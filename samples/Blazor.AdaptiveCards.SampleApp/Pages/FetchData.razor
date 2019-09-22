@@ -1,0 +1,40 @@
+﻿@page "/fetchdata"
+
+<h1>Adaptive Card</h1>
+
+<AdaptiveCards Schema="@schema" Models="@Customers"></AdaptiveCards>
+
+<br/>
+
+<textarea style="width:100%" rows="10" @bind="@schema"></textarea>
+<button @onclick="UpdateSchema" class="btn btn-primary">Update schema</button>
+
+@code {
+
+    string schema = "";
+    private List<Customer> Customers = new List<Customer>();
+
+    protected override void OnInitialized()
+    {
+        Customers.Clear();
+        
+        Customers.Add(new Customer(){FirstName = "Mikael", LastName = "Koskinen"});
+        Customers.Add(new Customer(){FirstName = "Another", LastName = "Persn"});
+        Customers.Add(new Customer(){FirstName = "Third", LastName = "Customer"});
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        schema = await System.IO.File.ReadAllTextAsync("TemplatedAdaptiveCard.json");
+    }
+
+    public async Task UpdateSchema()
+    {
+//        await card.RenderCard(schema);
+    }
+
+    public async Task Submit((string, object) data)
+    {
+    }
+
+}

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29311.281
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.AdaptiveCards.SampleApp", "..\samples\Blazor.AdaptiveCards.SampleApp\Blazor.AdaptiveCards.SampleApp.csproj", "{CC6A68CC-71E8-4676-8624-03A9B7A8FFC3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.AdaptiveCards", "Blazor.AdaptiveCards\Blazor.AdaptiveCards.csproj", "{128CCC51-65BC-4D89-A031-E342246C9C4A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC6A68CC-71E8-4676-8624-03A9B7A8FFC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC6A68CC-71E8-4676-8624-03A9B7A8FFC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC6A68CC-71E8-4676-8624-03A9B7A8FFC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC6A68CC-71E8-4676-8624-03A9B7A8FFC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{128CCC51-65BC-4D89-A031-E342246C9C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{128CCC51-65BC-4D89-A031-E342246C9C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{128CCC51-65BC-4D89-A031-E342246C9C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{128CCC51-65BC-4D89-A031-E342246C9C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C1EE74D1-FA1F-4B51-B3C1-CBF04B4EC943}
+	EndGlobalSection
+EndGlobal

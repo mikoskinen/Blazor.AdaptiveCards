@@ -1,0 +1,32 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Components
+
+@typeparam TModel
+
+@if (Models?.Any() == true)
+{
+    <div class="card-columns">
+
+        <CascadingValue Value="@Schema" Name="Template">
+            @foreach (var model in Models)
+            {
+                <TemplatedAdaptiveCard TModel="TModel" Model="@model"></TemplatedAdaptiveCard>
+            }
+        </CascadingValue>
+
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public string Schema { get; set; }
+
+    [Parameter]
+    public RenderFragment<TModel> RowTemplate { get; set; }
+
+    [Parameter]
+    public List<TModel> Models { get; set; }
+
+}

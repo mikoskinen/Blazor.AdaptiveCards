@@ -1,0 +1,24 @@
+﻿@page "/"
+@namespace Blazor.AdaptiveCards.SampleApp.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlazorApp4</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <app>
+        @(await Html.RenderComponentAsync<App>(RenderMode.Server))
+    </app>
+
+    <script src="_framework/blazor.server.js"></script>
+    <script src="_content/Blazor.AdaptiveCards/exampleJsInterop.js"></script>
+</body>
+</html>

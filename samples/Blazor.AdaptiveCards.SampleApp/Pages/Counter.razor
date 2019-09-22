@@ -1,0 +1,46 @@
+﻿@page "/counter"
+
+<h1>TemplatedAdaptive Card</h1>
+
+<TemplatedAdaptiveCard Schema="@schema" @ref="card" TModel="Customer" Model="@Customer"></TemplatedAdaptiveCard>
+
+<br />
+
+<textarea style="width:100%" rows="10" @bind="@schema"></textarea>
+
+<button @onclick="UpdateSchema" class="btn btn-primary">Update schema</button>
+@*<button @onclick="ChangeModel" class="btn btn-primary">Change Model</button>*@
+
+@if (card?.Model != null)
+{
+    <input type="text" @bind="card.Model.FirstName"></input>
+    <input type="text" @bind="card.Model.LastName"></input>
+}
+
+@if (Customer != null)
+{
+    <input type="text" @bind="Customer.FirstName"></input>
+    <input type="text" @bind="Customer.LastName"></input>
+}
+
+@code {
+
+    string schema = "";
+    TemplatedAdaptiveCard<Customer> card = null;
+
+    public Customer Customer = new Customer() { FirstName = "Mik", LastName = "Koski" };
+    protected override async Task OnParametersSetAsync()
+    {
+        schema = await System.IO.File.ReadAllTextAsync("TemplatedAdaptiveCard.json");
+    }
+
+    public async Task UpdateSchema()
+    {
+        await card.RenderCard(schema, Customer);
+    }
+
+    public async Task Submit((string, object) data)
+    {
+    }
+
+}
