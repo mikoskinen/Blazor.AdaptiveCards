@@ -1,4 +1,4 @@
-﻿@page "/counter"
+@page "/counter"
 
 <h1>TemplatedAdaptive Card</h1>
 
@@ -23,15 +23,19 @@
     <input type="text" @bind="Customer.LastName"></input>
 }
 
+<CodeBlock Code="@xmlCode" Language="language-xml"></CodeBlock>
+
 @code {
 
     string schema = "";
     TemplatedAdaptiveCard<Customer> card = null;
+    string xmlCode = "";
 
     public Customer Customer = new Customer() { FirstName = "Mik", LastName = "Koski" };
     protected override async Task OnParametersSetAsync()
     {
         schema = await System.IO.File.ReadAllTextAsync("TemplatedAdaptiveCard.json");
+        xmlCode = await System.IO.File.ReadAllTextAsync("XMLSample.txt");
     }
 
     public async Task UpdateSchema()

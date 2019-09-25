@@ -1,8 +1,10 @@
-﻿@page "/"
+@page "/"
 
 <h1>Adaptive Card</h1>
 
-<AdaptiveCard Schema="@schema" @ref="card" OnCardSubmit="Submit"></AdaptiveCard>
+<div class="adaptivecard">
+    <AdaptiveCard Schema="@schema" @ref="card" OnCardSubmit="Submit"></AdaptiveCard>
+</div>
 
 <br/>
 

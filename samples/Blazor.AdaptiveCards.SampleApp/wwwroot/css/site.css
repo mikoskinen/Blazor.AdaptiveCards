@@ -148,3 +148,7 @@ app {
         display: block;
     }
 }
+
+.adaptivecard {
+    border: solid 1px lightgray;
+}
