@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using AdaptiveCards;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
@@ -67,6 +67,11 @@ namespace Blazor.AdaptiveCards
         protected override bool ShouldRender(string currentSchema, string newSchema)
         {
             return true;
+        }
+
+        protected override async Task RunSubmit(SubmitEventArgs eventArgs)
+        {
+            await SubmitActionHandler.Handle(eventArgs, SubmitHandler, _model);
         }
     }
 }

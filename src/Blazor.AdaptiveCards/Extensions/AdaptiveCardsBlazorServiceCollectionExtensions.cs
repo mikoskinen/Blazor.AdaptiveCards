@@ -1,9 +1,10 @@
-﻿using AdaptiveCards;
+using AdaptiveCards;
 using AdaptiveCards.Rendering.Html;
 using System;
 using Blazor.AdaptiveCards;
 using Blazor.AdaptiveCards.ActionHandlers;
 using Blazor.AdaptiveCards.Templating;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
@@ -51,82 +52,12 @@ namespace Microsoft.Extensions.DependencyInjection
             });
 
             services.AddSingleton<AdaptiveCardRenderer>();
-
             services.AddSingleton<AdaptiveOpenUrlActionAdapter>();
+            services.TryAddSingleton<ISubmitActionHandler, DefaultSubmitActionHandler>();
 
-            //services.AddSingleton<MyH>();
+            services.AddSingleton(options);
 
             return services;
         }
     }
-
-    //public class MyH : ComponentBase
-    //{
-    //    [Inject]
-    //    private IJSRuntime jSRuntime { get; set; }
-    //    [Inject]
-    //    private AdaptiveOpenUrlActionAdapter adapter { get; set; }
-
-    //    //public MyH(IJSRuntime jSRuntime, AdaptiveOpenUrlActionAdapter adapter)
-    //    //{
-    //    //    this.jSRuntime = jSRuntime;
-    //    //    this.adapter = adapter;
-
-    //    //    var myRef = DotNetObjectReference.Create(adapter);
-    //    //    await JSRuntime.InvokeAsync<object>("blazorAdaptiveCards.setUrlOpener", myRef);
-    //    //}
-
-    //    protected override async Task OnInitializedAsync()
-    //    {
-    //        var myRef = DotNetObjectReference.Create(adapter);
-    //        await jSRuntime.InvokeAsync<object>("blazorAdaptiveCards.setUrlOpener", myRef );
-
-    //        //return base.OnInitializedAsync();
-    //    }
-    //}
-
-    //public class ExampleJsInterop
-    //{
-    //    private readonly IJSRuntime _jsRuntime;
-    //    private readonly ComponentBase component;
-
-    //    public ExampleJsInterop(IJSRuntime jsRuntime, ComponentBase component)
-    //    {
-    //        _jsRuntime = jsRuntime;
-    //        this.component = component;
-    //    }
-
-    //    public ValueTask<object> CallHelloHelperSayHello(string name)
-    //    {
-    //        // sayHello is implemented in wwwroot/exampleJsInterop.js
-    //        return _jsRuntime.InvokeAsync<object>(
-    //            "exampleJsFunctions.sayHello",
-    //            DotNetObjectReference.Create(new HelloHelper(name)));
-    //    }
-    //}
-
-    //public static class NavigationHelper
-    //{
-    //    public static IServiceProvider ServiceProvider { get; set; }
-
-    //    [JSInvokable]
-    //    public static Task NavigateToUrl(string url)
-    //    {
-    //        if (string.IsNullOrWhiteSpace(url))
-    //        {
-    //            return Task.CompletedTask;
-    //        }
-
-    //        Debug.WriteLine($"Navigating to {url}");
-
-    //        var scopeFactory = ServiceProvider.GetService<IServiceScopeFactory>();
-    //        using (var scope = scopeFactory.CreateScope())
-    //        {
-    //            var navigationManager = scope.ServiceProvider.GetRequiredService<NavigationManager>();
-    //            navigationManager.NavigateTo(url);
-    //        }
-
-    //        return Task.CompletedTask;
-    //    }
-    //}
 }

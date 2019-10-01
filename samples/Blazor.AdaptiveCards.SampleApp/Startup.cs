@@ -13,6 +13,13 @@ namespace Blazor.AdaptiveCards.SampleApp
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
+
+    public class TestData
+    {
+        public int x { get; set; }
+        public string dueDate { get; set; }
+    }
+
     public class Startup
     {
         public Startup(IConfiguration configuration)

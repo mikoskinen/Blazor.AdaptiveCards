@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AdaptiveCards;
@@ -21,11 +21,15 @@ namespace Blazor.AdaptiveCards
 
         [Inject] private NavigationManager NavigationManager { get; set; }
 
+        [Inject] protected ISubmitActionHandler SubmitActionHandler { get; set; }
+
         [Parameter] public string Schema { get; set; }
+
+        [Parameter] public object SubmitHandler{ get; set; }
 
         [Parameter] public EventCallback<string> OnOpeningLink { get; set; }
 
-        [Parameter] public EventCallback<(string, object)> OnCardSubmit { get; set; }
+        [Parameter] public EventCallback<SubmitEventArgs> OnCardSubmit { get; set; }
 
         [Parameter] public EventCallback<string> OnCardRendered { get; set; }
 
@@ -93,21 +97,26 @@ namespace Blazor.AdaptiveCards
         [JSInvokable]
         public async Task SubmitData(Dictionary<string, object> data, string actionName)
         {
-            if (!OnCardSubmit.HasDelegate)
+            if (!OnCardSubmit.HasDelegate && SubmitHandler == null)
             {
                 return;
             }
 
-            await OnCardSubmit.InvokeAsync((actionName, data));
+            var eventArgs = new SubmitEventArgs(actionName, data);
 
-            //System.Diagnostics.Debug.WriteLine(data);
-            //if (OnOpeningLink.HasDelegate)
-            //{
-            //    await OnOpeningLink.InvokeAsync(url);
-            //    return;
-            //}
+            if (SubmitHandler != null )
+            {
+                await RunSubmit(eventArgs);
+            }
+            else
+            {
+                await OnCardSubmit.InvokeAsync(eventArgs);
+            }
+        }
 
-            //urlActionAdapter.OpenUrl(navigationManager, url);
+        protected virtual async Task RunSubmit(SubmitEventArgs eventArgs)
+        {
+            await SubmitActionHandler.Handle(eventArgs, SubmitHandler, null);
         }
 
         protected virtual bool ShouldRender(string currentSchema, string newSchema)
