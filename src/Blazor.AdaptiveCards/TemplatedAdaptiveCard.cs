@@ -10,6 +10,7 @@ namespace Blazor.AdaptiveCards
     {
         private TModel _model;
         private string _modelJson;
+        private string _templateName;
 
         [Parameter]
         public TModel Model
@@ -33,9 +34,13 @@ namespace Blazor.AdaptiveCards
             }
         }
 
+        [Parameter]
+        public string TemplateName { get => _templateName; set => _templateName = value; }
+
         [Inject] private IAdaptiveCardTemplatingProvider TemplatingProvider { get; set; }
-        [Inject] private IModelTemplateProvider<TModel> ModelTemplateProvider { get; set; }
-        [CascadingParameter(Name = "Template")] private string Template { get; set; }
+        [Inject] private IModelTemplateCatalog ModelTemplateCatalog { get; set; }
+        [CascadingParameter(Name = "Template")] private string ParentTemplate { get; set; }
+        [CascadingParameter(Name = "TemplateName")] private string ParentTemplateName { get; set; }
 
         public async Task RenderCard(string schema, TModel model)
         {
@@ -48,16 +53,28 @@ namespace Blazor.AdaptiveCards
         {
             base.OnParametersSet();
 
-            if (!string.IsNullOrWhiteSpace(Template))
+            if (!string.IsNullOrWhiteSpace(ParentTemplate))
             {
-                Schema = Template;
-                
+                Schema = ParentTemplate;
+
                 return;
             }
 
-            if (ModelTemplateProvider != null)
+            if (!string.IsNullOrWhiteSpace(ParentTemplateName))
             {
-                Schema = ModelTemplateProvider.GetTemplate(Model);
+                _templateName = ParentTemplateName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(_templateName))
+            {
+                Schema = ModelTemplateCatalog.Get(_templateName);
+
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(Schema))
+            {
+                Schema = ModelTemplateCatalog.Get(typeof(TModel).Name);
             }
         }
 

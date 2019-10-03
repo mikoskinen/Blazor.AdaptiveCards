@@ -2,17 +2,24 @@ using System.Threading.Tasks;
 
 namespace Blazor.AdaptiveCards.Templating
 {
-    public class FileModelTemplateProvider<T> : IModelTemplateProvider<T>
+    public class FileModelTemplateProvider : IModelTemplateProvider
     {
         private readonly string _filename;
+        private readonly string _templateName;
 
-        public FileModelTemplateProvider(string filename)
+        public FileModelTemplateProvider(string filename, string templateName)
         {
             _filename = filename;
+            _templateName = templateName;
         }
 
-        string IModelTemplateProvider<T>.GetTemplate(T model)
+        public string GetTemplate(string templateName)
         {
+            if (!string.Equals(templateName, _templateName))
+            {
+                return null;
+            }
+
             var result = System.IO.File.ReadAllText("TemplatedAdaptiveCard.json");
 
             return result;

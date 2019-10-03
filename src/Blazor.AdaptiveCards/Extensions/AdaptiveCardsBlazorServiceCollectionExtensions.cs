@@ -5,6 +5,7 @@ using Blazor.AdaptiveCards;
 using Blazor.AdaptiveCards.ActionHandlers;
 using Blazor.AdaptiveCards.Templating;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Linq;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
@@ -23,7 +24,22 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static BlazorAdaptiveCardsBuilder AddFileTemplate<TModel>(this BlazorAdaptiveCardsBuilder builder, string filepath)
         {
-            builder.Services.AddSingleton<IModelTemplateProvider<TModel>>(new FileModelTemplateProvider<TModel>(filepath));
+            builder.Services.AddTransient<IModelTemplateProvider>(provider => 
+            {
+                var templateName = typeof(TModel).Name;
+
+                return new FileModelTemplateProvider(filepath, templateName);
+            });
+
+            return builder;
+        }
+
+        public static BlazorAdaptiveCardsBuilder AddFileTemplate(this BlazorAdaptiveCardsBuilder builder, string templateName, string filepath)
+        {
+            builder.Services.AddTransient<IModelTemplateProvider>(provider =>
+            {
+                return new FileModelTemplateProvider(filepath, templateName);
+            });
 
             return builder;
         }
@@ -76,7 +92,19 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<AdaptiveCardRenderer>();
             services.AddSingleton<AdaptiveOpenUrlActionAdapter>();
             services.TryAddSingleton<ISubmitActionHandler, DefaultSubmitActionHandler>();
-            services.TryAddSingleton(typeof(IModelTemplateProvider<>), typeof(EmptyModelTemplateProvider<>));
+
+            services.TryAddSingleton<IModelTemplateCatalog>(provider =>
+            {
+                var templateProviders = provider.GetServices(typeof(IModelTemplateProvider)).Cast<IModelTemplateProvider>();
+
+                var result = new ModelTemplateCatalog();
+                foreach(var templateProvider in templateProviders)
+                {
+                    result.Register(templateProvider);
+                }
+
+                return result;
+            });
 
             services.AddSingleton(options);
 
