@@ -34,6 +34,7 @@ namespace Blazor.AdaptiveCards
         }
 
         [Inject] private IAdaptiveCardTemplatingProvider TemplatingProvider { get; set; }
+        [Inject] private IModelTemplateProvider<TModel> ModelTemplateProvider { get; set; }
         [CascadingParameter(Name = "Template")] private string Template { get; set; }
 
         public async Task RenderCard(string schema, TModel model)
@@ -47,12 +48,17 @@ namespace Blazor.AdaptiveCards
         {
             base.OnParametersSet();
 
-            if (string.IsNullOrWhiteSpace(Template))
+            if (!string.IsNullOrWhiteSpace(Template))
             {
+                Schema = Template;
+                
                 return;
             }
 
-            Schema = Template;
+            if (ModelTemplateProvider != null)
+            {
+                Schema = ModelTemplateProvider.GetTemplate(Model);
+            }
         }
 
         protected override async Task<AdaptiveCardParseResult> CreateCardFromSchema(string schema)

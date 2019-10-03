@@ -9,10 +9,32 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
 {
+    public class BlazorAdaptiveCardsBuilder
+    {
+        public BlazorAdaptiveCardsBuilder(IServiceCollection services)
+        {
+            Services = services;
+        }
+
+        public IServiceCollection Services { get; }
+    }
+
+    public static class AdaptiveCardsBlazorModelTemplateExtensions
+    {
+        public static BlazorAdaptiveCardsBuilder AddFileTemplate<TModel>(this BlazorAdaptiveCardsBuilder builder, string filepath)
+        {
+            builder.Services.AddSingleton<IModelTemplateProvider<TModel>>(new FileModelTemplateProvider<TModel>(filepath));
+
+            return builder;
+        }
+    }
+
     public static class AdaptiveCardsBlazorServiceCollectionExtensions
     {
-        public static IServiceCollection AddBlazorAdaptiveCards(this IServiceCollection services, Action<BlazorAdaptiveCardsOptions> configure = null)
+        public static BlazorAdaptiveCardsBuilder AddBlazorAdaptiveCards(this IServiceCollection services, Action<BlazorAdaptiveCardsOptions> configure = null)
         {
+            var builder = new BlazorAdaptiveCardsBuilder(services);
+
             var options = new BlazorAdaptiveCardsOptions();
             configure?.Invoke(options);
 
@@ -54,10 +76,11 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<AdaptiveCardRenderer>();
             services.AddSingleton<AdaptiveOpenUrlActionAdapter>();
             services.TryAddSingleton<ISubmitActionHandler, DefaultSubmitActionHandler>();
+            services.TryAddSingleton(typeof(IModelTemplateProvider<>), typeof(EmptyModelTemplateProvider<>));
 
             services.AddSingleton(options);
 
-            return services;
+            return builder;
         }
     }
 }
