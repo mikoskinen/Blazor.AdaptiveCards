@@ -3,6 +3,7 @@ using AdaptiveCards;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 using Blazor.AdaptiveCards.Templating;
+using System;
 
 namespace Blazor.AdaptiveCards
 {
@@ -41,6 +42,7 @@ namespace Blazor.AdaptiveCards
         [Inject] private IModelTemplateCatalog ModelTemplateCatalog { get; set; }
         [CascadingParameter(Name = "Template")] private string ParentTemplate { get; set; }
         [CascadingParameter(Name = "TemplateName")] private string ParentTemplateName { get; set; }
+        [CascadingParameter(Name = "TemplateSelector")] private Func<TModel, string> TemplateSelector { get; set; }
 
         public async Task RenderCard(string schema, TModel model)
         {
@@ -52,6 +54,13 @@ namespace Blazor.AdaptiveCards
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
+
+            if (TemplateSelector != null)
+            {
+                Schema = TemplateSelector(_model);
+
+                return;
+            }
 
             if (!string.IsNullOrWhiteSpace(ParentTemplate))
             {

@@ -20,7 +20,7 @@ namespace Blazor.AdaptiveCards.Templating
                 return null;
             }
 
-            var result = System.IO.File.ReadAllText("TemplatedAdaptiveCard.json");
+            var result = System.IO.File.ReadAllText(_filename);
 
             return result;
         }
