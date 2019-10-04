@@ -7,7 +7,6 @@
 @if (Models?.Any() == true)
 {
     <div class="card-columns">
-
         <CascadingValue Value="@TemplateSelector" Name="TemplateSelector">
             <CascadingValue Value="@Schema" Name="Template">
                 @foreach (var model in Models)
@@ -32,4 +31,5 @@
 
     [Parameter]
     public Func<TModel, string> TemplateSelector { get; set; }
+
 }

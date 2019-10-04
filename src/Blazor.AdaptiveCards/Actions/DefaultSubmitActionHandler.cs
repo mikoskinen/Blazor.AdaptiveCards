@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 
-namespace Blazor.AdaptiveCards
+namespace Blazor.AdaptiveCards.Actions
 {
     public class DefaultSubmitActionHandler : ISubmitActionHandler
     {
@@ -70,7 +70,7 @@ namespace Blazor.AdaptiveCards
 
                 if (methodParameters.Any() != true)
                 {
-                    var t = (Task)method.Invoke(handler, null);
+                    var t = (Task) method.Invoke(handler, null);
                     await t;
 
                     return;
@@ -78,7 +78,7 @@ namespace Blazor.AdaptiveCards
 
                 if (methodParameters.Count == 1 && typeof(SubmitEventArgs).IsAssignableFrom(methodParameters.First().ParameterType))
                 {
-                    var t = (Task)method.Invoke(handler, new[] { eventArgs });
+                    var t = (Task) method.Invoke(handler, new[] { eventArgs });
                     await t;
 
                     return;
@@ -86,25 +86,27 @@ namespace Blazor.AdaptiveCards
 
                 if (model != null && methodParameters.Count == 1 && model.GetType().IsAssignableFrom(methodParameters.First().ParameterType))
                 {
-                    var t = (Task)method.Invoke(handler, new[] { model });
+                    var t = (Task) method.Invoke(handler, new[] { model });
                     await t;
 
                     return;
                 }
 
                 var arguments = new List<object>();
-                
+
                 foreach (var methodParameter in methodParameters)
                 {
                     if (typeof(SubmitEventArgs).IsAssignableFrom(methodParameter.ParameterType))
                     {
                         arguments.Add(eventArgs);
+
                         continue;
                     }
 
                     if (model != null && model.GetType().IsAssignableFrom(methodParameter.ParameterType))
                     {
                         arguments.Add(model);
+
                         continue;
                     }
 
@@ -114,9 +116,10 @@ namespace Blazor.AdaptiveCards
                         var obj = System.Text.Json.JsonSerializer.Deserialize(json, methodParameter.ParameterType);
 
                         arguments.Add(obj);
+
                         continue;
                     }
-                    
+
                     if (eventArgs.Data != null && IsSimpleType(methodParameter.ParameterType))
                     {
                         if (eventArgs.Data.ContainsKey(methodParameter.Name))
@@ -128,13 +131,12 @@ namespace Blazor.AdaptiveCards
 
                             continue;
                         }
-
                     }
 
                     arguments.Add(null);
                 }
 
-                var tOut = (Task)method.Invoke(handler, arguments.ToArray());
+                var tOut = (Task) method.Invoke(handler, arguments.ToArray());
                 await tOut;
             }
             catch (Exception e)
@@ -150,17 +152,10 @@ namespace Blazor.AdaptiveCards
         {
             return
                 type.IsPrimitive ||
-                new Type[] {
-            typeof(Enum),
-            typeof(String),
-            typeof(Decimal),
-            typeof(DateTime),
-            typeof(DateTimeOffset),
-            typeof(TimeSpan),
-            typeof(Guid)
-                }.Contains(type) ||
+                new Type[] { typeof(Enum), typeof(string), typeof(decimal), typeof(DateTime), typeof(DateTimeOffset), typeof(TimeSpan), typeof(Guid) }
+                    .Contains(type) ||
                 Convert.GetTypeCode(type) != TypeCode.Object ||
-                (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsSimpleType(type.GetGenericArguments()[0]))
+                type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsSimpleType(type.GetGenericArguments()[0])
                 ;
         }
     }

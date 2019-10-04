@@ -6,47 +6,19 @@ using Blazor.AdaptiveCards.ActionHandlers;
 using Blazor.AdaptiveCards.Templating;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Linq;
+using Blazor.AdaptiveCards.Actions;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public class BlazorAdaptiveCardsBuilder
-    {
-        public BlazorAdaptiveCardsBuilder(IServiceCollection services)
-        {
-            Services = services;
-        }
-
-        public IServiceCollection Services { get; }
-    }
-
-    public static class AdaptiveCardsBlazorModelTemplateExtensions
-    {
-        public static BlazorAdaptiveCardsBuilder AddFileTemplate<TModel>(this BlazorAdaptiveCardsBuilder builder, string filepath)
-        {
-            builder.Services.AddTransient<IModelTemplateProvider>(provider => 
-            {
-                var templateName = typeof(TModel).Name;
-
-                return new FileModelTemplateProvider(filepath, templateName);
-            });
-
-            return builder;
-        }
-
-        public static BlazorAdaptiveCardsBuilder AddFileTemplate(this BlazorAdaptiveCardsBuilder builder, string templateName, string filepath)
-        {
-            builder.Services.AddTransient<IModelTemplateProvider>(provider =>
-            {
-                return new FileModelTemplateProvider(filepath, templateName);
-            });
-
-            return builder;
-        }
-    }
-
     public static class AdaptiveCardsBlazorServiceCollectionExtensions
     {
+        /// <summary>
+        /// Adds the adaptive cards support into your Blazor app.
+        /// </summary>
+        /// <param name="services">The service collection.</param>
+        /// <param name="configure">The configure action.</param>
+        /// <returns>BlazorAdaptiveCardsBuilder.</returns>
         public static BlazorAdaptiveCardsBuilder AddBlazorAdaptiveCards(this IServiceCollection services, Action<BlazorAdaptiveCardsOptions> configure = null)
         {
             var builder = new BlazorAdaptiveCardsBuilder(services);
@@ -98,7 +70,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 var templateProviders = provider.GetServices(typeof(IModelTemplateProvider)).Cast<IModelTemplateProvider>();
 
                 var result = new ModelTemplateCatalog();
-                foreach(var templateProvider in templateProviders)
+
+                foreach (var templateProvider in templateProviders)
                 {
                     result.Register(templateProvider);
                 }

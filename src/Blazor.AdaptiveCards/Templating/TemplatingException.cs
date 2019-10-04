@@ -10,8 +10,7 @@ namespace Blazor.AdaptiveCards.Templating
             Model = model;
         }
 
-        public string Template { get; private set; }
-        public object Model { get; private set; }
-
+        public string Template { get; }
+        public object Model { get; }
     }
 }

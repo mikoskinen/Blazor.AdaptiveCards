@@ -1,13 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AdaptiveCards;
 
-namespace Blazor.AdaptiveCards
+namespace Blazor.AdaptiveCards.Actions
 {
-    public class CardActionCreator
+    public class ActionCreator
     {
-        public global::AdaptiveCards.AdaptiveCard Create(global::AdaptiveCards.AdaptiveCard adaptiveCard, Func<dynamic, List<AdaptiveAction>> actions, object obj)
+        public global::AdaptiveCards.AdaptiveCard Create(global::AdaptiveCards.AdaptiveCard adaptiveCard, Func<dynamic, List<AdaptiveAction>> actions,
+            object obj)
         {
             if (actions == null)
             {

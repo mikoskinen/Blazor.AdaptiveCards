@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Scriban;
@@ -8,7 +8,7 @@ namespace Blazor.AdaptiveCards.Templating
     public class ScribanCardBinder : IAdaptiveCardTemplatingProvider
     {
         private readonly ILogger<ScribanCardBinder> _logger;
-        private BlazorAdaptiveCardsOptions _options;
+        private readonly BlazorAdaptiveCardsOptions _options;
 
         public ScribanCardBinder(BlazorAdaptiveCardsOptions options, ILogger<ScribanCardBinder> logger)
         {
@@ -28,6 +28,7 @@ namespace Blazor.AdaptiveCards.Templating
             catch (Exception e)
             {
                 _logger.LogError(e, "Failed to create schema from {template} with {model}", template, model);
+
                 if (_options.AllowTemplatingError)
                 {
                     return Task.FromResult(template);
@@ -35,7 +36,6 @@ namespace Blazor.AdaptiveCards.Templating
 
                 throw new TemplatingException("Failed to create schema from template", template, model, e);
             }
-
         }
     }
 }

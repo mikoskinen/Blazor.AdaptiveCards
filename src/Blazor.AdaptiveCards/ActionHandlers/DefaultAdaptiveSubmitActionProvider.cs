@@ -1,11 +1,20 @@
-﻿using AdaptiveCards;
+using AdaptiveCards;
 using AdaptiveCards.Rendering.Html;
 using Newtonsoft.Json;
 
 namespace Blazor.AdaptiveCards.ActionHandlers
 {
+    /// <summary>
+    /// The default class for for creating submit actions
+    /// </summary>
     public class DefaultAdaptiveSubmitActionProvider
     {
+        /// <summary>
+        /// Creates the specified submit action.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <param name="tag">The tag.</param>
+        /// <param name="renderContext">The render context.</param>
         public static void Create(AdaptiveSubmitAction action, HtmlTag tag, AdaptiveRenderContext renderContext)
         {
             tag.Attr("id", AdaptiveCardRenderer.GenerateRandomId());
@@ -21,8 +30,6 @@ namespace Blazor.AdaptiveCards.ActionHandlers
             }
 
             tag.Attributes.Add("onclick", "window.blazorAdaptiveCards.submitData(this)");
-
-            //tag.Attributes.Add("onclick", "window.location.assign(this.getAttribute('data-ac-url'))");
         }
     }
 }

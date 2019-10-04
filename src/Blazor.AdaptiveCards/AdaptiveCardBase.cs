@@ -4,11 +4,17 @@ using System.Threading.Tasks;
 using AdaptiveCards;
 using AdaptiveCards.Rendering.Html;
 using Blazor.AdaptiveCards.ActionHandlers;
+using Blazor.AdaptiveCards.Actions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace Blazor.AdaptiveCards
 {
+    /// <summary>
+    /// Base class for Adaptive Cards
+    /// Implements the <see cref="Microsoft.AspNetCore.Components.ComponentBase" />
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Components.ComponentBase" />
     public abstract class AdaptiveCardBase : ComponentBase
     {
         protected string CardHtml = "";
@@ -23,15 +29,35 @@ namespace Blazor.AdaptiveCards
 
         [Inject] protected ISubmitActionHandler SubmitActionHandler { get; set; }
 
+        /// <summary>
+        /// Gets or sets the schema.
+        /// </summary>
+        /// <value>The schema.</value>
         [Parameter] public string Schema { get; set; }
 
-        [Parameter] public object SubmitHandler{ get; set; }
+        /// <summary>
+        /// Gets or sets the submit handler.
+        /// </summary>
+        /// <value>The submit handler.</value>
+        [Parameter] public object SubmitHandler { get; set; }
 
-        [Parameter] public EventCallback<string> OnOpeningLink { get; set; }
+        /// <summary>
+        /// Gets or sets the handler which is executed when opening link.
+        /// </summary>
+        /// <value>The handler.</value>
+        [Parameter] public EventCallback<string> OnOpenLinkAction { get; set; }
 
-        [Parameter] public EventCallback<SubmitEventArgs> OnCardSubmit { get; set; }
+        /// <summary>
+        /// Gets or sets the submit action handler.
+        /// </summary>
+        /// <value>The handler.</value>
+        [Parameter] public EventCallback<SubmitEventArgs> OnSubmitAction { get; set; }
 
-        [Parameter] public EventCallback<string> OnCardRendered { get; set; }
+        /// <summary>
+        /// Gets or sets the callback when a card is rendered.
+        /// </summary>
+        /// <value>The on card rendered.</value>
+        [Parameter] public EventCallback<CardRenderedEventArgs> OnCardRendered { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
@@ -54,6 +80,10 @@ namespace Blazor.AdaptiveCards
             }
         }
 
+        /// <summary>
+        /// Renders the card.
+        /// </summary>
+        /// <param name="schema">The schema.</param>
         public async Task RenderCard(string schema)
         {
             if (string.IsNullOrWhiteSpace(schema))
@@ -69,7 +99,8 @@ namespace Blazor.AdaptiveCards
             }
 
             var adaptiveCard = await CreateCardFromSchema(schema);
-            CardHtml = Renderer.RenderCard(adaptiveCard.Card).Html.ToString();
+            var renderedAdaptiveCard = Renderer.RenderCard(adaptiveCard.Card);
+            CardHtml = renderedAdaptiveCard.Html.ToString();
 
             CurrentSchema = schema;
 
@@ -78,15 +109,15 @@ namespace Blazor.AdaptiveCards
                 return;
             }
 
-            await OnCardRendered.InvokeAsync(CurrentSchema);
+            await OnCardRendered.InvokeAsync(new CardRenderedEventArgs(CurrentSchema, renderedAdaptiveCard.Warnings));
         }
 
         [JSInvokable]
         public async Task OpenUrl(string url)
         {
-            if (OnOpeningLink.HasDelegate)
+            if (OnOpenLinkAction.HasDelegate)
             {
-                await OnOpeningLink.InvokeAsync(url);
+                await OnOpenLinkAction.InvokeAsync(url);
 
                 return;
             }
@@ -97,20 +128,20 @@ namespace Blazor.AdaptiveCards
         [JSInvokable]
         public async Task SubmitData(Dictionary<string, object> data, string actionName)
         {
-            if (!OnCardSubmit.HasDelegate && SubmitHandler == null)
+            if (!OnSubmitAction.HasDelegate && SubmitHandler == null)
             {
                 return;
             }
 
             var eventArgs = new SubmitEventArgs(actionName, data);
 
-            if (SubmitHandler != null )
+            if (SubmitHandler != null)
             {
                 await RunSubmit(eventArgs);
             }
             else
             {
-                await OnCardSubmit.InvokeAsync(eventArgs);
+                await OnSubmitAction.InvokeAsync(eventArgs);
             }
         }
 

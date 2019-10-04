@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Blazor.AdaptiveCards
+namespace Blazor.AdaptiveCards.Actions
 {
     public class SubmitActionException : Exception
     {
@@ -18,6 +18,5 @@ namespace Blazor.AdaptiveCards
 
         public SubmitEventArgs EventArgs { get; private set; }
         public object Handler { get; private set; }
-
     }
 }

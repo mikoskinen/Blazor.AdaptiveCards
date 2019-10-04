@@ -4,9 +4,16 @@ using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 using Blazor.AdaptiveCards.Templating;
 using System;
+using Blazor.AdaptiveCards.Actions;
 
 namespace Blazor.AdaptiveCards
 {
+    /// <summary>
+    /// Templated Adaptive Card. The card has a schema and a model.
+    /// Implements the <see cref="Blazor.AdaptiveCards.AdaptiveCard" />
+    /// </summary>
+    /// <typeparam name="TModel">The type of the model.</typeparam>
+    /// <seealso cref="Blazor.AdaptiveCards.AdaptiveCard" />
     public class TemplatedAdaptiveCard<TModel> : AdaptiveCard
     {
         private TModel _model;
@@ -35,14 +42,23 @@ namespace Blazor.AdaptiveCards
             }
         }
 
-        [Parameter]
-        public string TemplateName { get => _templateName; set => _templateName = value; }
+        /// <summary>
+        /// Gets or sets the name of the template.
+        /// </summary>
+        /// <value>The name of the template.</value>
+        [Parameter] public string TemplateName { get => _templateName; set => _templateName = value; }
 
         [Inject] private IAdaptiveCardTemplatingProvider TemplatingProvider { get; set; }
         [Inject] private IModelTemplateCatalog ModelTemplateCatalog { get; set; }
-        [CascadingParameter(Name = "Template")] private string ParentTemplate { get; set; }
-        [CascadingParameter(Name = "TemplateName")] private string ParentTemplateName { get; set; }
-        [CascadingParameter(Name = "TemplateSelector")] private Func<TModel, string> TemplateSelector { get; set; }
+
+        [CascadingParameter(Name = "Template")]
+        private string ParentTemplate { get; set; }
+
+        [CascadingParameter(Name = "TemplateName")]
+        private string ParentTemplateName { get; set; }
+
+        [CascadingParameter(Name = "TemplateSelector")]
+        private Func<TModel, string> TemplateSelector { get; set; }
 
         public async Task RenderCard(string schema, TModel model)
         {
