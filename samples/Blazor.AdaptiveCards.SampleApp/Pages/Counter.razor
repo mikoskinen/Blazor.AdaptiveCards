@@ -1,4 +1,4 @@
-﻿@page "/counter"
+@page "/counter"
 @using Blazor.AdaptiveCards.Actions
 
 <h1>TemplatedAdaptive Card</h1>
@@ -10,7 +10,6 @@
 <textarea style="width:100%" rows="10" @bind="@schema"></textarea>
 
 <button @onclick="UpdateSchema" class="btn btn-primary">Update schema</button>
-@*<button @onclick="ChangeModel" class="btn btn-primary">Change Model</button>*@
 
 @if (card?.Model != null)
 {

@@ -11,7 +11,7 @@ using Microsoft.JSInterop;
 namespace Blazor.AdaptiveCards
 {
     /// <summary>
-    /// Base class for Adaptive Cards
+    /// Base class for Adaptive Card
     /// Implements the <see cref="Microsoft.AspNetCore.Components.ComponentBase" />
     /// </summary>
     /// <seealso cref="Microsoft.AspNetCore.Components.ComponentBase" />
@@ -59,9 +59,13 @@ namespace Blazor.AdaptiveCards
         /// <value>The on card rendered.</value>
         [Parameter] public EventCallback<CardRenderedEventArgs> OnCardRendered { get; set; }
 
+        [Parameter(CaptureUnmatchedValues = true)]
+        public Dictionary<string, object> Attributes { get; set; }
+
         protected override async Task OnParametersSetAsync()
         {
-            await RenderCard(Schema);
+            // Enable for sync render
+            //await RenderCard(Schema);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -77,6 +81,9 @@ namespace Blazor.AdaptiveCards
                 await JsRuntime.InvokeAsync<object>("blazorAdaptiveCards.setUrlOpener", myRef);
 
                 JsInitialized = true;
+
+                // Enable for async render
+                await RenderCard(Schema);
             }
         }
 
@@ -98,11 +105,16 @@ namespace Blazor.AdaptiveCards
                 return;
             }
 
+            System.Diagnostics.Debug.WriteLine("Rendering card");
+
             var adaptiveCard = await CreateCardFromSchema(schema);
             var renderedAdaptiveCard = Renderer.RenderCard(adaptiveCard.Card);
             CardHtml = renderedAdaptiveCard.Html.ToString();
 
             CurrentSchema = schema;
+
+            // Enable for async render
+            StateHasChanged();
 
             if (OnCardRendered.HasDelegate == false)
             {

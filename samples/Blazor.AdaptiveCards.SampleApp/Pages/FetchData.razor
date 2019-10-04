@@ -3,7 +3,19 @@
 
 <h1>Adaptive Card</h1>
 
-<AdaptiveCards Models="@Customers" TemplateSelector="TemplateSelector"></AdaptiveCards>
+<AdaptiveCards Models="@Customers" TemplateSelector="TemplateSelector" 
+        ContainerClass="card-columns" 
+        Attributes="@(new Dictionary<string, object>()
+        {
+            { "class", "card-columns" },
+        })"
+        CardClass="adaptive-card"
+        CardAttributes="@(new Dictionary<string, object>() { { "data-aos", "fade" } })"
+        CardAttributeFunctions="@(new List<(string, Func<int, Customer, object>)>()
+                              {("data-aos-delay", (i, customer) => (i*100).ToString() )}
+        )">
+
+</AdaptiveCards>    
 
 @*<br/>
 
@@ -22,9 +34,10 @@
     {
         Customers.Clear();
 
-        Customers.Add(new Customer(){FirstName = "Mikael", LastName = "Koskinen"});
-        Customers.Add(new Customer(){FirstName = "Another", LastName = "Persn"});
-        Customers.Add(new Customer(){FirstName = "Third", LastName = "Customer"});
+        for(int i = 0; i < 10; i++)
+        {
+            Customers.Add(new Customer() { FirstName = $"Person {i}", LastName = "Lastname" });
+        }
     }
 
     public async Task UpdateSchema()

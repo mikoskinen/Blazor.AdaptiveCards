@@ -69,6 +69,8 @@ namespace Blazor.AdaptiveCards
 
         protected override void OnParametersSet()
         {
+            System.Diagnostics.Debug.WriteLine("On parameters set");
+
             base.OnParametersSet();
 
             if (TemplateSelector != null)

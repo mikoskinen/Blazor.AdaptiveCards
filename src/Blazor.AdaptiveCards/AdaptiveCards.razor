@@ -6,12 +6,12 @@
 
 @if (Models?.Any() == true)
 {
-    <div class="card-columns">
+    <div @attributes="Attributes" class="@ContainerClass">
         <CascadingValue Value="@TemplateSelector" Name="TemplateSelector">
             <CascadingValue Value="@Schema" Name="Template">
-                @foreach (var model in Models)
+                @for (var i = 0; i < Models.Count; i++)
                 {
-                    <TemplatedAdaptiveCard TModel="TModel" Model="@model"></TemplatedAdaptiveCard>
+                    <TemplatedAdaptiveCard TModel="TModel" Model="@Models[i]" Attributes="@(GetCardAttributes(i, Models[i]))"></TemplatedAdaptiveCard>
                 }
             </CascadingValue>
         </CascadingValue>
@@ -19,7 +19,6 @@
 }
 
 @code {
-
     [Parameter]
     public string Schema { get; set; }
 
@@ -32,4 +31,44 @@
     [Parameter]
     public Func<TModel, string> TemplateSelector { get; set; }
 
+    [Parameter]
+    public string ContainerClass { get; set; } = "card-columns";
+
+    [Parameter]
+    public string CardClass { get; set; }
+
+    [Parameter]
+    public Dictionary<string, object> CardAttributes { get; set; } = new Dictionary<string, object>();
+
+    [Parameter]
+    public List<(string, Func<int, TModel, object>)> CardAttributeFunctions { get; set; }
+
+    [Parameter]
+    public Dictionary<string, Func<int, TModel, object>> CardAttributeFunctions2 { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> Attributes { get; set; }
+
+    private Dictionary<string, object> GetCardAttributes(int index, TModel model)
+    {
+        var result = new Dictionary<string, object>(CardAttributes);
+
+        if (!string.IsNullOrWhiteSpace(CardClass) && !result.ContainsKey("class"))
+        {
+            result.Add("class", CardClass);
+        }
+
+        if (CardAttributeFunctions?.Any() != true)
+        {
+            return result;
+        }
+
+        foreach(var cardAttribute in CardAttributeFunctions)
+        {
+            result.Add(cardAttribute.Item1, cardAttribute.Item2(index, model));
+        }
+
+        return result;
+
+    }
 }
