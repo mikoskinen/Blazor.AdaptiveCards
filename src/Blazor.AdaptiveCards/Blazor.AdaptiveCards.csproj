@@ -3,10 +3,26 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
+    <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Mikael Koskinen</Authors>
+    <Company />
+    <Description>Adaptive Cards for Blazor provides powerful support for using Adaptive Cards inside Blazor Applications.</Description>
+    <PackageDescription>Adaptive Cards for Blazor provides powerful and fully featured support for using Adaptive Cards inside Blazor Applications. Some of the feature highlights include built-in support for templates, ability to handle actions in C# and many more.</PackageDescription>
+    <PackageProjectUrl>https://github.com/mikoskinen/Blazor.AdaptiveCards</PackageProjectUrl>
+    <Copyright>2019 Mikael Koskinen</Copyright>
+    <PackageId>AdaptiveCards.Blazor</PackageId>
+    <Product>AdaptiveCards.Blazor</Product>
+    <AssemblyName>AdaptiveCards.Blazor</AssemblyName>
+    <RootNamespace>Blazor.AdaptiveCards</RootNamespace>
+    <PackageLicenseUrl>https://github.com/mikoskinen/Blazor.AdaptiveCards/blob/master/LICENSE</PackageLicenseUrl>
+    <Version>1.0.0-rc</Version>
+    <RepositoryUrl>https://github.com/mikoskinen/Blazor.AdaptiveCards</RepositoryUrl>
+    <PackageTags>Adaptive Cards;Blazor</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdaptiveCards.Rendering.Html" Version="1.2.2" />
+    <PackageReference Include="AdaptiveCards.Rendering.Html" Version="1.2.3" />
     <PackageReference Include="Scriban" Version="2.0.1" />
   </ItemGroup>
 

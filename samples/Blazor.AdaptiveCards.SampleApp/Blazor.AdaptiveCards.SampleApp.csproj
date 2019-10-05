@@ -8,4 +8,22 @@
     <ProjectReference Include="..\..\src\Blazor.AdaptiveCards\Blazor.AdaptiveCards.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Samples\Card\" />
+    <Folder Include="Pages\Samples\Cards\" />
+    <Folder Include="Pages\Samples\Advanced\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Pages\Samples\Templated Card\Customer.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\Samples\Templated Card\Basic.razor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

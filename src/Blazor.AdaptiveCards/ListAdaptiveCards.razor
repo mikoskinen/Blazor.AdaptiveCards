@@ -7,16 +7,18 @@
 
 @if (Models?.Any() == true)
 {
-    <div @attributes="Attributes" class="@ContainerClass">
+    <ul @attributes="Attributes" class="@ContainerClass">
         <CascadingValue Value="@RenderMode" Name="RenderMode">
             <CascadingValue Value="@TemplateSelector" Name="TemplateSelector">
                 <CascadingValue Value="@Schema" Name="Template">
                     @for (var i = 0; i < Models.Count; i++)
                     {
-                        <TemplatedAdaptiveCard TModel="TModel" Model="@Models[i]" Attributes="@(GetCardAttributes(i, Models[i]))"></TemplatedAdaptiveCard>
+                        <li>
+                            <TemplatedAdaptiveCard TModel="TModel" Model="@Models[i]" Attributes="@(GetCardAttributes(i, Models[i]))"></TemplatedAdaptiveCard>
+                        </li>
                     }
                 </CascadingValue>
             </CascadingValue>
         </CascadingValue>
-    </div>
+    </ul>
 }

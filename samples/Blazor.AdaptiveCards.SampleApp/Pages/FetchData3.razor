@@ -1,4 +1,4 @@
-@page "/fetchdata"
+@page "/fetchdata3"
 @using Blazor.AdaptiveCards.Templating;
 
 <div class="row">
@@ -9,20 +9,20 @@
 
 <div class="row">
     <div class="col-12">
-        <AdaptiveCards Models="@Customers" TemplateSelector="TemplateSelector"
-                       ContainerClass="card-columns"
+        <ListAdaptiveCards Models="@Customers" TemplateSelector="TemplateSelector" RenderMode="@RenderMode.Asynchronous"
+                       ContainerClass=""
                        Attributes="@(new Dictionary<string, object>()
         {
             { "class", "card-columns" },
         })"
-                       CardClass="card"
+                       CardClass=""
                        CardAttributes="@(new Dictionary<string, object>() { { "data-aos", "fade-left" } })"
                        CardAttributeFunctions="@(new List<(string, Func<int, Customer, object>)>()
                               {("data-aos-delay", (i, customer) => (i*200).ToString() ),
                                   ("data-aos-duration", (i, customer) => (500).ToString() )}
         )">
 
-        </AdaptiveCards>
+        </ListAdaptiveCards>
     </div>
 </div>
 

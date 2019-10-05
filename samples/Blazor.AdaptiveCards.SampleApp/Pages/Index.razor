@@ -1,22 +1,33 @@
-﻿@page "/"
+@page "/"
 @using Blazor.AdaptiveCards.Actions
 
-<h1>Adaptive Card</h1>
-
-<div class="adaptivecard">
-    <AdaptiveCard Schema="@schema" @ref="card" OnCardSubmit="Submit"></AdaptiveCard>
+<div class="row">
+    <div class="col-12">
+        <h1>Adaptive Card</h1>
+    </div>
 </div>
 
-<br/>
+<div class="row">
+    <div class="col-12">
+        <div class="adaptivecard">
+            <AdaptiveCard Schema="@schema" @ref="card" OnCardSubmit="Submit"></AdaptiveCard>
+        </div>
+    </div>
+</div>
 
+<div class="row">
+    <div class="col-12">
 <textarea style="width:100%" rows="10" @bind="@schema"></textarea>
-<button @onclick="UpdateSchema" class="btn btn-primary">Update schema</button>
+        <button @onclick="UpdateSchema" class="btn btn-primary">Update schema</button>
+    </div>
+</div>
+
 
 @code {
 
     string schema = "";
     AdaptiveCard card = null;
-    
+
     protected override async Task OnParametersSetAsync()
     {
         schema = await System.IO.File.ReadAllTextAsync("AdaptiveCard.json");

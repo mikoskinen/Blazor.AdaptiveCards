@@ -62,10 +62,17 @@ namespace Blazor.AdaptiveCards
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> Attributes { get; set; }
 
+        [CascadingParameter(Name = "RenderMode")]
+        public RenderMode RenderMode { get; set; } = RenderMode.Synchronous;
+
         protected override async Task OnParametersSetAsync()
         {
-            // Enable for sync render
-            //await RenderCard(Schema);
+            if (RenderMode == RenderMode.Asynchronous)
+            {
+                return;
+            }
+             
+            await RenderCard(Schema);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -82,7 +89,11 @@ namespace Blazor.AdaptiveCards
 
                 JsInitialized = true;
 
-                // Enable for async render
+                if (RenderMode == RenderMode.Synchronous)
+                {
+                    return;
+                }
+
                 await RenderCard(Schema);
             }
         }
@@ -113,8 +124,10 @@ namespace Blazor.AdaptiveCards
 
             CurrentSchema = schema;
 
-            // Enable for async render
-            StateHasChanged();
+            if (RenderMode == RenderMode.Asynchronous)
+            {
+                StateHasChanged();
+            }
 
             if (OnCardRendered.HasDelegate == false)
             {
