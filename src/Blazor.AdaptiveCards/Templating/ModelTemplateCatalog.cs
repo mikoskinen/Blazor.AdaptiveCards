@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Blazor.AdaptiveCards.Templating
+namespace AdaptiveCards.Blazor.Templating
 {
     public class ModelTemplateCatalog : IModelTemplateCatalog
     {

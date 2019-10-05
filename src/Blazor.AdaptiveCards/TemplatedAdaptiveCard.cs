@@ -2,11 +2,11 @@ using System.Text.Json;
 using AdaptiveCards;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
-using Blazor.AdaptiveCards.Templating;
 using System;
-using Blazor.AdaptiveCards.Actions;
+using AdaptiveCards.Blazor.Actions;
+using AdaptiveCards.Blazor.Templating;
 
-namespace Blazor.AdaptiveCards
+namespace AdaptiveCards.Blazor
 {
     /// <summary>
     /// Templated Adaptive Card. The card has a schema and a model.

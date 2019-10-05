@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using AdaptiveCards;
 
-namespace Blazor.AdaptiveCards.Actions
+namespace AdaptiveCards.Blazor.Actions
 {
     public class CardRenderedEventArgs
     {

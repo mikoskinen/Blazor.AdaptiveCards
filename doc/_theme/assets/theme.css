@@ -1,5 +1,5 @@
 .bd-navbar {
-    background-color: #358ccb;
+    background-color: #5D2F91;
 }
 
 .bd-navbar .navbar-nav .nav-link {
@@ -31,4 +31,8 @@
 	.bd-content>ol, .bd-content>p, .bd-content>ul {
 		max-width: 100%;
 	}
+}
+
+pre[class*="language-"]>code {
+	border-left-color: #5D2F91 !important;
 }

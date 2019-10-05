@@ -1,8 +1,7 @@
 ﻿using System;
-using AdaptiveCards;
 using AdaptiveCards.Rendering.Html;
 
-namespace Blazor.AdaptiveCards.ActionHandlers
+namespace AdaptiveCards.Blazor.ActionHandlers
 {
     public static class AdaptiveCardActionCreators
     {

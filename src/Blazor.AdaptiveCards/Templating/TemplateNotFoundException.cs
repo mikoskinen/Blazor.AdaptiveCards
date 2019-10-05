@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Blazor.AdaptiveCards.Templating
+namespace AdaptiveCards.Blazor.Templating
 {
     [Serializable]
     public class TemplateNotFoundException : Exception

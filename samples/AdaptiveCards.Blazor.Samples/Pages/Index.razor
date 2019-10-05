@@ -1,0 +1,24 @@
+@page "/"
+
+<div class="row">
+    <div class="col-12">
+        <h1>Adaptive Card</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="adaptivecard">
+            <AdaptiveCard Schema="@schema"></AdaptiveCard>
+        </div>
+    </div>
+</div>
+
+@code {
+    string schema = "";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        schema = "not working shcmcdifij"; //await System.IO.File.ReadAllTextAsync("AdaptiveCard.json");
+    }
+}

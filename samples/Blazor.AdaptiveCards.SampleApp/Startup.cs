@@ -1,6 +1,6 @@
 using System;
+using AdaptiveCards.Blazor.Extensions;
 using Blazor.AdaptiveCards.SampleApp.Data;
-using Blazor.AdaptiveCards.Templating;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

@@ -1,9 +1,9 @@
 using System;
 using AdaptiveCards;
+using AdaptiveCards.Blazor.Templating;
 using AdaptiveCards.Rendering.Html;
-using Blazor.AdaptiveCards.Templating;
 
-namespace Blazor.AdaptiveCards
+namespace AdaptiveCards.Blazor
 {
     /// <summary>
     /// Options
@@ -40,5 +40,11 @@ namespace Blazor.AdaptiveCards
         /// </summary>
         /// <value><c>true</c> if [allow templating error]; otherwise, <c>false</c>.</value>
         public bool AllowTemplatingError { get; set; }
+
+        /// <summary>
+        /// Gets or sets the render failed text.
+        /// </summary>
+        /// <value>The render failed text.</value>
+        public string RenderFailedText { get; set; } = "Rendering card failed: {0}";
     }
 }

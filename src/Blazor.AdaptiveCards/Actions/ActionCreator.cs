@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AdaptiveCards;
 
-namespace Blazor.AdaptiveCards.Actions
+namespace AdaptiveCards.Blazor.Actions
 {
     public class ActionCreator
     {

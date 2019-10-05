@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdaptiveCards;
+using AdaptiveCards.Blazor.ActionHandlers;
+using AdaptiveCards.Blazor.Actions;
 using AdaptiveCards.Rendering.Html;
-using Blazor.AdaptiveCards.ActionHandlers;
-using Blazor.AdaptiveCards.Actions;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 
-namespace Blazor.AdaptiveCards
+namespace AdaptiveCards.Blazor
 {
     /// <summary>
     /// Base class for Adaptive Card
@@ -28,6 +28,10 @@ namespace Blazor.AdaptiveCards
         [Inject] private NavigationManager NavigationManager { get; set; }
 
         [Inject] protected ISubmitActionHandler SubmitActionHandler { get; set; }
+
+        [Inject] protected ILogger<AdaptiveCardBase> Logger { get; set; }
+
+        [Inject] protected BlazorAdaptiveCardsOptions Options { get; set; }
 
         /// <summary>
         /// Gets or sets the schema.
@@ -59,6 +63,12 @@ namespace Blazor.AdaptiveCards
         /// <value>The on card rendered.</value>
         [Parameter] public EventCallback<CardRenderedEventArgs> OnCardRendered { get; set; }
 
+        /// <summary>
+        /// Gets or sets the callback when rendering the card fails.
+        /// </summary>
+        /// <value>The on card render failed.</value>
+        [Parameter] public EventCallback<CardRenderFailedEventArgs> OnCardRenderFailed { get; set; }
+
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> Attributes { get; set; }
 
@@ -71,7 +81,7 @@ namespace Blazor.AdaptiveCards
             {
                 return;
             }
-             
+
             await RenderCard(Schema);
         }
 
@@ -104,37 +114,52 @@ namespace Blazor.AdaptiveCards
         /// <param name="schema">The schema.</param>
         public async Task RenderCard(string schema)
         {
-            if (string.IsNullOrWhiteSpace(schema))
+            try
             {
-                CardHtml = "";
 
-                return;
+                if (string.IsNullOrWhiteSpace(schema))
+                {
+                    CardHtml = "";
+
+                    return;
+                }
+
+                if (!ShouldRender(CurrentSchema, schema))
+                {
+                    return;
+                }
+
+                var adaptiveCard = await CreateCardFromSchema(schema);
+                var renderedAdaptiveCard = Renderer.RenderCard(adaptiveCard.Card);
+                CardHtml = renderedAdaptiveCard.Html.ToString();
+
+                CurrentSchema = schema;
+
+                if (RenderMode == RenderMode.Asynchronous)
+                {
+                    StateHasChanged();
+                }
+
+                if (OnCardRendered.HasDelegate == false)
+                {
+                    return;
+                }
+
+                await OnCardRendered.InvokeAsync(new CardRenderedEventArgs(CurrentSchema, renderedAdaptiveCard.Warnings));
             }
-
-            if (!ShouldRender(CurrentSchema, schema))
+            catch (Exception e)
             {
-                return;
+                Logger.LogError(e, "Failed to render card with {Schema}.", Schema);
+
+                CardHtml = string.Format(Options.RenderFailedText, e.ToString());
+
+                if (OnCardRenderFailed.HasDelegate == false)
+                {
+                    return;
+                }
+
+                await OnCardRenderFailed.InvokeAsync(new CardRenderFailedEventArgs(schema, e));
             }
-
-            System.Diagnostics.Debug.WriteLine("Rendering card");
-
-            var adaptiveCard = await CreateCardFromSchema(schema);
-            var renderedAdaptiveCard = Renderer.RenderCard(adaptiveCard.Card);
-            CardHtml = renderedAdaptiveCard.Html.ToString();
-
-            CurrentSchema = schema;
-
-            if (RenderMode == RenderMode.Asynchronous)
-            {
-                StateHasChanged();
-            }
-
-            if (OnCardRendered.HasDelegate == false)
-            {
-                return;
-            }
-
-            await OnCardRendered.InvokeAsync(new CardRenderedEventArgs(CurrentSchema, renderedAdaptiveCard.Warnings));
         }
 
         [JSInvokable]

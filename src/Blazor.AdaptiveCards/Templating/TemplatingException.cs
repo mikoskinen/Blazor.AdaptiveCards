@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Blazor.AdaptiveCards.Templating
+namespace AdaptiveCards.Blazor.Templating
 {
     public class TemplatingException : Exception
     {

@@ -1,4 +1,4 @@
-﻿namespace Blazor.AdaptiveCards.ActionHandlers
+﻿namespace AdaptiveCards.Blazor.ActionHandlers
 {
     public class AdaptiveSubmitActionAdapter
     {

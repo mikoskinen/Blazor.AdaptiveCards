@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Blazor.AdaptiveCards.Actions
+namespace AdaptiveCards.Blazor.Actions
 {
     public class SubmitEventArgs
     {

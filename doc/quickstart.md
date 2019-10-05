@@ -8,7 +8,13 @@ description: Adaptive Cards for Blazor is available as a NuGet package. This tut
 
 Adaptive Cards for Blazor targets the server side version of Blazor, which was released in .NET Core 3.0. This tutorials gives you a quick run through of how to build a Blazor application which uses Adaptive Cards.
 
+## The Goal
+
 ## The starting point
+
+## Adding the Adaptive Cards for Blazor
+
+Adaptive Cards for Blazor is available as a NuGet package.
 
 ## The schema
 
@@ -89,10 +95,15 @@ Here's the JSON-schema we will be using in this tutorial:
 
 ```
 
-We will be using the Flight Update sample, a simple JSON-schema from [Adaptive Cards' official sample site](https://adaptivecards.io/samples/). 
-
+## Rendering the card
 
 ## Adding a submit action
+
+## Adding an open link action
+
+## Rendering multiple cards
+
+
 ## Feature Highlights
 
 Blazor Adaptive Cards provides components for displaying daptive Cards inside your Blazor Application. Here's few of the most notable features of this library:

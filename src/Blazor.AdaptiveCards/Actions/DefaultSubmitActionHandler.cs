@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace Blazor.AdaptiveCards.Actions
+namespace AdaptiveCards.Blazor.Actions
 {
     public class DefaultSubmitActionHandler : ISubmitActionHandler
     {

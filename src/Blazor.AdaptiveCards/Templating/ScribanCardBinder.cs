@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Scriban;
 
-namespace Blazor.AdaptiveCards.Templating
+namespace AdaptiveCards.Blazor.Templating
 {
     public class ScribanCardBinder : IAdaptiveCardTemplatingProvider
     {

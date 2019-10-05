@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Blazor.AdaptiveCards.Templating
+namespace AdaptiveCards.Blazor.Templating
 {
     /// <summary>
     /// Interface IAdaptiveCardTemplatingProvider

@@ -1,12 +1,13 @@
 using AdaptiveCards;
 using AdaptiveCards.Rendering.Html;
 using System;
-using Blazor.AdaptiveCards;
-using Blazor.AdaptiveCards.ActionHandlers;
-using Blazor.AdaptiveCards.Templating;
+using AdaptiveCards.Blazor;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Linq;
-using Blazor.AdaptiveCards.Actions;
+using AdaptiveCards.Blazor.ActionHandlers;
+using AdaptiveCards.Blazor.Actions;
+using AdaptiveCards.Blazor.Extensions;
+using AdaptiveCards.Blazor.Templating;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection

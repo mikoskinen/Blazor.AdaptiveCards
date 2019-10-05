@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-
-namespace Blazor.AdaptiveCards.Templating
+namespace AdaptiveCards.Blazor.Templating
 {
     public class FileModelTemplateProvider : IModelTemplateProvider
     {

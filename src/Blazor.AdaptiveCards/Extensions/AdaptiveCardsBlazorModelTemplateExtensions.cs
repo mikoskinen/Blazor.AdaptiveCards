@@ -1,6 +1,7 @@
-using Blazor.AdaptiveCards.Templating;
+using AdaptiveCards.Blazor.Templating;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace AdaptiveCards.Blazor.Extensions
 {
     public static class AdaptiveCardsBlazorModelTemplateExtensions
     {

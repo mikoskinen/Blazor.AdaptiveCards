@@ -1,4 +1,4 @@
-namespace Blazor.AdaptiveCards.Templating
+namespace AdaptiveCards.Blazor.Templating
 {
     public interface IModelTemplateCatalog
     {

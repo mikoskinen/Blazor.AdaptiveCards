@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Blazor.AdaptiveCards.Actions
+namespace AdaptiveCards.Blazor.Actions
 {
     public interface ISubmitActionHandler
     {

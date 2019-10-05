@@ -1,4 +1,4 @@
-namespace Blazor.AdaptiveCards
+namespace AdaptiveCards.Blazor
 {
     public enum RenderMode
     {

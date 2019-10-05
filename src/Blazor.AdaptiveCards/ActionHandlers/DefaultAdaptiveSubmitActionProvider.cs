@@ -1,8 +1,7 @@
-using AdaptiveCards;
 using AdaptiveCards.Rendering.Html;
 using Newtonsoft.Json;
 
-namespace Blazor.AdaptiveCards.ActionHandlers
+namespace AdaptiveCards.Blazor.ActionHandlers
 {
     /// <summary>
     /// The default class for for creating submit actions

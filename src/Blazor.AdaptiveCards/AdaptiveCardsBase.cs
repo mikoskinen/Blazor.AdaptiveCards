@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Components;
 
-namespace Blazor.AdaptiveCards
+namespace AdaptiveCards.Blazor
 {
     public abstract class AdaptiveCardsBase<TModel> : ComponentBase
     {

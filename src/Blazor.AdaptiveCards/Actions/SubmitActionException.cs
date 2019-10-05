@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Blazor.AdaptiveCards.Actions
+namespace AdaptiveCards.Blazor.Actions
 {
     public class SubmitActionException : Exception
     {
