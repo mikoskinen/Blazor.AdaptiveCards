@@ -153,6 +153,10 @@ app {
     border: solid 1px lightgray;
 }
 
+.ac-adaptivecard.ac-showCard {
+    border: none;
+}
+
 .ac-image.ac-selectable {
     cursor: pointer;
 }

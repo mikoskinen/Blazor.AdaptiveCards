@@ -1,5 +1,5 @@
 ---
 order: 0
-title: Introduction to Blazor Adaptive Cards
+title: Display lists and columns of cards using Cards component
 ---
 

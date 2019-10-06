@@ -285,40 +285,231 @@ Now we have everything ready. Here's how our card now looks like:
 
 Currently the card just displays information. In the next part we are going to add couple actions into it.
 
-### Adding a submit action
+### Adding an OpenUrl action
 
-### Adding an open link action
+Adaptive Cards can contain actions. Actions are usually displayed as button and their functionality can range from opening links to confirming booking details. Adaptive Cards support four types of actions:
 
-### Displaying multiple cards
+* **[OpenUrl](https://adaptivecards.io/explorer/Action.OpenUrl.html)**: An action which opens a link (href)
+* **[Submit](https://adaptivecards.io/explorer/Action.Submit.html)**: Submits input fields (form)
+* **[ShowCard](https://adaptivecards.io/explorer/Action.ShowCard.html)**: Cards can contain cards. ShowCard can be used to show and hide an card. Usually used for displaying more detailed data for a particular card.
+* **[ToggleVisibility](https://adaptivecards.io/explorer/Action.ToggleVisibility.html)**: Action which can show or hide card elements.
 
+Adaptive Cards for Blazor supports three types of actions: OpenUrl, Submit and ShowCard. Support for ToggleVisibility is coming on the next version.
 
-## Feature Highlights
+Adding an OpenUrl action is just a matter of adding couple new lines into our schema. Currently our card's schema only contains the **"body"** element. Now we add a new **"actions"** element in it. Actions inside the actions-element are rendered at the bottom of the card. Here's how to define an empty actions element:
 
-Blazor Adaptive Cards provides components for displaying daptive Cards inside your Blazor Application. Here's few of the most notable features of this library:
+```json {.line-numbers}
+"body": [
+  ...
+],
+"actions": [
+]
+```
 
-* **JSON-support**: Create and display Adaptive Cards from the JSON-schema.
-* **Templating support**: Combine models (objects) and the schema.
-* **Multi-card support**: Display a list of models and use template selector to customize the output.
-* **Action support**: Handle submit and openlink actions using C#.
-* **Native .NET-based solution**: Blazor Adaptive Cards is based on the official .NET SDK for Adaptive Cards. 
+To add an OpenUrl which takes us to Weather.com, we add an action of type Action.OpenUrl:
 
-## Sample
+```json {.line-numbers}
+"body": [
+  ...
+],
+"actions": [
+  {
+    "type": "Action.OpenUrl",
+    "title": "Open Weather Service",
+    "url": "https://weather.com"
+  }
+]
+```
 
-Please note that the sample site runs on a slow Azure App Service so the provided performance may not be the best. You can run the samples locally by cloning the project repository from GitHub.
+Here's our card when the application is run:
 
-## Project home
+![](2019-10-06-17-29-59.png)
 
-Blazor Adaptive Cards source code is available from GitHub. GitHub can be used to report any suggestions or issues.
+When the button is clicked, the browser navigates to the defined URL, in this case https://weather.com.
 
-## Author
+### Adding a Submit & ShowCard actions
 
-Blazor Adaptive Cards is created by [Mikael Koskinen](https://mikaelkoskinen.net).
+Submit actions are quite likely the most popular actions in Adaptive Cards. They allow you to gather some input from the user, like their name and address, and then to submit that data into your desired endpoint. 
 
-Contributions are welcome!
+The [Inputs sample](https://adaptivecards.io/samples/Inputs.html) at the Adaptive Cards' sample site gives a good representation of different input controls which are available through the schema:
 
-## License
+![](2019-10-06-17-34-04.png)
 
-Blazor Adaptive Cards is MIT licensed. The library uses the following other libraries:
+We are going to use Submit action to add "Share"-functionality into our app. But as we like to keep the main view of our card simple, we will use a ShowCard-action to display the sharing functionality. The idea is that by default the sharing functionality is hidden:
 
-* [AdaptiveCards.Rendering.Html](https://www.nuget.org/packages/AdaptiveCards.Rendering.Html): MIT-license
-* [Scriban](https://www.nuget.org/packages/Scriban/): BSD 2-Clause "Simplified" License
+![](2019-10-06-17-50-16.png)
+
+When the user clicks the "Share"-button, the card is expanded with the help of ShowCard:
+
+![](2019-10-06-17-50-53.png)
+
+Here's the updated actions-element from our schema:
+
+```json {.line-numbers}
+"body": [
+  ...
+],
+"actions": [
+  {
+    "type": "Action.OpenUrl",
+    "title": "Open Weather Service",
+    "url": "https://weather.com"
+  },
+  {
+    "type": "Action.ShowCard",
+    "title": "Share...",
+    "card": {
+      "type": "AdaptiveCard",
+      "body": [
+        {
+          "type": "TextBlock",
+          "text": "Share with Email:"
+        },
+        {
+          "type": "Input.Text",
+          "id": "emailAddress",
+          "placeholder": "user@email.com"
+        }
+      ],
+      "actions": [
+        {
+          "type": "Action.Submit",
+          "title": "Send Email"
+        }
+      ]
+    }
+  }
+]
+```
+Now we have the desired UI but the Submit doesn't actually do anything. In Adaptive Cards for Blazor, Submit actions are handled using C#. As a reminder, here's how the **Index.razor** currently looks:
+
+```charp {.line-numbers}
+@page "/"
+
+<h1>Hello Adaptive Cards for Blazor!</h1>
+
+Here's a card for displaying the weather:
+
+<div class="row">
+    <div class="col-3">
+        <AdaptiveCard Schema="@schema"></AdaptiveCard>
+    </div>
+</div>
+
+@code{
+    string schema = "";
+
+    protected override void OnInitialized()
+    {
+        schema = System.IO.File.ReadAllText("WeatherSchema.json");
+    }
+}
+```
+
+In order to handle the Submit, we must provide a submit method for the AdaptiveCard-component. This happens through **OnSubmitAction**:
+```csharp {.line-numbers}
+<div class="row">
+    <div class="col-3">
+        <AdaptiveCard Schema="@schema" OnSubmitAction="@SendEmail"></AdaptiveCard>
+    </div>
+</div>
+
+@code{
+    string schema = "";
+
+    protected override void OnInitialized()
+    {
+        schema = System.IO.File.ReadAllText("WeatherSchema.json");
+    }
+
+    public void SendEmail(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+
+    }
+}
+```
+
+The event args contains the name of the submitted action (if the schema defines one) and the submitted data. In our case the submit data only contains one input: emailAddress:
+
+![](2019-10-06-18-07-08.png)
+
+The values are in the form of Dictionary<string, object>. Here's a code which reads the submitted email address and displayes it under the card:
+
+```csharp {.line-numbers}
+<div class="row">
+    <div class="col-3">
+        <AdaptiveCard Schema="@schema" OnSubmitAction="@SendEmail"></AdaptiveCard>
+    </div>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(submittedTo))
+{
+    <b>Email submitted to:</b> @submittedTo
+}
+
+@code{
+    string schema = "";
+    string submittedTo = "";
+
+    protected override void OnInitialized()
+    {
+        schema = System.IO.File.ReadAllText("WeatherSchema.json");
+    }
+
+    public void SendEmail(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        submittedTo = eventArgs.Data["emailAddress"].ToString();
+    }
+}
+```
+
+And here's how the applications looks like after submitting the data:
+
+![](2019-10-06-18-16-16.png)
+
+Adaptive Cards for Blazor offers multiple ways of handling the submitted data. One of them is model binding. Instead of having to get the desired values from a Dictionary, Adaptive Cards for Blazor can automatically bind the values into method parameters. For this to work, we replace the **OnSubmitAction** from the card with **SubmitHandler**. Also **SendEmail** method is replaced with **Submit**:
+
+```csharp {.line-numbers}
+<div class="row">
+    <div class="col-3">
+        <AdaptiveCard Schema="@schema" SubmitHandler="this"></AdaptiveCard>
+    </div>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(submittedTo))
+{
+    <b>Email submitted to:</b> @submittedTo
+}
+
+@code{
+    string schema = "";
+    string submittedTo = "";
+
+    protected override void OnInitialized()
+    {
+        schema = System.IO.File.ReadAllText("WeatherSchema.json");
+    }
+
+    public Task Submit(string emailAddress)
+    {
+        submittedTo = emailAddress;
+
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+}
+```
+
+Note that the Submit method currently has to return Task. It's possible that in future also void methods can be used. Also, as behind the scenes the Submit method is awaited, StateHasChanged must be manually called, if the component needs updating.
+
+This produces an identical result as the previous example:
+
+![](2019-10-06-18-29-07.png)
+
+This concludes the first part of our tutorial. In this tutorial we set-up our Blazor app to support Adaptive Cards for Blazor. Then we created a card schema using JSON. Lastly, we added three different actions into our card.
+
+The next part of this tutorial is a shorter one. It continues from the first part and shows how you can use Adaptive Cards for Blazor to render multiple cards.
+
+## Displaying multiple cards
+
+### Animating the cards

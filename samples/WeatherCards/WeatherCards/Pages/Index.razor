@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 
 <h1>Hello Adaptive Cards for Blazor!</h1>
 
@@ -6,15 +6,29 @@ Here's a card for displaying the weather:
 
 <div class="row">
     <div class="col-3">
-        <AdaptiveCard Schema="@schema"></AdaptiveCard>
+        <AdaptiveCard Schema="@schema" SubmitHandler="this"></AdaptiveCard>
     </div>
 </div>
 
+@if (!string.IsNullOrWhiteSpace(submittedTo))
+{
+    <b>Email submitted to:</b> @submittedTo
+}
+
 @code{
     string schema = "";
+    string submittedTo = "";
 
     protected override void OnInitialized()
     {
         schema = System.IO.File.ReadAllText("WeatherSchema.json");
+    }
+
+    public Task Submit(string emailAddress)
+    {
+        submittedTo = emailAddress;
+
+        StateHasChanged();
+        return Task.CompletedTask;
     }
 }
