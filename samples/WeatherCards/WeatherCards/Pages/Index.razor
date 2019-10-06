@@ -1,0 +1,20 @@
+﻿@page "/"
+
+<h1>Hello Adaptive Cards for Blazor!</h1>
+
+Here's a card for displaying the weather:
+
+<div class="row">
+    <div class="col-3">
+        <AdaptiveCard Schema="@schema"></AdaptiveCard>
+    </div>
+</div>
+
+@code{
+    string schema = "";
+
+    protected override void OnInitialized()
+    {
+        schema = System.IO.File.ReadAllText("WeatherSchema.json");
+    }
+}
