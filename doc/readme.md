@@ -12,7 +12,7 @@ Adaptive Cards for Blazor provides Adaptive Cards support for your Blazor applic
 
 ## Feature Highlights
 
-Adaptive Cards for Blazor provides components for displaying daptive Cards inside your Blazor Application. Here's few of the most notable features of this library:
+Adaptive Cards for Blazor provides components for displaying Adaptive Cards inside your Blazor Application. Here's few of the most notable features of this library:
 
 * **JSON-support**: Create and display Adaptive Cards from the JSON-schema.
 * **Templating support**: Combine models (objects) and the schema.

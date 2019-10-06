@@ -90,7 +90,8 @@
             "type": "Action.Submit",
             "title": "OK",
             "data": {
-              "x": 13
+              "x": 13,
+              "y":  15
             },
             "name": "SaveDate"
           }

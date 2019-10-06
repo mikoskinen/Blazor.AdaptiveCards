@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
@@ -10,15 +9,17 @@
     <Description>Adaptive Cards for Blazor provides powerful support for using Adaptive Cards inside Blazor Applications.</Description>
     <PackageDescription>Adaptive Cards for Blazor provides powerful and fully featured support for using Adaptive Cards inside Blazor Applications. Some of the feature highlights include built-in support for templates, ability to handle actions in C# and many more.</PackageDescription>
     <PackageProjectUrl>https://github.com/mikoskinen/Blazor.AdaptiveCards</PackageProjectUrl>
-    <Copyright>2019 Mikael Koskinen</Copyright>
+    <Copyright>©2019 Mikael Koskinen</Copyright>
     <PackageId>AdaptiveCardsBlazor</PackageId>
     <Product>AdaptiveCards.Blazor</Product>
     <AssemblyName>AdaptiveCards.Blazor</AssemblyName>
     <RootNamespace>AdaptiveCards.Blazor</RootNamespace>
-    <PackageLicenseUrl>https://github.com/mikoskinen/Blazor.AdaptiveCards/blob/master/LICENSE</PackageLicenseUrl>
-    <Version>1.0.0-rc</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.0.0-rc1</Version>
     <RepositoryUrl>https://github.com/mikoskinen/Blazor.AdaptiveCards</RepositoryUrl>
     <PackageTags>Adaptive Cards;Blazor</PackageTags>
+    <PackageIcon>logo_128.png</PackageIcon>
+    <Title>Adaptive Cards for Blazor</Title>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,4 +32,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="logo_128.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
+  
 </Project>
