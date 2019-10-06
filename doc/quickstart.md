@@ -8,6 +8,8 @@ description: Adaptive Cards for Blazor is available as a NuGet package. This tut
 
 Adaptive Cards for Blazor targets the server side version of Blazor, which was released in .NET Core 3.0. This tutorials gives you a quick run through of how to build a Blazor application which uses Adaptive Cards.
 
+This tutorial is split into two parts: In the first part a card with actions is created. In the second part the card collection capabilities of Adaptive Cards for Blazor are introduced.
+
 ### The Goal
 
 The goal of this tutorial is to create a Blazor application which contains weather cards.
@@ -508,8 +510,8 @@ This produces an identical result as the previous example:
 
 This concludes the first part of our tutorial. In this tutorial we set-up our Blazor app to support Adaptive Cards for Blazor. Then we created a card schema using JSON. Lastly, we added three different actions into our card.
 
-The next part of this tutorial is a shorter one. It continues from the first part and shows how you can use Adaptive Cards for Blazor to render multiple cards.
+The next part of this tutorial is a shorter one. It continues from the first part and shows how you can use Card Collections: Adaptive Cards for Blazor's way of rendering multiple cards.
 
-## Displaying multiple cards
+## Displaying Collections of Cards
 
 ### Animating the cards
