@@ -13,7 +13,7 @@
 	</SecondaryLinks>	
   </site>
   <ChildPages Location="" DefaultPageLayoutFile="page.cshtml" IndexLayoutFile="pagesindex.cshtml" IndexFileName="all.html" FolderPerPage="false" ReadmeName="index"
-              TagsIndexLayoutFile="tagsindex.cshtml" TagLayoutFile="tag.cshtml" RelativePathPrefix=""
+              TagsIndexLayoutFile="tagsindex.cshtml" TagLayoutFile="tag.cshtml" RelativePathPrefix="Blazor.AdaptiveCards"
 			  RssGenerate="false" RssFeedName="" RssUri="" RssAuthor="" RssDescription="">
     <Groups>
       <Group Key="">Home</Group>
