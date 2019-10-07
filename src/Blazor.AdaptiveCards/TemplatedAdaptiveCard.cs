@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System;
 using AdaptiveCards.Blazor.Actions;
 using AdaptiveCards.Blazor.Templating;
+using System.Collections.Generic;
+using Microsoft.JSInterop;
 
 namespace AdaptiveCards.Blazor
 {
@@ -14,7 +16,7 @@ namespace AdaptiveCards.Blazor
     /// </summary>
     /// <typeparam name="TModel">The type of the model.</typeparam>
     /// <seealso cref="Blazor.AdaptiveCards.AdaptiveCard" />
-    public class TemplatedAdaptiveCard<TModel> : AdaptiveCard
+    public class TemplatedAdaptiveCard<TModel> : AdaptiveCard where TModel : class
     {
         private TModel _model;
         private string _modelJson;
@@ -122,6 +124,11 @@ namespace AdaptiveCards.Blazor
         protected override async Task RunSubmit(SubmitEventArgs eventArgs)
         {
             await SubmitActionHandler.Handle(eventArgs, SubmitHandler, _model);
+        }
+
+        protected override SubmitEventArgs CreateSubmitEventArgs(Dictionary<string, object> data, string actionName)
+        {
+            return new SubmitEventArgs(actionName, data, _model);
         }
     }
 }

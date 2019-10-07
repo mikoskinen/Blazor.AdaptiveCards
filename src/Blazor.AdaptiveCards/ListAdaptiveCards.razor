@@ -7,18 +7,23 @@
 
 @if (Models?.Any() == true)
 {
-    <ul @attributes="Attributes" class="@(@class)">
-        <CascadingValue Value="@RenderMode" Name="RenderMode">
-            <CascadingValue Value="@TemplateSelector" Name="TemplateSelector">
-                <CascadingValue Value="@Schema" Name="Template">
-                    @for (var i = 0; i < Models.Count; i++)
+<ul @attributes="Attributes" class="@(@class)">
+    <CascadingValue Value="@RenderMode" Name="RenderMode">
+        <CascadingValue Value="@TemplateSelector" Name="TemplateSelector">
+            <CascadingValue Value="@Schema" Name="Template">
+                @for (var i = 0; i < Models.Count; i++)
                     {
-                        <li>
-                            <TemplatedAdaptiveCard TModel="TModel" Model="@Models[i]" Attributes="@(GetCardAttributes(i, Models[i]))"></TemplatedAdaptiveCard>
-                        </li>
+                <li>
+                    <TemplatedAdaptiveCard TModel="TModel" Model="@Models[i]" Attributes="@(GetCardAttributes(i, Models[i]))"
+                                           SubmitHandler="@SubmitHandler"
+                                           OnCardRenderFailed="@OnCardRenderFailed"
+                                           OnCardRendered="@OnCardRendered"
+                                           OnSubmitAction="@OnSubmitAction"
+                                           OnOpenLinkAction="@OnOpenLinkAction"></TemplatedAdaptiveCard>
+                </li>
                     }
-                </CascadingValue>
             </CascadingValue>
         </CascadingValue>
-    </ul>
+    </CascadingValue>
+</ul>
 }

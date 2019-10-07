@@ -23,7 +23,7 @@ namespace AdaptiveCards.Blazor
 
         [Inject] private AdaptiveOpenUrlActionAdapter UrlActionAdapter { get; set; }
         [Inject] private AdaptiveCardRenderer Renderer { get; set; }
-        [Inject] private IJSRuntime JsRuntime { get; set; }
+        [Inject] protected IJSRuntime JsRuntime { get; set; }
 
         [Inject] private NavigationManager NavigationManager { get; set; }
 
@@ -94,10 +94,7 @@ namespace AdaptiveCards.Blazor
                     return;
                 }
 
-                var myRef = DotNetObjectReference.Create(this);
-                await JsRuntime.InvokeAsync<object>("blazorAdaptiveCards.setUrlOpener", myRef);
-
-                JsInitialized = true;
+                await InitializeJsInterop();
 
                 if (RenderMode == RenderMode.Synchronous)
                 {
@@ -106,6 +103,14 @@ namespace AdaptiveCards.Blazor
 
                 await RenderCard(Schema);
             }
+        }
+
+        protected virtual async Task InitializeJsInterop()
+        {
+            var myRef = DotNetObjectReference.Create(this);
+            await JsRuntime.InvokeAsync<object>("blazorAdaptiveCards.setCardComponent", myRef);
+
+            JsInitialized = true;
         }
 
         /// <summary>
@@ -183,7 +188,7 @@ namespace AdaptiveCards.Blazor
                 return;
             }
 
-            var eventArgs = new SubmitEventArgs(actionName, data);
+            var eventArgs = CreateSubmitEventArgs(data, actionName);
 
             if (SubmitHandler != null)
             {
@@ -193,6 +198,11 @@ namespace AdaptiveCards.Blazor
             {
                 await OnSubmitAction.InvokeAsync(eventArgs);
             }
+        }
+
+        protected virtual SubmitEventArgs CreateSubmitEventArgs(Dictionary<string, object> data, string actionName)
+        {
+            return new SubmitEventArgs(actionName, data);
         }
 
         protected virtual async Task RunSubmit(SubmitEventArgs eventArgs)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AdaptiveCards.Blazor.Actions;
 using Microsoft.AspNetCore.Components;
 
 namespace AdaptiveCards.Blazor
@@ -23,7 +24,7 @@ namespace AdaptiveCards.Blazor
         public string @class { get; set; } = "row";
 
         [Parameter]
-        public string CardClass { get; set; }
+        public string CardClass { get; set; } = "col-3";
 
         [Parameter]
         public Dictionary<string, object> CardAttributes { get; set; } = new Dictionary<string, object>();
@@ -36,6 +37,36 @@ namespace AdaptiveCards.Blazor
 
         [Parameter]
         public RenderMode RenderMode { get; set; } = RenderMode.Synchronous;
+
+        /// <summary>
+        /// Gets or sets the handler which is executed when opening link.
+        /// </summary>
+        /// <value>The handler.</value>
+        [Parameter] public EventCallback<string> OnOpenLinkAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the submit action handler.
+        /// </summary>
+        /// <value>The handler.</value>
+        [Parameter] public EventCallback<SubmitEventArgs> OnSubmitAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the callback when a card is rendered.
+        /// </summary>
+        /// <value>The on card rendered.</value>
+        [Parameter] public EventCallback<CardRenderedEventArgs> OnCardRendered { get; set; }
+
+        /// <summary>
+        /// Gets or sets the callback when rendering the card fails.
+        /// </summary>
+        /// <value>The on card render failed.</value>
+        [Parameter] public EventCallback<CardRenderFailedEventArgs> OnCardRenderFailed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the submit handler.
+        /// </summary>
+        /// <value>The submit handler.</value>
+        [Parameter] public object SubmitHandler { get; set; }
 
         protected Dictionary<string, object> GetCardAttributes(int index, TModel model)
         {

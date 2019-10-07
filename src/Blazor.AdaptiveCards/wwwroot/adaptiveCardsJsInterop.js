@@ -1,13 +1,18 @@
-let urlOpener;
+let cardComponent;
+let cardCollectionComponent;
 
 window.blazorAdaptiveCards = {
 
-    setUrlOpener: function (component) {
-        urlOpener = component;
+    setCardComponent: function (component) {
+        cardComponent = component;
+    },
+
+    setCardCollectionComponent: function (component) {
+        cardCollectionComponent = component;
     },
 
     openUrl: function (url) {
-        urlOpener.invokeMethodAsync("OpenUrl", url);
+        cardComponent.invokeMethodAsync("OpenUrl", url);
     },
 
     submitData: function (el) {
@@ -44,6 +49,6 @@ window.blazorAdaptiveCards = {
         }
 
         // Invoke the C#-method which handles the actual submit operation
-        urlOpener.invokeMethodAsync("SubmitData", obj, actionName);
+        cardComponent.invokeMethodAsync("SubmitData", obj, actionName);
     }
 };

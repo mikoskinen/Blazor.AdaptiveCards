@@ -13,7 +13,12 @@
                 <CascadingValue Value="@Schema" Name="Template">
                     @for (var i = 0; i < Models.Count; i++)
                     {
-                        <TemplatedAdaptiveCard TModel="TModel" Model="@Models[i]" Attributes="@(GetCardAttributes(i, Models[i]))"></TemplatedAdaptiveCard>
+                        <TemplatedAdaptiveCard TModel="TModel" Model="@Models[i]" Attributes="@(GetCardAttributes(i, Models[i]))" 
+                                               SubmitHandler="@SubmitHandler" 
+                                               OnCardRenderFailed="@OnCardRenderFailed" 
+                                               OnCardRendered="@OnCardRendered" 
+                                               OnSubmitAction="@OnSubmitAction"
+                                               OnOpenLinkAction="@OnOpenLinkAction"></TemplatedAdaptiveCard>
                     }
                 </CascadingValue>
             </CascadingValue>
