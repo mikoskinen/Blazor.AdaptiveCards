@@ -1,6 +1,6 @@
 ---
 order: 1
-title: Gettting Started
+title: Getting Started
 description: Adaptive Cards for Blazor is available as a NuGet package. This tutorial shows you can get started with the library.
 ---
 
@@ -512,6 +512,381 @@ This concludes the first part of our tutorial. In this tutorial we set-up our Bl
 
 The next part of this tutorial is a shorter one. It continues from the first part and shows how you can use Card Collections: Adaptive Cards for Blazor's way of rendering multiple cards.
 
-## Displaying Collections of Cards
+## Card Collections
+
+Adaptive Cards for Blazor has a feature called Card Collections. Card Collections allow the developer to easily display a list of cards based on two things: **A model** and **a template**. Model can be any .NET object, like a Customer, Invoice or WeatherInf. Template is a JSON schema. Card Collection takes a list of models, for example List<WeatherInfo> and the template and then binds each model against the schema. The end result is then rendered on the screen. Sounds harder than it is.
+
+*Note*: The templating support in Adaptive Cards for Blazor is a custom-built solution, based on the [Scriban](https://github.com/lunet-io/scriban) templating language. Adaptive Cards should at some point receive a native templating support.
+
+Here's a quick reminder of how our weather schema displays the temperatures:
+
+```json {.line-numbers}
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "42",
+              "size": "extraLarge",
+              "spacing": "none"
+            }
+          ]
+        }
+```
+
+Here's a slightly modified version of the schema where the "42" is replaced with binding:
+
+```json {.line-numbers}
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "{{ TemperatureF }}",
+              "size": "extraLarge",
+              "spacing": "none"
+            }
+          ]
+        },
+```
+
+And here's our C# class (the model) which we will bind against the card:
+
+```charp {.line-numbers}
+    public class WeatherForecast
+    {
+        public DateTime Date { get; set; }
+
+        public int TemperatureC { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+
+        public string Summary { get; set; }
+    }
+```
+
+Our current Blazor App already have a page which displays weather forecasts but in a rather plain format:
+
+![](2019-10-07-17-42-33.png)
+
+In this tutorial we will modify the page so that instead of a table, we get a nice collection of cards:
+
+### Creating the Templated Schema
+
+First we need to have a schema which enables the templating. For this we copy-paste the existing WeatherSchema.json into **WeatherSchemaTemplate.json**:
+
+![](2019-10-07-17-44-04.png)
+
+The schema currently has the following information hard coded:
+* Weather summary
+* Date
+* Image
+* Current weather in fahrenheits
+* Temperature range for the day
+
+![](2019-10-07-17-46-06.png)
+
+As we already have an existing WeatherForecastService, we don't want to do any changes into it. Instead we tweak the card a little: Instead of displaying the temperature range, we display the weather in celcius. To make sure we get the schema correct before adding the templating support, we modify **WeatherSchemaTemplate.json** to display the temperature in celsius. Where we previously had:
+
+```json {.line-numbers}
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Hi 51",
+              "horizontalAlignment": "left"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Lo 40",
+              "horizontalAlignment": "left",
+              "spacing": "none"
+            }
+          ]
+        }
+```
+
+Is changed to the following:
+
+```json {.line-numbers}
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "20",
+              "size": "extraLarge",
+              "spacing": "none"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "C",
+              "weight": "bolder",
+              "spacing": "small"
+            }
+          ]
+        }
+```
+
+This will give us an output similar to this:
+
+![](2019-10-07-17-51-20.png)
+
+Now that we have the schema, we will modify it that is supports the templating. The syntax for template is:
+
+```json
+{{ PropertyName }}
+```
+
+Here's again our model:
+
+```csharp
+    public class WeatherForecast
+    {
+        public DateTime Date { get; set; }
+
+        public int TemperatureC { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+
+        public string Summary { get; set; }
+    }
+```
+
+So the syntax for displaying property **TemperatureC** in our card is:
+
+```json
+{{ TemperatureC }}
+```
+
+The first change we need to make into our schema is to remove the hard-coded "warm" and to replace it with value of Summary. This is the original schema:
+
+```json {.line-numbers}
+    {
+      "type": "TextBlock",
+      "text": "Warm",
+      "size": "large",
+      "isSubtle": true
+    },
+```
+
+And here's the same part modified to support templating:
+
+```json {.line-numbers}
+    {
+      "type": "TextBlock",
+      "text": "{{ Summary }}",
+      "size": "large",
+      "isSubtle": true
+    },
+```json
+
+After going through our schema and replacing everything else except the hard-coded image, here's the full outcome:
+
+```json {.line-numbers}
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "{{ Summary }}",
+      "size": "large",
+      "isSubtle": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "{{ Date }}",
+      "spacing": "none"
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "Image",
+              "url": "http://messagecardplayground.azurewebsites.net/assets/Mostly%20Cloudy-Square.png",
+              "size": "small"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "{{ TemperatureF }}",
+              "size": "extraLarge",
+              "spacing": "none"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "F",
+              "weight": "bolder",
+              "spacing": "small"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "{{ TemperatureC }}",
+              "size": "extraLarge",
+              "spacing": "none"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "C",
+              "weight": "bolder",
+              "spacing": "small"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "Open Weather Service",
+      "url": "https://weather.com"
+    },
+    {
+      "type": "Action.ShowCard",
+      "title": "Share...",
+      "card": {
+        "type": "AdaptiveCard",
+        "body": [
+          {
+            "type": "TextBlock",
+            "text": "Share with Email:"
+          },
+          {
+            "type": "Input.Text",
+            "id": "emailAddress",
+            "placeholder": "user@email.com"
+          }
+        ],
+        "actions": [
+          {
+            "type": "Action.Submit",
+            "title": "Send Email"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+We now have our templated schema ready and it's time to display the cards.
+
+### Displaying the Card Collection
+
+Currently the weather forecasts are displayed in **FetchData.razor** in a HTML table:
+
+![](2019-10-07-18-04-52.png)
+
+Start by removing the table:
+
+![](2019-10-07-18-05-39.png)
+
+Card Collection can be rendered through AdaptiveCards-component. The component requires two properties: the templated schema and list of objects. List of objects we already have in the form of forecasts:
+
+```csharp
+@code {
+    WeatherForecast[] forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+    }
+}
+```
+As in the first part of this tutorial, we will load the schema-file from the disk:
+
+```csharp
+@code {
+    WeatherForecast[] forecasts;
+    string schema;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        schema = System.IO.File.ReadAllText("WeatherSchemaTemplate.json");
+    }
+}
+```
+And here's how we add the AdaptiveCards-component:
+
+```html
+    <AdaptiveCards Models="@forecasts" Schema="@schema"></AdaptiveCards>
+```
+
+FetchData.razor at this point should look like the following:
+
+```html {.line-numbers}
+@page "/fetchdata"
+
+@using WeatherCards.Data
+@inject WeatherForecastService ForecastService
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <AdaptiveCards Models="@forecasts" Schema="@schema"></AdaptiveCards>
+}
+
+@code {
+    WeatherForecast[] forecasts;
+    string schema;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        schema = System.IO.File.ReadAllText("WeatherSchemaTemplate.json");
+    }
+}
+```
 
 ### Animating the cards
+
+## Next Steps

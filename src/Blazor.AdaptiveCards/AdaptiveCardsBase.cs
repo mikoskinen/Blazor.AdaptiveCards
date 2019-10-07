@@ -20,7 +20,7 @@ namespace AdaptiveCards.Blazor
         public Func<TModel, string> TemplateSelector { get; set; }
 
         [Parameter]
-        public string ContainerClass { get; set; } = "card-columns";
+        public string @class { get; set; } = "row";
 
         [Parameter]
         public string CardClass { get; set; }
@@ -30,9 +30,6 @@ namespace AdaptiveCards.Blazor
 
         [Parameter]
         public List<(string, Func<int, TModel, object>)> CardAttributeFunctions { get; set; }
-
-        [Parameter]
-        public Dictionary<string, Func<int, TModel, object>> CardAttributeFunctions2 { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> Attributes { get; set; }

@@ -7,7 +7,7 @@
 
 @if (Models?.Any() == true)
 {
-    <ul @attributes="Attributes" class="@ContainerClass">
+    <ul @attributes="Attributes" class="@(@class)">
         <CascadingValue Value="@RenderMode" Name="RenderMode">
             <CascadingValue Value="@TemplateSelector" Name="TemplateSelector">
                 <CascadingValue Value="@Schema" Name="Template">
