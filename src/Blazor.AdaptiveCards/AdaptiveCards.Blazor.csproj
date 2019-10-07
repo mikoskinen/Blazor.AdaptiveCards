@@ -15,7 +15,7 @@
     <AssemblyName>AdaptiveCards.Blazor</AssemblyName>
     <RootNamespace>AdaptiveCards.Blazor</RootNamespace>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.0-rc2</Version>
+    <Version>1.0.0-rc3</Version>
     <RepositoryUrl>https://github.com/mikoskinen/Blazor.AdaptiveCards</RepositoryUrl>
     <PackageTags>Adaptive Cards;Blazor</PackageTags>
     <PackageIcon>logo_128.png</PackageIcon>
