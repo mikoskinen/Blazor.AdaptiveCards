@@ -1,17 +1,23 @@
-let cardComponent;
+let cardComponents = [];
 let cardCollectionComponent;
 
 window.blazorAdaptiveCards = {
 
-    setCardComponent: function (component) {
-        cardComponent = component;
+    setCardComponent: function (component, id) {
+        cardComponents[id] = component;
     },
 
     setCardCollectionComponent: function (component) {
         cardCollectionComponent = component;
     },
 
-    openUrl: function (url) {
+    openUrl: function (url, el) {
+        // Find the correct component which we use to invoke the action
+        var card = el.closest(".ac-adaptivecard");
+        var cardComponentElement = card.closest(".blazor-adaptive-card-container");
+        var cardComponentId = cardComponentElement.getAttribute('id');
+
+        var cardComponent = cardComponents[cardComponentId];
         cardComponent.invokeMethodAsync("OpenUrl", url);
     },
 
@@ -47,6 +53,12 @@ window.blazorAdaptiveCards = {
         if (!actionName) {
             actionName = "Submit";
         }
+
+        // Find the correct component which we use to invoke the action
+        var cardComponentElement = card.closest(".blazor-adaptive-card-container");
+        var cardComponentId = cardComponentElement.getAttribute('id');
+
+        var cardComponent = cardComponents[cardComponentId];
 
         // Invoke the C#-method which handles the actual submit operation
         cardComponent.invokeMethodAsync("SubmitData", obj, actionName);

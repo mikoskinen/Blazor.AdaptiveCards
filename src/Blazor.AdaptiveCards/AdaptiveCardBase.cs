@@ -20,6 +20,7 @@ namespace AdaptiveCards.Blazor
         protected string CardHtml = "";
         protected string CurrentSchema = "";
         protected bool JsInitialized;
+        protected Guid Id { get; set; } = Guid.NewGuid();
 
         [Inject] private AdaptiveOpenUrlActionAdapter UrlActionAdapter { get; set; }
         [Inject] private AdaptiveCardRenderer Renderer { get; set; }
@@ -77,6 +78,23 @@ namespace AdaptiveCards.Blazor
 
         protected override async Task OnParametersSetAsync()
         {
+            if (Attributes == null)
+            {
+                Attributes = new Dictionary<string, object>();
+                Attributes.Add("class", "blazor-adaptive-card-container");
+            }
+            else
+            {
+                if (Attributes.ContainsKey("class"))
+                {
+                    Attributes["class"] = Attributes["class"] + " " + "blazor-adaptive-card-container";
+                }
+                else
+                {
+                    Attributes.Add("class", "blazor-adaptive-card-container");
+                }
+            }
+            
             if (RenderMode == RenderMode.Asynchronous)
             {
                 return;
@@ -108,7 +126,7 @@ namespace AdaptiveCards.Blazor
         protected virtual async Task InitializeJsInterop()
         {
             var myRef = DotNetObjectReference.Create(this);
-            await JsRuntime.InvokeAsync<object>("blazorAdaptiveCards.setCardComponent", myRef);
+            await JsRuntime.InvokeAsync<object>("blazorAdaptiveCards.setCardComponent", myRef, Id);
 
             JsInitialized = true;
         }

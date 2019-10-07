@@ -16,7 +16,8 @@ namespace AdaptiveCards.Blazor.ActionHandlers
         /// <param name="renderContext">The render context.</param>
         public static void Create(AdaptiveSubmitAction action, HtmlTag tag, AdaptiveRenderContext renderContext)
         {
-            tag.Attr("id", AdaptiveCardRenderer.GenerateRandomId());
+            var id = AdaptiveCardRenderer.GenerateRandomId();
+            tag.Attr("id", id);
             tag.Attr("data-ac-submitData", JsonConvert.SerializeObject(action.Data, Formatting.None));
 
             if (action.AdditionalProperties.ContainsKey("name"))
@@ -28,7 +29,7 @@ namespace AdaptiveCards.Blazor.ActionHandlers
                 tag.Attributes.Add("data-name", "Submit");
             }
 
-            tag.Attributes.Add("onclick", "window.blazorAdaptiveCards.submitData(this)");
+            tag.Attributes.Add("onclick", "window.blazorAdaptiveCards.submitData(this, id)");
         }
     }
 }

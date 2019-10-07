@@ -16,7 +16,7 @@ namespace AdaptiveCards.Blazor
     /// </summary>
     /// <typeparam name="TModel">The type of the model.</typeparam>
     /// <seealso cref="Blazor.AdaptiveCards.AdaptiveCard" />
-    public class TemplatedAdaptiveCard<TModel> : AdaptiveCard where TModel : class
+    public class TemplatedAdaptiveCard<TModel> : AdaptiveCard 
     {
         private TModel _model;
         private string _modelJson;

@@ -1,4 +1,4 @@
-﻿using AdaptiveCards.Rendering.Html;
+using AdaptiveCards.Rendering.Html;
 
 namespace AdaptiveCards.Blazor.ActionHandlers
 {
@@ -9,9 +9,7 @@ namespace AdaptiveCards.Blazor.ActionHandlers
             tag.Attr("id", AdaptiveCardRenderer.GenerateRandomId());
             tag.Attr("data-ac-url", action.Url);
 
-            tag.Attributes.Add("onclick", "window.blazorAdaptiveCards.openUrl(this.getAttribute('data-ac-url'))");
-
-            //tag.Attributes.Add("onclick", "window.location.assign(this.getAttribute('data-ac-url'))");
+            tag.Attributes.Add("onclick", "window.blazorAdaptiveCards.openUrl(this.getAttribute('data-ac-url'), this)");
         }
     }
 }
