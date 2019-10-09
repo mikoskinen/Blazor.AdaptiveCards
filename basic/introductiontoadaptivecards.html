@@ -74,7 +74,7 @@
                                                 Quick start
                                             </a>
                                         </li>
-                                        <li class="">
+                                        <li class="active">
                                             <a href="/basic/introductiontoadaptivecards.html">
                                                 Introduction to Adaptive Cards
                                             </a>
@@ -158,7 +158,7 @@
                                                 Template selector
                                             </a>
                                         </li>
-                                        <li class="active">
+                                        <li class="">
                                             <a href="/cards/builtinlayouts.html">
                                                 Layouts
                                             </a>
@@ -203,19 +203,69 @@
 
                 <div class="d-none d-xl-block col-xl-2 bd-toc">
                     <ul class="section-nav">
+                            <li class="toc-entry toc-h3"><a href="#actions">Actions</a></li>
+                            <li class="toc-entry toc-h2"><a href="#where-to-find-more-information">Where to find more information?</a></li>
                     </ul>
                 </div>
 
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
-                <h1 class="bd-title" id="content">Layouts</h1>
+                <h1 class="bd-title" id="content">Introduction to Adaptive Cards</h1>
                 <p class="bd-lead"></p>
-                
+                <p><a href="https://adaptivecards.io/">Adaptive Cards</a> are a way to exchange content in a common and consistent way. Adaptive Cards can be integrated into different applications like Microsoft Teams and Outlook.</p>
+<p>An adaptive card is presented by a JSON Schema. To get a better understanding of the schema, the <a href="https://adaptivecards.io/samples/">Adaptive Cards' sample site</a> contains nearly 20 different schemas to go through. When you find an interesting schema, you can copy and paste it into the <a href="https://adaptivecards.io/designer/">Adaptive Cards Designer</a>. The designer allows you to edit the schema and see the changes real time.</p>
+<p>Another good introduction to the possibilities of Adaptive Cards is <a href="https://adaptivecards.io/explorer/">Schema Explorer</a>.</p>
+<p>Here's a simple JSON-schema:</p>
+<pre><code class="line-numbers language-json">{
+    "type": "AdaptiveCard",
+    "version": "1.0",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "Really simple Adaptive Card"
+        }
+    ]
+}
+</code></pre>
+<p><a href="2019-10-09-21-59-35.png" class="lightbox"><img src="2019-10-09-21-59-35.png" class="img-fluid" alt=""></a></p>
+<h3 id="actions">Actions</h3>
+<p>Adaptive Cards can contain actions. Actions are usually displayed as button and their functionality can range from opening links to confirming booking details. Adaptive Cards support four types of actions:</p>
+<ul>
+<li><strong><a href="https://adaptivecards.io/explorer/Action.OpenUrl.html">OpenUrl</a></strong>: An action which opens a link (href)</li>
+<li><strong><a href="https://adaptivecards.io/explorer/Action.Submit.html">Submit</a></strong>: Submits input fields (form)</li>
+<li><strong><a href="https://adaptivecards.io/explorer/Action.ShowCard.html">ShowCard</a></strong>: Cards can contain cards. ShowCard can be used to show and hide an card. Usually used for displaying more detailed data for a particular card.</li>
+<li><strong><a href="https://adaptivecards.io/explorer/Action.ToggleVisibility.html">ToggleVisibility</a></strong>: Action which can show or hide card elements.</li>
+</ul>
+<p>Adding an action is just a matter of adding couple new lines into schema:</p>
+<pre><code class="line-numbers language-json">{
+	"type": "AdaptiveCard",
+	"version": "1.0",
+	"body": [{
+		"type": "TextBlock",
+		"text": "Really simple Adaptive Card"
+	}],
+	"actions": [{
+		"type": "Action.OpenUrl",
+		"title": "Open Weather Service",
+		"url": "https://weather.com"
+	}]
+}
+</code></pre>
+<p><a href="2019-10-09-21-59-53.png" class="lightbox"><img src="2019-10-09-21-59-53.png" class="img-fluid" alt=""></a></p>
+<h2 id="where-to-find-more-information">Where to find more information?</h2>
+<p>For more information, please see the following references:</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/getting-started">https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/getting-started</a></li>
+<li><a href="https://adaptivecards.io/explorer/">https://adaptivecards.io/explorer/</a></li>
+<li><a href="https://adaptivecards.io/">https://adaptivecards.io/</a></li>
+</ul>
+
 
                 <div class="row">
                     <div class="col">
-                            <a class="text-muted" href="/cards/templateselector.html">Previous: Template selector</a>
+                            <a class="text-muted" href="/basic/quickstart.html">Previous: Quick start</a>
                     </div>
                     <div class="col text-right">
+                            <a class="text-muted" href="/basic/components.html">Next: Components</a>
                     </div>
                 </div>
 

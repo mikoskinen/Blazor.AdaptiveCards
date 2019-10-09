@@ -35,6 +35,9 @@
                 <li class="nav-item">
                     <a class="nav-link p-2" href="https://www.adaptivecardsblazor.com" target="_blank" rel="noopener">Project Home</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link p-2" href="https://github.com/mikoskinen/Blazor.AdaptiveCards" target="_blank" rel="noopener">GitHub</a>
+                </li>
         </ul>
     </header>
     <div class="container-fluid">
@@ -61,10 +64,27 @@
                                 </ul>
                         </div>
                         <div class="bd-toc-item active">
-                            <a class="bd-toc-link" href="/basic/introduction.html">
-                                Getting started
+                            <a class="bd-toc-link" href="/basic/quickstart.html">
+                                Introduction
                             </a>
 
+                                <ul class="nav bd-sidenav">
+                                        <li class="">
+                                            <a href="/basic/quickstart.html">
+                                                Quick start
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/basic/introductiontoadaptivecards.html">
+                                                Introduction to Adaptive Cards
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/basic/components.html">
+                                                Components
+                                            </a>
+                                        </li>
+                                </ul>
                         </div>
                         <div class="bd-toc-item active">
                             <a class="bd-toc-link" href="/actions/introduction.html">
@@ -74,27 +94,27 @@
                                 <ul class="nav bd-sidenav">
                                         <li class="">
                                             <a href="/actions/introduction.html">
-                                                Blazor Adaptive Cards support openlink, submit and open group actions
+                                                Introduction to actions
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/actions/openlink.html">
-                                                Blazor Adaptive Cards support openlink, submit and open group actions
+                                            <a href="/actions/openurl.html">
+                                                OpenUrl
                                             </a>
                                         </li>
                                         <li class="">
                                             <a href="/actions/submit.html">
-                                                Blazor Adaptive Cards support openlink, submit and open group actions
+                                                Submit
                                             </a>
                                         </li>
                                         <li class="">
                                             <a href="/actions/multiplesubmitactions.html">
-                                                multiplesubmitactions
+                                                Multiple submit actions
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/actions/updatingschema.html">
-                                                updatingschema
+                                            <a href="/actions/opencard.html">
+                                                ShowCard
                                             </a>
                                         </li>
                                 </ul>
@@ -107,7 +127,7 @@
                                 <ul class="nav bd-sidenav">
                                         <li class="">
                                             <a href="/templating/introduction.html">
-                                                Introduction to Blazor Adaptive Cards
+                                                Introduction to templating
                                             </a>
                                         </li>
                                         <li class="">
@@ -125,17 +145,22 @@
                                 <ul class="nav bd-sidenav">
                                         <li class="">
                                             <a href="/cards/introduction.html">
-                                                Display lists and columns of cards using Cards component
+                                                Introduction to Card Collections
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/cards/builtinlayouts.html">
-                                                Introduction to Blazor Adaptive Cards
+                                            <a href="/cards/actions.html">
+                                                Handling actions
                                             </a>
                                         </li>
                                         <li class="">
                                             <a href="/cards/templateselector.html">
-                                                Introduction to Blazor Adaptive Cards
+                                                Template selector
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/cards/builtinlayouts.html">
+                                                Layouts
                                             </a>
                                         </li>
                                 </ul>
@@ -148,22 +173,27 @@
                                 <ul class="nav bd-sidenav">
                                         <li class="">
                                             <a href="/advanced/configuration.html">
-                                                Configuring Blazor Adaptive Cards
+                                                Configuration
                                             </a>
                                         </li>
                                         <li class="">
                                             <a href="/advanced/events.html">
-                                                Configuring Blazor Adaptive Cards
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/renderingerror.html">
-                                                Configuring Blazor Adaptive Cards
+                                                Events
                                             </a>
                                         </li>
                                         <li class="">
                                             <a href="/advanced/performance.html">
-                                                Performance tips for Blazor Adaptive Cards
+                                                Performance tips
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/advanced/updatingschema.html">
+                                                Updating schema
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/advanced/renderingerror.html">
+                                                Handling rendering errors
                                             </a>
                                         </li>
                                 </ul>
@@ -174,7 +204,7 @@
                 <div class="d-none d-xl-block col-xl-2 bd-toc">
                     <ul class="section-nav">
                             <li class="toc-entry toc-h2"><a href="#introduction">Introduction</a></li>
-                            <li class="toc-entry toc-h3"><a href="#the-goal">The Goal</a></li>
+                            <li class="toc-entry toc-h2"><a href="#the-goal">The Goal</a></li>
                             <li class="toc-entry toc-h3"><a href="#the-starting-point">The Starting Point</a></li>
                             <li class="toc-entry toc-h3"><a href="#adding-the-adaptive-cards-for-blazor-package">Adding the Adaptive Cards for Blazor package</a></li>
                             <li class="toc-entry toc-h3"><a href="#configuring-the-blazor-app-for-adaptive-cards">Configuring the Blazor App for Adaptive Cards</a></li>
@@ -187,7 +217,7 @@
                             <li class="toc-entry toc-h2"><a href="#card-collections">Card Collections</a></li>
                             <li class="toc-entry toc-h3"><a href="#creating-the-templated-schema">Creating the Templated Schema</a></li>
                             <li class="toc-entry toc-h3"><a href="#displaying-the-card-collection">Displaying the Card Collection</a></li>
-                            <li class="toc-entry toc-h3"><a href="#animating-the-cards">Animating the cards</a></li>
+                            <li class="toc-entry toc-h3"><a href="#handling-actions-in">Handling Actions in</a></li>
                             <li class="toc-entry toc-h2"><a href="#next-steps">Next Steps</a></li>
                     </ul>
                 </div>
@@ -196,10 +226,15 @@
                 <h1 class="bd-title" id="content">Getting Started</h1>
                 <p class="bd-lead">Adaptive Cards for Blazor is available as a NuGet package. This tutorial shows you can get started with the library.</p>
                 <h2 id="introduction">Introduction</h2>
-<p>Adaptive Cards for Blazor targets the server side version of Blazor, which was released in .NET Core 3.0. This tutorials gives you a quick run through of how to build a Blazor application which uses Adaptive Cards.</p>
+<p>Adaptive Cards for Blazor is community project which provides Adaptive Cards support for Blazor. The library targets the server side version of Blazor, which was released in .NET Core 3.0. This tutorials gives you a run through of how to build a Blazor application which uses Adaptive Cards.</p>
 <p>This tutorial is split into two parts: In the first part a card with actions is created. In the second part the card collection capabilities of Adaptive Cards for Blazor are introduced.</p>
-<h3 id="the-goal">The Goal</h3>
-<p>The goal of this tutorial is to create a Blazor application which contains weather cards.</p>
+<h2 id="the-goal">The Goal</h2>
+<p>The goal of this tutorial is to create a Blazor application which contains weather cards. In the first part we create and display a single weather card:</p>
+<p><a href="2019-10-09-21-27-44.png" class="lightbox"><img src="2019-10-09-21-27-44.png" class="img-fluid" alt=""></a></p>
+<p>In the second part of the tutorial we create a card collection and display weather forecasts:</p>
+<p><a href="2019-10-09-21-28-36.png" class="lightbox"><img src="2019-10-09-21-28-36.png" class="img-fluid" alt=""></a></p>
+<p>We start by creating a new Blazor Application using Visual Studio and then work our way step-by-step until we have adaptive weather cards rendereded on the page.</p>
+<p>The full source code for this tutorial is <a href="https://github.com/mikoskinen/Blazor.AdaptiveCards/tree/master/samples/WeatherCards">available from GitHub</a>.</p>
 <h3 id="the-starting-point">The Starting Point</h3>
 <p>Create a new Blazor App in Visual Studio 2019:</p>
 <p><a href="2019-10-06-12-25-33.png" class="lightbox"><img src="2019-10-06-12-25-33.png" class="img-fluid" alt=""></a></p>
@@ -837,7 +872,7 @@ After going through our schema and replacing everything else except the hard-cod
 <p><a href="2019-10-07-18-04-52.png" class="lightbox"><img src="2019-10-07-18-04-52.png" class="img-fluid" alt=""></a></p>
 <p>Start by removing the table:</p>
 <p><a href="2019-10-07-18-05-39.png" class="lightbox"><img src="2019-10-07-18-05-39.png" class="img-fluid" alt=""></a></p>
-<p>Card Collection can be rendered through AdaptiveCards-component. The component requires two properties: the templated schema and list of objects. List of objects we already have in the form of forecasts:</p>
+<p>Card Collection can be rendered through AdaptiveCards-component. The component requires three properties: the templated schema, the model type and list of models (objects). List of objects we already have in the form of forecasts:</p>
 <pre><code class="language-csharp">@code {
     WeatherForecast[] forecasts;
 
@@ -860,7 +895,7 @@ After going through our schema and replacing everything else except the hard-cod
 }
 </code></pre>
 <p>And here's how we add the AdaptiveCards-component:</p>
-<pre><code class="language-html">    &lt;AdaptiveCards Models="@forecasts" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+<pre><code class="language-html">    &lt;AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
 </code></pre>
 <p>FetchData.razor at this point should look like the following:</p>
 <pre><code class="line-numbers language-html">@page "/fetchdata"
@@ -878,7 +913,7 @@ After going through our schema and replacing everything else except the hard-cod
 }
 else
 {
-    &lt;AdaptiveCards Models="@forecasts" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+    &lt;AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
 }
 
 @code {
@@ -892,8 +927,24 @@ else
     }
 }
 </code></pre>
-<h3 id="animating-the-cards">Animating the cards</h3>
+<p>Now, if we run the application, we can see our Card Collection:</p>
+<p><a href="2019-10-07-18-48-32.png" class="lightbox"><img src="2019-10-07-18-48-32.png" class="img-fluid" alt=""></a></p>
+<p>It's quite pretty! Card Collection tries not to care what CSS files you are using (Bootstrap vs Material vs custom). Couple classes are still added by default which allows the cards to render nicely when used with Bootstrap: The collection gets the class <strong>"row"</strong> and each of the cards is wrapped inside class <strong>col-3</strong>.</p>
+<p>You can use <strong>CardClass</strong> and <strong>Class</strong> properties to configure what classes are applied to the collection and to its content. To make the cards larger, we can change the card class to col-6:</p>
+<pre><code class="line-numbers language-html">    &lt;AdaptiveCards CardClass="col-6" TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+</code></pre>
+<p>This will give us two columns instead of four:</p>
+<p><a href="2019-10-07-18-52-25.png" class="lightbox"><img src="2019-10-07-18-52-25.png" class="img-fluid" alt=""></a></p>
+<p>In the next and last section of this tutorial we will add support for handling the actions.</p>
+<h3 id="handling-actions-in">Handling Actions in</h3>
+<p>Similar to the first part of this tutorial, our cards contain two actions: OpenLink and Submit action:</p>
+<p><a href="2019-10-07-19-00-13.png" class="lightbox"><img src="2019-10-07-19-00-13.png" class="img-fluid" alt=""></a></p>
+<p>The "Open weather service" action is of type OpenLink and it works automatically. But we need to handle manually the "Share..." functionality using C#. As before, we add a little textbox above the component to display information about the action. But this time we "catch" the actual model from the card in order to display information. We can use the SubmitHandler or On:</p>
+<pre><code class="line-numbers language-html">    &lt;AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+</code></pre>
 <h2 id="next-steps">Next Steps</h2>
+<p>That concludes our getting started guide. We covered lots of features like templating, handling actions and card collections. There's still a whole lot of features we didn't cover in this tutorial, including animating the cards and using template selectors and template providers.</p>
+<p>Hope you enjoy using Adaptive Cards for Blazor! Let us know if you have any issues or feature requests through our project's home page on <a href="https://github.com/mikoskinen/Blazor.AdaptiveCards">GitHub</a>.</p>
 
 
                 <div class="row">

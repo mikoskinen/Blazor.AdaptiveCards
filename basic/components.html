@@ -79,7 +79,7 @@
                                                 Introduction to Adaptive Cards
                                             </a>
                                         </li>
-                                        <li class="">
+                                        <li class="active">
                                             <a href="/basic/components.html">
                                                 Components
                                             </a>
@@ -158,7 +158,7 @@
                                                 Template selector
                                             </a>
                                         </li>
-                                        <li class="active">
+                                        <li class="">
                                             <a href="/cards/builtinlayouts.html">
                                                 Layouts
                                             </a>
@@ -203,17 +203,70 @@
 
                 <div class="d-none d-xl-block col-xl-2 bd-toc">
                     <ul class="section-nav">
+                            <li class="toc-entry toc-h2"><a href="#adaptivecard">AdaptiveCard</a></li>
+                            <li class="toc-entry toc-h2"><a href="#templatedadaptivecard">TemplatedAdaptiveCard</a></li>
+                            <li class="toc-entry toc-h2"><a href="#adaptivecards">AdaptiveCards</a></li>
                     </ul>
                 </div>
 
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
-                <h1 class="bd-title" id="content">Layouts</h1>
+                <h1 class="bd-title" id="content">Components</h1>
                 <p class="bd-lead"></p>
-                
+                <p>Adaptive Cards for Blazor contains three components:</p>
+<h2 id="adaptivecard">AdaptiveCard</h2>
+<p>AdaptiveCard-component is the basic building block in Adaptive Cards for Blazor. AdaptiveCard always requires a JSON schema in string-format. This is used to render the card.</p>
+<p><strong>Usage:</strong></p>
+<pre><code class="line-numbers language-json">            &lt;AdaptiveCard Schema="@schema" OnCardSubmit="Submit"&gt;&lt;/AdaptiveCard&gt;
+</code></pre>
+<h2 id="templatedadaptivecard">TemplatedAdaptiveCard<t></t></h2>
+<p>TemplatedAdaptiveCard<t> is a generic component which supports templating. Template is a JSON schema. TemplatedAdaptiveCard takes a model (C# object) and a template. The model is bound against the template schema. The end result is then rendered on the screen.</t></p>
+<p><em>Note</em>: The templating support in Adaptive Cards for Blazor is a custom-built solution, based on the <a href="https://github.com/lunet-io/scriban">Scriban</a> templating language. Adaptive Cards should at some point receive a native templating support</p>
+<p><strong>Usage:</strong></p>
+<pre><code class="line-numbers language-html">&lt;TemplatedAdaptiveCard Model="customer" TModel="Customer" Schema="@schema"&gt;&lt;/TemplatedAdaptiveCard&gt;
+
+@code{
+    string schema = "";
+    Customer customer = new Customer() { FirstName = "My", LastName = "Name" };
+
+    protected override void OnInitialized()
+    {
+        schema = System.IO.File.ReadAllText("TemplatedAdaptiveCard.json");
+    }
+}
+</code></pre>
+<h2 id="adaptivecards">AdaptiveCards<t></t></h2>
+<p>Adaptive Cards for Blazor has a feature called Card Collections. Card Collections allow the developer to easily display a list of cards based on two things: <strong>A model</strong> and <strong>a template</strong>. Model can be any .NET object, like a Customer. Template is a JSON schema. Card Collection takes a list of models, for example List<weatherinfo> and the template and then binds each model against the schema. The end result is then rendered on the screen.</weatherinfo></p>
+<p><strong>Usage:</strong></p>
+<pre><code class="line-numbers language-html">@if (forecasts == null)
+{
+    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+}
+else
+{
+    @if (selectedForecast != null &amp;&amp; !string.IsNullOrWhiteSpace(submittedTo))
+    {
+        &lt;b&gt;@selectedForecast.Date.ToShortDateString(): &lt;/b&gt; @submittedTo
+    }
+
+    &lt;AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+}
+
+@code {
+    WeatherForecast[] forecasts;
+    string schema;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        schema = System.IO.File.ReadAllText("WeatherSchemaTemplate.json");
+    }
+}
+</code></pre>
+
 
                 <div class="row">
                     <div class="col">
-                            <a class="text-muted" href="/cards/templateselector.html">Previous: Template selector</a>
+                            <a class="text-muted" href="/basic/introductiontoadaptivecards.html">Previous: Introduction to Adaptive Cards</a>
                     </div>
                     <div class="col text-right">
                     </div>
