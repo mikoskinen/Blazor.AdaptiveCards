@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data>
   <site>
-    <Title>Blazor Adaptive Cards</Title>
-    <Description>Blazor Adaptive Cards: Documentation</Description>
+    <Title>Adaptive Cards for Blazor</Title>
+    <Description>Adaptive Cards for Blazor: Documentation</Description>
 	<Logo>/assets/logo.png</Logo>
 	<Footer>Copyright 2019 Mikael Koskinen</Footer>
 	<Navigations>
 		<Navigation Url="/" ExtraClass="active">Documentation</Navigation>
 	</Navigations>
 	<SecondaryLinks>
-		<SecondaryLink Url="https://grazedocs.io">Project Home</SecondaryLink>
+		<SecondaryLink Url="https://www.adaptivecardsblazor.com">Project Home</SecondaryLink>
 	</SecondaryLinks>	
   </site>
   <ChildPages Location="" DefaultPageLayoutFile="page.cshtml" IndexLayoutFile="pagesindex.cshtml" IndexFileName="all.html" FolderPerPage="false" ReadmeName="index"

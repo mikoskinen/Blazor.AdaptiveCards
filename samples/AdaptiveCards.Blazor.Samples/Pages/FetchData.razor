@@ -37,5 +37,7 @@ else
     {
         submittedTo = eventArgs.Data["emailAddress"].ToString();
         selectedForecast = (WeatherForecast)eventArgs.Model;
+
+        eventArgs.AdaptiveCard.ShouldReRender = true;
     }
 }

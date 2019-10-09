@@ -21,6 +21,7 @@ namespace AdaptiveCards.Blazor
         protected string CurrentSchema = "";
         protected bool JsInitialized;
         protected Guid Id { get; set; } = Guid.NewGuid();
+        public bool ShouldReRender { get; set; }
 
         [Inject] private AdaptiveOpenUrlActionAdapter UrlActionAdapter { get; set; }
         [Inject] private AdaptiveCardRenderer Renderer { get; set; }
@@ -220,7 +221,7 @@ namespace AdaptiveCards.Blazor
 
         protected virtual SubmitEventArgs CreateSubmitEventArgs(Dictionary<string, object> data, string actionName)
         {
-            return new SubmitEventArgs(actionName, data);
+            return new SubmitEventArgs(actionName, data, this);
         }
 
         protected virtual async Task RunSubmit(SubmitEventArgs eventArgs)
@@ -230,6 +231,13 @@ namespace AdaptiveCards.Blazor
 
         protected virtual bool ShouldRender(string currentSchema, string newSchema)
         {
+            if (ShouldReRender)
+            {
+                ShouldReRender = false;
+
+                return true;
+            }
+
             return !string.Equals(newSchema, currentSchema, StringComparison.InvariantCulture);
         }
 

@@ -16,7 +16,7 @@ namespace AdaptiveCards.Blazor
     /// </summary>
     /// <typeparam name="TModel">The type of the model.</typeparam>
     /// <seealso cref="Blazor.AdaptiveCards.AdaptiveCard" />
-    public class TemplatedAdaptiveCard<TModel> : AdaptiveCard 
+    public class TemplatedAdaptiveCard<TModel> : AdaptiveCard
     {
         private TModel _model;
         private string _modelJson;
@@ -71,7 +71,6 @@ namespace AdaptiveCards.Blazor
 
         protected override void OnParametersSet()
         {
-            System.Diagnostics.Debug.WriteLine("On parameters set");
 
             base.OnParametersSet();
 
@@ -116,11 +115,6 @@ namespace AdaptiveCards.Blazor
             return result;
         }
 
-        protected override bool ShouldRender(string currentSchema, string newSchema)
-        {
-            return true;
-        }
-
         protected override async Task RunSubmit(SubmitEventArgs eventArgs)
         {
             await SubmitActionHandler.Handle(eventArgs, SubmitHandler, _model);
@@ -128,7 +122,7 @@ namespace AdaptiveCards.Blazor
 
         protected override SubmitEventArgs CreateSubmitEventArgs(Dictionary<string, object> data, string actionName)
         {
-            return new SubmitEventArgs(actionName, data, _model);
+            return new SubmitEventArgs(actionName, data, this, _model);
         }
     }
 }
