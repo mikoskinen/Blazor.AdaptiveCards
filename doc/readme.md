@@ -22,7 +22,9 @@ Adaptive Cards for Blazor provides components for displaying Adaptive Cards insi
 
 ## Samples
 
-Please note that the sample site runs on a slow Azure App Service so the provided performance may not be the best. You can run the samples locally by cloning the project repository from GitHub.
+** More samples are coming soon ** 
+
+For now, a sample application can be found from https://github.com/mikoskinen/Blazor.AdaptiveCards/tree/master/samples/WeatherCards
 
 ## Project home
 

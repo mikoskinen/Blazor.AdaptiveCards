@@ -915,18 +915,49 @@ This will give us two columns instead of four:
 
 In the next and last section of this tutorial we will add support for handling the actions.
 
-### Handling Actions in 
+### Handling Actions 
 
 Similar to the first part of this tutorial, our cards contain two actions: OpenLink and Submit action:
 
 ![](2019-10-07-19-00-13.png)
 
-The "Open weather service" action is of type OpenLink and it works automatically. But we need to handle manually the "Share..." functionality using C#. As before, we add a little textbox above the component to display information about the action. But this time we "catch" the actual model from the card in order to display information. We can use the SubmitHandler or On:
+The "Open weather service" action is of type OpenLink and it works automatically. But we need to handle manually the "Share..." functionality using C#. As before, we add a little textbox above the component to display information about the action. But this time we "catch" the actual model from the card in order to display information:
 
 ```html {.line-numbers}
-    <AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"></AdaptiveCards>
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (selectedForecast != null && !string.IsNullOrWhiteSpace(submittedTo))
+    {
+        <b>@selectedForecast.Date.ToShortDateString(): </b> @submittedTo
+    }
+
+    <AdaptiveCards OnSubmitAction="@SendEmail" CardClass="col-6" TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"></AdaptiveCards>
+}
+@code {
+    WeatherForecast[] forecasts;
+    string schema;
+    WeatherForecast selectedForecast = null;
+    string submittedTo = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        schema = System.IO.File.ReadAllText("WeatherSchemaTemplate.json");
+    }
+
+    public void SendEmail(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        submittedTo = eventArgs.Data["emailAddress"].ToString();
+        selectedForecast = (WeatherForecast)eventArgs.Model;
+    }
+}    
 ```
 
+![](2019-10-09-22-18-55.png)
 
 ## Next Steps
 
