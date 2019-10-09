@@ -69,7 +69,7 @@
                             </a>
 
                                 <ul class="nav bd-sidenav">
-                                        <li class="active">
+                                        <li class="">
                                             <a href="/basic/quickstart.html">
                                                 Quick start
                                             </a>
@@ -171,7 +171,7 @@
                             </a>
 
                                 <ul class="nav bd-sidenav">
-                                        <li class="">
+                                        <li class="active">
                                             <a href="/advanced/animations.html">
                                                 Configuration
                                             </a>
@@ -208,111 +208,20 @@
 
                 <div class="d-none d-xl-block col-xl-2 bd-toc">
                     <ul class="section-nav">
-                            <li class="toc-entry toc-h4"><a href="#add-nuget">Add NuGet</a></li>
-                            <li class="toc-entry toc-h4"><a href="#configure-startup.cs">Configure Startup.cs</a></li>
-                            <li class="toc-entry toc-h4"><a href="#configure_imports.razor">Configure _Imports.razor</a></li>
-                            <li class="toc-entry toc-h4"><a href="#add-js-interop-into_host.cshtml">Add JS interop into _Host.cshtml</a></li>
-                            <li class="toc-entry toc-h4"><a href="#add-json-schema-file">Add JSON schema-file</a></li>
-                            <li class="toc-entry toc-h4"><a href="#load-schema-in-component">Load schema in component</a></li>
-                            <li class="toc-entry toc-h4"><a href="#render-the-card-by-adding-component-into-page">Render the card by adding component into page</a></li>
-                            <li class="toc-entry toc-h2"><a href="#result">Result</a></li>
-                            <li class="toc-entry toc-h2"><a href="#full-source-code-of-index.razor">Full source code of index.razor</a></li>
                     </ul>
                 </div>
 
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
-                <h1 class="bd-title" id="content">Quick start</h1>
+                <h1 class="bd-title" id="content">Configuration</h1>
                 <p class="bd-lead"></p>
-                <p>This quick start shows the required steps of using Adaptive Cards for Blazor. For a more throughout tutorial, please see the <a href="/gettingstarted.html">Getting Started</a> guide.</p>
-<p>The quick start assumes that an existing server side Blazor application is modified to support Adaptive Cards.</p>
-<h4 id="add-nuget">Add NuGet</h4>
-<pre><code class="language-csharp">Install-Package Elma AdaptiveCardsBlazor
-</code></pre>
-<h4 id="configure-startup.cs">Configure Startup.cs</h4>
-<pre><code class="language-csharp">        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddRazorPages();
-            services.AddServerSideBlazor();
-            
-            ...
-
-            services.AddBlazorAdaptiveCards();
-        }
-</code></pre>
-<h4 id="configure_imports.razor">Configure _Imports.razor</h4>
-<pre><code class="language-csharp">...
-@using AdaptiveCards.Blazor
-</code></pre>
-<h4 id="add-js-interop-into_host.cshtml">Add JS interop into _Host.cshtml</h4>
-<pre><code class="language-html">    &lt;script src="_content/AdaptiveCardsBlazor/adaptiveCardsJsInterop.js"&gt;&lt;/script&gt;
-</code></pre>
-<h4 id="add-json-schema-file">Add JSON schema-file</h4>
-<p>Please make sure that it is copied to output directory.</p>
-<p>Schema.json:</p>
-<pre><code class="language-json">{
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.0",
-  "body": [
-    {
-      "type": "TextBlock",
-      "text": "Warm",
-      "size": "large",
-      "isSubtle": true
-    },
-    {
-      "type": "TextBlock",
-      "text": "September 18, 7:30 AM",
-      "spacing": "none"
-    }
-  ]
-}
-</code></pre>
-<h4 id="load-schema-in-component">Load schema in component</h4>
-<pre><code class="language-csharp">@code{
-    string schema = "";
-
-    protected override void OnInitialized()
-    {
-        schema = System.IO.File.ReadAllText("Schema.json");
-    }
-}
-</code></pre>
-<h4 id="render-the-card-by-adding-component-into-page">Render the card by adding component into page</h4>
-<pre><code class="language-html">        &lt;AdaptiveCard Schema="@schema" SubmitHandler="this"&gt;&lt;/AdaptiveCard&gt;
-</code></pre>
-<h2 id="result">Result</h2>
-<p><a href="2019-10-09-21-44-46.png" class="lightbox"><img src="2019-10-09-21-44-46.png" class="img-fluid" alt=""></a></p>
-<h2 id="full-source-code-of-index.razor">Full source code of index.razor</h2>
-<pre><code class="language-html">@page "/"
-
-&lt;h1&gt;Hello Adaptive Cards for Blazor!&lt;/h1&gt;
-
-Here's a card for displaying the weather:
-
-&lt;div class="row"&gt;
-    &lt;div class="col-3"&gt;
-        &lt;AdaptiveCard Schema="@schema"&gt;&lt;/AdaptiveCard&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-
-@code{
-    string schema = "";
-
-    protected override void OnInitialized()
-    {
-        schema = System.IO.File.ReadAllText("WeatherSchema.json");
-    }
-}
-```html
-</code></pre>
+                <p>TODO</p>
 
 
                 <div class="row">
                     <div class="col">
                     </div>
                     <div class="col text-right">
-                            <a class="text-muted" href="/basic/introductiontoadaptivecards.html">Next: Introduction to Adaptive Cards</a>
+                            <a class="text-muted" href="/advanced/configuration.html">Next: Configuration</a>
                     </div>
                 </div>
 

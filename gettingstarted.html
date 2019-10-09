@@ -166,11 +166,16 @@
                                 </ul>
                         </div>
                         <div class="bd-toc-item active">
-                            <a class="bd-toc-link" href="/advanced/configuration.html">
+                            <a class="bd-toc-link" href="/advanced/animations.html">
                                 Advanced Topics
                             </a>
 
                                 <ul class="nav bd-sidenav">
+                                        <li class="">
+                                            <a href="/advanced/animations.html">
+                                                Configuration
+                                            </a>
+                                        </li>
                                         <li class="">
                                             <a href="/advanced/configuration.html">
                                                 Configuration
@@ -217,7 +222,7 @@
                             <li class="toc-entry toc-h2"><a href="#card-collections">Card Collections</a></li>
                             <li class="toc-entry toc-h3"><a href="#creating-the-templated-schema">Creating the Templated Schema</a></li>
                             <li class="toc-entry toc-h3"><a href="#displaying-the-card-collection">Displaying the Card Collection</a></li>
-                            <li class="toc-entry toc-h3"><a href="#handling-actions-in">Handling Actions in</a></li>
+                            <li class="toc-entry toc-h3"><a href="#handling-actions">Handling Actions</a></li>
                             <li class="toc-entry toc-h2"><a href="#next-steps">Next Steps</a></li>
                     </ul>
                 </div>
@@ -936,12 +941,43 @@ else
 <p>This will give us two columns instead of four:</p>
 <p><a href="2019-10-07-18-52-25.png" class="lightbox"><img src="2019-10-07-18-52-25.png" class="img-fluid" alt=""></a></p>
 <p>In the next and last section of this tutorial we will add support for handling the actions.</p>
-<h3 id="handling-actions-in">Handling Actions in</h3>
+<h3 id="handling-actions">Handling Actions</h3>
 <p>Similar to the first part of this tutorial, our cards contain two actions: OpenLink and Submit action:</p>
 <p><a href="2019-10-07-19-00-13.png" class="lightbox"><img src="2019-10-07-19-00-13.png" class="img-fluid" alt=""></a></p>
-<p>The "Open weather service" action is of type OpenLink and it works automatically. But we need to handle manually the "Share..." functionality using C#. As before, we add a little textbox above the component to display information about the action. But this time we "catch" the actual model from the card in order to display information. We can use the SubmitHandler or On:</p>
-<pre><code class="line-numbers language-html">    &lt;AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+<p>The "Open weather service" action is of type OpenLink and it works automatically. But we need to handle manually the "Share..." functionality using C#. As before, we add a little textbox above the component to display information about the action. But this time we "catch" the actual model from the card in order to display information:</p>
+<pre><code class="line-numbers language-html">@if (forecasts == null)
+{
+    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+}
+else
+{
+    @if (selectedForecast != null &amp;&amp; !string.IsNullOrWhiteSpace(submittedTo))
+    {
+        &lt;b&gt;@selectedForecast.Date.ToShortDateString(): &lt;/b&gt; @submittedTo
+    }
+
+    &lt;AdaptiveCards OnSubmitAction="@SendEmail" CardClass="col-6" TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+}
+@code {
+    WeatherForecast[] forecasts;
+    string schema;
+    WeatherForecast selectedForecast = null;
+    string submittedTo = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        schema = System.IO.File.ReadAllText("WeatherSchemaTemplate.json");
+    }
+
+    public void SendEmail(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        submittedTo = eventArgs.Data["emailAddress"].ToString();
+        selectedForecast = (WeatherForecast)eventArgs.Model;
+    }
+}    
 </code></pre>
+<p><a href="2019-10-09-22-18-55.png" class="lightbox"><img src="2019-10-09-22-18-55.png" class="img-fluid" alt=""></a></p>
 <h2 id="next-steps">Next Steps</h2>
 <p>That concludes our getting started guide. We covered lots of features like templating, handling actions and card collections. There's still a whole lot of features we didn't cover in this tutorial, including animating the cards and using template selectors and template providers.</p>
 <p>Hope you enjoy using Adaptive Cards for Blazor! Let us know if you have any issues or feature requests through our project's home page on <a href="https://github.com/mikoskinen/Blazor.AdaptiveCards">GitHub</a>.</p>
