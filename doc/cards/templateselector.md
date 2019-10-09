@@ -1,5 +1,5 @@
 ---
-order: 0
-title: Introduction to Blazor Adaptive Cards
+order: 2
+title: Template selector
 ---
 

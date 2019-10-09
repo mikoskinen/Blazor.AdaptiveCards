@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdaptiveCardsBlazor" Version="1.0.0-rc3" />
+    <PackageReference Include="AdaptiveCardsBlazor" Version="1.0.0-rc4" />
   </ItemGroup>
 
 </Project>

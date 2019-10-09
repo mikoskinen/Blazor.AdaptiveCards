@@ -1,5 +1,5 @@
 ---
-order: 0
-title: Introduction to Blazor Adaptive Cards
+order: 3
+title: Layouts
 ---
 

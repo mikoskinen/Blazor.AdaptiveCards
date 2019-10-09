@@ -13,16 +13,29 @@
 }
 else
 {
-    <AdaptiveCards CardClass="col-6" TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema" ></AdaptiveCards>
+    @if (selectedForecast != null && !string.IsNullOrWhiteSpace(submittedTo))
+    {
+        <b>@selectedForecast.Date.ToShortDateString(): </b> @submittedTo
+    }
+
+    <AdaptiveCards OnSubmitAction="@SendEmail" CardClass="col-6" TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"></AdaptiveCards>
 }
 
 @code {
     WeatherForecast[] forecasts;
     string schema;
+    WeatherForecast selectedForecast = null;
+    string submittedTo = null;
 
     protected override async Task OnInitializedAsync()
     {
         forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
         schema = System.IO.File.ReadAllText("WeatherSchemaTemplate.json");
+    }
+
+    public void SendEmail(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        submittedTo = eventArgs.Data["emailAddress"].ToString();
+        selectedForecast = (WeatherForecast)eventArgs.Model;
     }
 }

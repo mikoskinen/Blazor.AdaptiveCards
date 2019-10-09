@@ -1,7 +1,9 @@
 ---
 order: 0
-title: Blazor Adaptive Cards support openlink, submit and open group actions
+title: Introduction to actions
+description: Blazor Adaptive Cards support OpenUrl, Submit and ShowCard actions
 ---
 
-Supported actions include:
+TODO
+
 

@@ -6,13 +6,23 @@ description: Adaptive Cards for Blazor is available as a NuGet package. This tut
 
 ## Introduction
 
-Adaptive Cards for Blazor targets the server side version of Blazor, which was released in .NET Core 3.0. This tutorials gives you a quick run through of how to build a Blazor application which uses Adaptive Cards.
+Adaptive Cards for Blazor is community project which provides Adaptive Cards support for Blazor. The library targets the server side version of Blazor, which was released in .NET Core 3.0. This tutorials gives you a run through of how to build a Blazor application which uses Adaptive Cards.
 
 This tutorial is split into two parts: In the first part a card with actions is created. In the second part the card collection capabilities of Adaptive Cards for Blazor are introduced.
 
-### The Goal
+## The Goal
 
-The goal of this tutorial is to create a Blazor application which contains weather cards.
+The goal of this tutorial is to create a Blazor application which contains weather cards. In the first part we create and display a single weather card:
+
+![](2019-10-09-21-27-44.png)
+
+In the second part of the tutorial we create a card collection and display weather forecasts:
+
+![](2019-10-09-21-28-36.png)
+
+We start by creating a new Blazor Application using Visual Studio and then work our way step-by-step until we have adaptive weather cards rendereded on the page.
+
+The full source code for this tutorial is [available from GitHub](https://github.com/mikoskinen/Blazor.AdaptiveCards/tree/master/samples/WeatherCards).
 
 ### The Starting Point
 
@@ -822,7 +832,7 @@ Start by removing the table:
 
 ![](2019-10-07-18-05-39.png)
 
-Card Collection can be rendered through AdaptiveCards-component. The component requires two properties: the templated schema and list of objects. List of objects we already have in the form of forecasts:
+Card Collection can be rendered through AdaptiveCards-component. The component requires three properties: the templated schema, the model type and list of models (objects). List of objects we already have in the form of forecasts:
 
 ```csharp
 @code {
@@ -851,7 +861,7 @@ As in the first part of this tutorial, we will load the schema-file from the dis
 And here's how we add the AdaptiveCards-component:
 
 ```html
-    <AdaptiveCards Models="@forecasts" Schema="@schema"></AdaptiveCards>
+    <AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"></AdaptiveCards>
 ```
 
 FetchData.razor at this point should look like the following:
@@ -872,7 +882,7 @@ FetchData.razor at this point should look like the following:
 }
 else
 {
-    <AdaptiveCards Models="@forecasts" Schema="@schema"></AdaptiveCards>
+    <AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"></AdaptiveCards>
 }
 
 @code {
@@ -887,6 +897,39 @@ else
 }
 ```
 
-### Animating the cards
+Now, if we run the application, we can see our Card Collection:
+
+![](2019-10-07-18-48-32.png)
+
+It's quite pretty! Card Collection tries not to care what CSS files you are using (Bootstrap vs Material vs custom). Couple classes are still added by default which allows the cards to render nicely when used with Bootstrap: The collection gets the class **"row"** and each of the cards is wrapped inside class **col-3**.
+
+You can use **CardClass** and **Class** properties to configure what classes are applied to the collection and to its content. To make the cards larger, we can change the card class to col-6:
+
+```html {.line-numbers}
+    <AdaptiveCards CardClass="col-6" TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"></AdaptiveCards>
+```
+
+This will give us two columns instead of four:
+
+![](2019-10-07-18-52-25.png)
+
+In the next and last section of this tutorial we will add support for handling the actions.
+
+### Handling Actions in 
+
+Similar to the first part of this tutorial, our cards contain two actions: OpenLink and Submit action:
+
+![](2019-10-07-19-00-13.png)
+
+The "Open weather service" action is of type OpenLink and it works automatically. But we need to handle manually the "Share..." functionality using C#. As before, we add a little textbox above the component to display information about the action. But this time we "catch" the actual model from the card in order to display information. We can use the SubmitHandler or On:
+
+```html {.line-numbers}
+    <AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"></AdaptiveCards>
+```
+
 
 ## Next Steps
+
+That concludes our getting started guide. We covered lots of features like templating, handling actions and card collections. There's still a whole lot of features we didn't cover in this tutorial, including animating the cards and using template selectors and template providers.
+
+Hope you enjoy using Adaptive Cards for Blazor! Let us know if you have any issues or feature requests through our project's home page on [GitHub](https://github.com/mikoskinen/Blazor.AdaptiveCards).

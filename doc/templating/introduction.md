@@ -1,5 +1,6 @@
 ---
 order: 0
-title: Introduction to Blazor Adaptive Cards
+title: Introduction to templating
 ---
 
+TODO

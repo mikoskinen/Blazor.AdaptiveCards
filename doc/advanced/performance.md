@@ -1,5 +1,6 @@
 ---
-order: 0
-title: Performance tips for Blazor Adaptive Cards
+order: 2
+title: Performance tips
 ---
 
+TODO

@@ -1,16 +1,13 @@
-﻿@page "/counter"
+@page "/counter"
 
-<h1>Counter</h1>
+<TemplatedAdaptiveCard Model="customer" TModel="Customer" Schema="@schema"></TemplatedAdaptiveCard>
 
-<p>Current count: @currentCount</p>
+@code{
+    string schema = "";
+    Customer customer = new Customer() { FirstName = "My", LastName = "Name" };
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-
-@code {
-    int currentCount = 0;
-
-    void IncrementCount()
+    protected override void OnInitialized()
     {
-        currentCount++;
+        schema = System.IO.File.ReadAllText("TemplatedAdaptiveCard.json");
     }
 }

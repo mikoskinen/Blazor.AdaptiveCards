@@ -10,6 +10,7 @@
 	</Navigations>
 	<SecondaryLinks>
 		<SecondaryLink Url="https://www.adaptivecardsblazor.com">Project Home</SecondaryLink>
+		<SecondaryLink Url="https://github.com/mikoskinen/Blazor.AdaptiveCards">GitHub</SecondaryLink>
 	</SecondaryLinks>	
   </site>
   <ChildPages Location="" DefaultPageLayoutFile="page.cshtml" IndexLayoutFile="pagesindex.cshtml" IndexFileName="all.html" FolderPerPage="false" ReadmeName="index"
@@ -17,7 +18,7 @@
 			  RssGenerate="false" RssFeedName="" RssUri="" RssAuthor="" RssDescription="">
     <Groups>
       <Group Key="">Home</Group>
-      <Group Key="basic">Getting started</Group>
+      <Group Key="basic">Introduction</Group>
       <Group Key="actions">Actions</Group>
       <Group Key="templating">Templating</Group>
       <Group Key="cards">Card Collections</Group>

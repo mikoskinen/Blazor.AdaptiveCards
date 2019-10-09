@@ -1,5 +1,6 @@
 ---
-order: 0
-title: Configuring Blazor Adaptive Cards
+order: 5
+title: Handling rendering errors
 ---
 
+TODO
