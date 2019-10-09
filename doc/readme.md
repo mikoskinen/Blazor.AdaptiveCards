@@ -17,7 +17,7 @@ Adaptive Cards for Blazor provides components for displaying Adaptive Cards insi
 * **JSON-support**: Create and display Adaptive Cards from the JSON-schema.
 * **Templating**: Combine models (objects) and the schema.
 * **Card Collections**: Display a list of cards based on model and use template selector to customize the output.
-* **Action support**: Handle submit and openlink actions using C#.
+* **Action support**: Handle Submit and OpenUrl actions using C#.
 * **Native .NET-based solution**: Blazor Adaptive Cards is based on the official .NET SDK for Adaptive Cards. 
 
 ## Samples
