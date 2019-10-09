@@ -114,4 +114,4 @@ Here's a card for displaying the weather:
         schema = System.IO.File.ReadAllText("WeatherSchema.json");
     }
 }
-```html
+```
