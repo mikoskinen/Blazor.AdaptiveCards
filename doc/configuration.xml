@@ -9,7 +9,7 @@
 		<Navigation Url="/" ExtraClass="active">Documentation</Navigation>
 	</Navigations>
 	<SecondaryLinks>
-		<SecondaryLink Url="https://www.adaptivecardsblazor.com">Project Home</SecondaryLink>
+		<SecondaryLink Url="https://adaptivecardsblazor.com">Project Home</SecondaryLink>
 		<SecondaryLink Url="https://github.com/mikoskinen/Blazor.AdaptiveCards">GitHub</SecondaryLink>
 	</SecondaryLinks>	
   </site>
