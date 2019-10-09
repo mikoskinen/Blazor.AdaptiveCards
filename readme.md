@@ -31,7 +31,7 @@ Getting Started guide is available through the [project's home site](https://ada
 #### Add NuGet
 
 ```csharp
-Install-Package Elma AdaptiveCardsBlazor
+Install-Package AdaptiveCardsBlazor
 ```
 
 #### Configure Startup.cs

@@ -10,7 +10,7 @@ The quick start assumes that an existing server side Blazor application is modif
 #### Add NuGet
 
 ```csharp
-Install-Package Elma AdaptiveCardsBlazor
+Install-Package AdaptiveCardsBlazor
 ```
 
 #### Configure Startup.cs
