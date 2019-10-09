@@ -700,7 +700,7 @@ And here's the same part modified to support templating:
       "size": "large",
       "isSubtle": true
     },
-```json
+```
 
 After going through our schema and replacing everything else except the hard-coded image, here's the full outcome:
 
