@@ -1,0 +1,42 @@
+@page "/templateselector"
+@using global::AdaptiveCards.Blazor.Templating
+
+@using AdaptiveCards.Blazor.Samples.Data
+@inject WeatherForecastService ForecastService
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (Customers?.Any() == true)
+{
+    <CardCollection TemplateSelector="SelectTemplate" Models="@Customers"></CardCollection>
+}
+
+@code {
+    private List<Customer> Customers = new List<Customer>();
+
+    [Inject]
+    private IModelTemplateCatalog ModelTemplateCatalog { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Customers.Clear();
+
+        for (int i = 0; i < 10; i++)
+        {
+            Customers.Add(new Customer() { FirstName = $"Person {i}", LastName = "Lastname" });
+        }
+    }
+
+    private string SelectTemplate(object customer)
+    {
+        var cust = (Customer)customer;
+        if (cust.FirstName.Contains("2") || cust.FirstName.Contains("5"))
+        {
+            return ModelTemplateCatalog.Get("Alternative");
+        }
+
+        return ModelTemplateCatalog.Get(customer.GetType().Name);
+    }
+}

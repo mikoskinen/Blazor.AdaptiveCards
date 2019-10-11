@@ -1,0 +1,31 @@
+@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Components
+
+@inherits AdaptiveCardsBase
+
+@if (Models?.Any() == true)
+{
+    <div @attributes="Attributes" class="@(@class)">
+        <CascadingValue Value="@RenderMode" Name="RenderMode">
+            <CascadingValue Value="@TemplateName" Name="TemplateName">
+                <CascadingValue Value="@TemplateSelector" Name="TemplateSelector">
+                    <CascadingValue Value="@Schema" Name="Template">
+                        @{
+                            var index = 0;
+                        }
+                        @foreach (var model in Models)
+                        {
+                            <TemplatedAdaptiveCard Model="@model" Attributes="@(GetCardAttributes(index, model))"
+                                                   SubmitHandler="@SubmitHandler"
+                                                   OnCardRenderFailed="@OnCardRenderFailed"
+                                                   OnCardRendered="@OnCardRendered"
+                                                   OnSubmitAction="@OnSubmitAction"
+                                                   OnOpenLinkAction="@OnOpenLinkAction"></TemplatedAdaptiveCard>
+                        }
+                    </CascadingValue>
+                </CascadingValue>
+            </CascadingValue>
+        </CascadingValue>
+    </div>
+}

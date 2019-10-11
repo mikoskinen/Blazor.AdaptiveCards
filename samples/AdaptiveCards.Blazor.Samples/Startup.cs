@@ -35,8 +35,8 @@ namespace AdaptiveCards.Blazor.Samples
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddBlazorAdaptiveCards()
-    .AddFileTemplate<Customer>("TemplatedAdaptiveCard.json")
-    .AddFileTemplate("Alternative", "TemplatedAdaptiveCard2.json");
+                .AddFileTemplate<Customer>("TemplatedAdaptiveCard.json")
+                .AddFileTemplate("Alternative", "TemplatedAdaptiveCard2.json");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

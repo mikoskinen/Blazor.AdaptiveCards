@@ -1,4 +1,4 @@
-@page "/fetchdata"
+@page "/cardcollectionsubmithandler"
 
 @using AdaptiveCards.Blazor.Samples.Data
 @inject WeatherForecastService ForecastService
@@ -18,7 +18,7 @@ else
         <b>@selectedForecast.Date.ToShortDateString(): </b> @submittedTo
     }
 
-    <CardCollection OnSubmitAction="@SendEmail" CardClass="col-6" Models="@forecasts" Schema="@schema"></CardCollection>
+    <CardCollection SubmitHandler="this" CardClass="col-6" Models="@forecasts" Schema="@schema"></CardCollection>
 }
 
 @code {
@@ -33,11 +33,14 @@ else
         schema = System.IO.File.ReadAllText("WeatherSchemaTemplate.json");
     }
 
-    public void SendEmail(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    public Task Submit(WeatherForecast model, string emailAddress, TemplatedAdaptiveCard card)
     {
-        submittedTo = eventArgs.Data["emailAddress"].ToString();
-        selectedForecast = (WeatherForecast)eventArgs.Model;
+        submittedTo = emailAddress;
+        selectedForecast = model;
 
-        eventArgs.AdaptiveCard.ShouldReRender = true;
+        card.ShouldReRender = true;
+
+        StateHasChanged();
+        return Task.CompletedTask;
     }
 }

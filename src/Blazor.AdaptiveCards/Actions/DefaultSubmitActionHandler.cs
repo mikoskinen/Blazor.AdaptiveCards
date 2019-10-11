@@ -110,6 +110,13 @@ namespace AdaptiveCards.Blazor.Actions
                         continue;
                     }
 
+                    if (eventArgs.AdaptiveCard != null && eventArgs.AdaptiveCard.GetType().IsAssignableFrom(methodParameter.ParameterType))
+                    {
+                        arguments.Add(eventArgs.AdaptiveCard);
+
+                        continue;
+                    }
+
                     if (eventArgs.Data != null && !IsSimpleType(methodParameter.ParameterType))
                     {
                         var json = System.Text.Json.JsonSerializer.Serialize(eventArgs.Data);

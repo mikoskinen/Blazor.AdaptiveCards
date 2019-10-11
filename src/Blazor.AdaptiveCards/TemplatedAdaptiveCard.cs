@@ -1,12 +1,10 @@
 using System.Text.Json;
-using AdaptiveCards;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 using System;
 using AdaptiveCards.Blazor.Actions;
 using AdaptiveCards.Blazor.Templating;
 using System.Collections.Generic;
-using Microsoft.JSInterop;
 
 namespace AdaptiveCards.Blazor
 {
@@ -16,14 +14,14 @@ namespace AdaptiveCards.Blazor
     /// </summary>
     /// <typeparam name="TModel">The type of the model.</typeparam>
     /// <seealso cref="Blazor.AdaptiveCards.AdaptiveCard" />
-    public class TemplatedAdaptiveCard<TModel> : AdaptiveCard
+    public class TemplatedAdaptiveCard : AdaptiveCard
     {
-        private TModel _model;
+        private object _model;
         private string _modelJson;
         private string _templateName;
 
         [Parameter]
-        public TModel Model
+        public object Model
         {
             get
             {
@@ -60,9 +58,9 @@ namespace AdaptiveCards.Blazor
         private string ParentTemplateName { get; set; }
 
         [CascadingParameter(Name = "TemplateSelector")]
-        private Func<TModel, string> TemplateSelector { get; set; }
+        private Func<object, string> TemplateSelector { get; set; }
 
-        public async Task RenderCard(string schema, TModel model)
+        public async Task RenderCard(string schema, object model)
         {
             _modelJson = JsonSerializer.Serialize(model);
 
@@ -71,7 +69,6 @@ namespace AdaptiveCards.Blazor
 
         protected override void OnParametersSet()
         {
-
             base.OnParametersSet();
 
             if (TemplateSelector != null)
@@ -102,13 +99,13 @@ namespace AdaptiveCards.Blazor
 
             if (string.IsNullOrWhiteSpace(Schema))
             {
-                Schema = ModelTemplateCatalog.Get(typeof(TModel).Name);
+                Schema = ModelTemplateCatalog.Get(Model.GetType().Name);
             }
         }
 
         protected override async Task<AdaptiveCardParseResult> CreateCardFromSchema(string schema)
         {
-            var templatedSchema = await TemplatingProvider.CreateSchemaFromTemplate(schema, JsonSerializer.Deserialize<TModel>(_modelJson));
+            var templatedSchema = await TemplatingProvider.CreateSchemaFromTemplate(schema, _model);
 
             var result = global::AdaptiveCards.AdaptiveCard.FromJson(templatedSchema);
 

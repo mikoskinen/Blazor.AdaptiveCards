@@ -6,19 +6,16 @@ using Microsoft.AspNetCore.Components;
 
 namespace AdaptiveCards.Blazor
 {
-    public abstract class AdaptiveCardsBase<TModel> : ComponentBase
+    public abstract class AdaptiveCardsBase : ComponentBase
     {
         [Parameter]
         public string Schema { get; set; }
 
         [Parameter]
-        public RenderFragment<TModel> RowTemplate { get; set; }
+        public IEnumerable<object> Models { get; set; }
 
         [Parameter]
-        public List<TModel> Models { get; set; }
-
-        [Parameter]
-        public Func<TModel, string> TemplateSelector { get; set; }
+        public Func<object, string> TemplateSelector { get; set; }
 
         [Parameter]
         public string @class { get; set; } = "row";
@@ -30,7 +27,7 @@ namespace AdaptiveCards.Blazor
         public Dictionary<string, object> CardAttributes { get; set; } = new Dictionary<string, object>();
 
         [Parameter]
-        public List<(string, Func<int, TModel, object>)> CardAttributeFunctions { get; set; }
+        public List<(string, Func<int, object, object>)> CardAttributeFunctions { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> Attributes { get; set; }
@@ -68,7 +65,13 @@ namespace AdaptiveCards.Blazor
         /// <value>The submit handler.</value>
         [Parameter] public object SubmitHandler { get; set; }
 
-        protected Dictionary<string, object> GetCardAttributes(int index, TModel model)
+        /// <summary>
+        /// Gets or sets the template name.
+        /// </summary>
+        /// <value>The submit handler.</value>
+        [Parameter] public string TemplateName { get; set; }
+
+        protected Dictionary<string, object> GetCardAttributes(int index, object model)
         {
             var result = new Dictionary<string, object>(CardAttributes);
 

@@ -140,7 +140,6 @@ namespace AdaptiveCards.Blazor
         {
             try
             {
-
                 if (string.IsNullOrWhiteSpace(schema))
                 {
                     CardHtml = "";
