@@ -1,4 +1,4 @@
-@page "/namedtemplate"
+@page "/collections/defaulttemplate"
 
 @using AdaptiveCards.Blazor.Samples.Data
 @inject WeatherForecastService ForecastService
@@ -9,7 +9,7 @@
 
 @if (Customers?.Any() == true)
 {
-    <CardCollection TemplateName="Alternative" Models="@Customers"></CardCollection>
+    <CardCollection Models="@Customers"></CardCollection>
 }
 
 @code {

@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AdaptiveCards.Blazor.Samples.Data;
 using AdaptiveCards.Blazor.Extensions;
+
 namespace AdaptiveCards.Blazor.Samples
 {
 
@@ -34,9 +30,11 @@ namespace AdaptiveCards.Blazor.Samples
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+
             services.AddBlazorAdaptiveCards()
-                .AddFileTemplate<Customer>("TemplatedAdaptiveCard.json")
-                .AddFileTemplate("Alternative", "TemplatedAdaptiveCard2.json");
+                .AddTemplate<WeatherForecast>(Schemas.WeatherTemplated)
+                .AddTemplate<Customer>(Schemas.CustomerTemplated)
+                .AddFileTemplate("Alternative", "AlternativeTemplatedAdaptiveCard.json");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

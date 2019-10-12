@@ -21,7 +21,7 @@ Here's a card for displaying the weather:
 
     protected override void OnInitialized()
     {
-        schema = System.IO.File.ReadAllText("WeatherSchema.json");
+        schema = Schemas.Weather;
     }
 
     public void Submit(string emailAddress)

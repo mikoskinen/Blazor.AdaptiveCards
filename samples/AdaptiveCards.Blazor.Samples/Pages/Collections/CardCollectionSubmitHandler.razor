@@ -1,4 +1,4 @@
-@page "/cardcollectionsubmithandler"
+@page "/collections/submithandler"
 
 @using AdaptiveCards.Blazor.Samples.Data
 @inject WeatherForecastService ForecastService
@@ -30,7 +30,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
-        schema = System.IO.File.ReadAllText("WeatherSchemaTemplate.json");
+        schema = Schemas.WeatherTemplated;
     }
 
     public Task Submit(WeatherForecast model, string emailAddress, TemplatedAdaptiveCard card)

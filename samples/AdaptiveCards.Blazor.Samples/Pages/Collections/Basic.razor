@@ -1,0 +1,28 @@
+@page "/collections/basic"
+
+@using AdaptiveCards.Blazor.Samples.Data
+@inject WeatherForecastService ForecastService
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <CardCollection Models="@forecasts" Schema="@schema"></CardCollection>
+}
+
+@code {
+    WeatherForecast[] forecasts;
+    string schema;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        schema = Schemas.WeatherTemplated;
+    }
+}
