@@ -1,0 +1,66 @@
+@page "/samples"
+
+<h1>Official Samples</h1>
+
+<p>Here's a collection of different samples from <a href="https://adaptivecards.io/samples/" target="_blank">https://adaptivecards.io/samples/</a>:</p>
+
+<div class="row">
+    <div class="col-2">
+        <table>
+            @foreach (var schema in schemas)
+            {
+                <tr @onclick="@(() => SetSelectedSchema(schema))" style="cursor: pointer;">
+                    @if (schemaName == schema.Key)
+                    {
+                        <td><b>@schema.Key</b></td>
+                    }
+                    else
+                    {
+                        <td>@schema.Key</td>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col-7">
+        @CustomRender
+        @*<CodeBlock Language="language-json" Code="@schema"></CodeBlock>*@
+    </div>
+    <div class="col-3">
+        <AdaptiveCard Schema="@schema"></AdaptiveCard>
+    </div>
+</div>
+
+@code{
+    string schema = "";
+    string schemaName = "";
+    Dictionary<string, string> schemas = new Dictionary<string, string>();
+    private RenderFragment CustomRender { get; set; }
+
+    private RenderFragment CreateComponent() => builder =>
+    {
+        builder.OpenComponent(0, typeof(CodeBlock));
+        builder.AddAttribute(1, "Language", "language-json");
+        builder.AddAttribute(1, "Code", schema);
+        builder.CloseComponent();
+    };
+
+    protected override void OnInitialized()
+    {
+        schemas.Add("Activity update", Schemas.ActivityUpdate);
+        schemas.Add("Calendar reminder", Schemas.CalendarUpdate);
+        schemas.Add("Flight itinerary", Schemas.FlightItinerary);
+
+        var selectedSchema = schemas.First();
+
+        SetSelectedSchema(selectedSchema);
+    }
+
+    private void SetSelectedSchema(KeyValuePair<string, string> selectedSchema)
+    {
+        schemaName = selectedSchema.Key;
+        schema = selectedSchema.Value;
+
+        CustomRender = CreateComponent();
+    }
+}

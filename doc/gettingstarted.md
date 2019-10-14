@@ -512,7 +512,7 @@ Adaptive Cards for Blazor offers multiple ways of handling the submitted data. O
 }
 ```
 
-Note that the Submit method currently has to return Task. It's possible that in future also void methods can be used. Also, as behind the scenes the Submit method is awaited, StateHasChanged must be manually called, if the component needs updating.
+Note that the Submit method currently has to return Task. It's possible that in future also void methods can be used. Also, StateHasChanged must be manually called, if the component needs updating.
 
 This produces an identical result as the previous example:
 

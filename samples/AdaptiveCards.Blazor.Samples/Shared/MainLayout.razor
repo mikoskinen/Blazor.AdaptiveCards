@@ -1,15 +1,22 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 
-<div class="sidebar">
-    <NavMenu />
-</div>
+<div class="container-fluid">
+    <div class="row">
+        <NavMenu />
 
-<div class="main">
-    <div class="top-row px-4">
-        <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">About</a>
+        <main class="col-12 col-md-9 col-xl-10 bd-content" role="main">
+            <div class="mb-3"></div>
+            @Body
+        </main>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <footer class="bd-footer text-muted">
+                <div class="p-4">
+                    <p>Documentation built with <a target="_blank" href="https://grazedocs.io">GrazeDocs</a>. <a target="_blank" href="https://getbootstrap.com/docs/4.3/assets/css/docs.min.css">"Bootstrap Docs"</a> theme by Twitter is licensed under <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="license noopener">CC BY 3.0</a></p>
+                </div>
+            </footer>
+        </div>
     </div>
 
-    <div class="content px-4">
-        @Body
-    </div>
 </div>

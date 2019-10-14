@@ -1,0 +1,36 @@
+<pre><code id="@_id" class="@Language">@Code
+</code>
+</pre>
+@code {
+    private string _code;
+
+    [Parameter]
+    public string Language { get; set; } = "language-csharp";
+
+    [Parameter]
+    public string Code
+    {
+        get
+        {
+            return _code;
+        }
+        set
+        {
+            if (string.Equals(_code, value))
+            {
+                return;
+            }
+
+            _code = value;
+        }
+    }
+
+    [Inject] private IJSRuntime JsRuntime { get; set; }
+
+    private readonly Guid _id = Guid.NewGuid();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("codeBlock.highlight", _id.ToString());
+    }
+}

@@ -1,32 +1,143 @@
-<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">Weather Samples</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<div class="col-12 col-md-3 col-xl-2 bd-sidebar">
+    <button class="btn btn-link bd-search-docs-toggle d-md-none p-0 collapsed" type="button" data-toggle="collapse" data-target="#bd-docs-nav" aria-controls="bd-docs-nav" aria-expanded="false" aria-label="Toggle docs navigation"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" role="img" focusable="false"><title>Menu</title><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button>
+    <nav class="collapse bd-links" id="bd-docs-nav">
+
+        <div class="bd-toc-item active">
+            <a class="bd-toc-link" href="/">
+                Basic Usage
+            </a>
+
+            <ul class="nav bd-sidenav">
+                @*<NavLink class="" href="/collections/basic">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Collections
+                </NavLink>*@
+                <li>
+                    <a href="overview.html">
+                        Overview
+                    </a>
+                </li>
+                <li>
+                    <a href="samples.html">
+                        Samples
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="bd-toc-item active">
+            <a class="bd-toc-link" href="/">
+                Actions
+            </a>
+
+            <ul class="nav bd-sidenav">
+                @*<NavLink class="" href="/collections/basic">
+            <span class="oi oi-list-rich" aria-hidden="true"></span> Collections
+        </NavLink>*@
+                <li>
+                    <a href="overview.html">
+                        Open Url
+                    </a>
+                </li>
+                <li>
+                    <a href="samples.html">
+                        Submit
+                    </a>
+                </li>
+                <li>
+                    <a href="samples.html">
+                        Submit with handler
+                    </a>
+                </li>
+                <li>
+                    <a href="samples.html">
+                        Open Card
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+
+        <div class="bd-toc-item active">
+            <a class="bd-toc-link" href="/">
+                Templating
+            </a>
+
+            <ul class="nav bd-sidenav">
+                @*<NavLink class="" href="/collections/basic">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Collections
+                </NavLink>*@
+                <li>
+                    <a href="overview.html">
+                        Overview
+                    </a>
+                </li>
+                <li>
+                    <a href="samples.html">
+                        Default Template
+                    </a>
+                </li>
+                <li>
+                    <a href="samples.html">
+                        Template Selector
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bd-toc-item active">
+            <a class="bd-toc-link" href="/">
+                Card Collection
+            </a>
+
+            <ul class="nav bd-sidenav">
+                @*<NavLink class="" href="/collections/basic">
+            <span class="oi oi-list-rich" aria-hidden="true"></span> Collections
+        </NavLink>*@
+                <li>
+                    <a href="overview.html">
+                        Overview
+                    </a>
+                </li>
+                <li>
+                    <a href="samples.html">
+                        Default Template
+                    </a>
+                </li>
+                <li>
+                    <a href="samples.html">
+                        Template Selector
+                    </a>
+                </li>
+                <li>
+                    <a href="samples.html">
+                        Submit Action
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bd-toc-item active">
+            <a class="bd-toc-link" href="/">
+                Misc
+            </a>
+
+            <ul class="nav bd-sidenav">
+                @*<NavLink class="" href="/collections/basic">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Collections
+                </NavLink>*@
+                <li>
+                    <a href="overview.html">
+                        Animation
+                    </a>
+                </li>
+                <li>
+                    <a href="samples.html">
+                        Render Mode
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/collections/basic">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Collections
-            </NavLink>
-        </li>
-    </ul>
-</div>
-
-@code {
-    bool collapseNavMenu = true;
-
-    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}

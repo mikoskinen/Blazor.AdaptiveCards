@@ -6,15 +6,49 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AdaptiveCards.Blazor.Samples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>AdaptiveCards for Blazor Samples</title>
     <base href="~/" />
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
-    <link href="css/site.css" rel="stylesheet" />
+
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="docs.min.css" rel="stylesheet">
+    <link href="prism.css" rel="stylesheet">
+    <link href="simpleLightbox.min.css" rel="stylesheet">
+    <link href="theme.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+
     <link href="css/outlook.css" rel="stylesheet" />
+    <script src="popper.min.js"></script>
+    <script src="prism.js" data-manual></script>
+    <script src="codeBlockJsInterop.js" data-manual></script>
+
     <script src="_content/AdaptiveCardsBlazor/adaptiveCardsJsInterop.js"></script>
 </head>
 <body>
+    <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar bd-fix">
+
+        <a class="navbar-brand mr-0 mr-md-2" href="/"><img src="~/logo.png" width="36" height="36" class="d-block" viewBox="0 0 612 612" role="img" focusable="false" /></a>
+
+        <div class="navbar-nav-scroll">
+            <ul class="navbar-nav bd-navbar-nav flex-row">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://adaptivecardsblazor.com/">Documentation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="https://samples.adaptivecardsblazor.com/">Samples</a>
+                </li>
+            </ul>
+        </div>
+
+        <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+            <li class="nav-item">
+                <a class="nav-link p-2" href="https://adaptivecardsblazor.com/" target="_blank" rel="noopener">Project Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link p-2" href="https://github.com/mikoskinen/Blazor.AdaptiveCards" target="_blank" rel="noopener">GitHub</a>
+            </li>
+        </ul>
+    </header>
     <app>
         @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
     </app>
