@@ -3,9 +3,11 @@
 @using AdaptiveCards.Blazor.Samples.Data
 @inject WeatherForecastService ForecastService
 
-<h1>Weather forecast</h1>
+<h1>Card Collection Overview</h1>
 
-<p>This component demonstrates fetching data from a service.</p>
+<Info>
+    Card Collection allow you to display collection of Adaptive Cards. This sample shows the basic usage of the Card Collection.
+</Info>
 
 @if (forecasts == null)
 {
@@ -13,16 +15,32 @@
 }
 else
 {
-    <CardCollection Models="@forecasts" Schema="@schema"></CardCollection>
+    <CardCollection Models="@forecasts" Schema="@Schemas.WeatherTemplated" OnSubmitAction="OnSubmit" OnOpenUrlAction="OnNavigation"></CardCollection>
+}
+
+@if (!string.IsNullOrWhiteSpace(actionDetails))
+{
+    <p class="alert alert-success mt-3" style="white-space: pre-wrap">@actionDetails</p>
 }
 
 @code {
+    string actionDetails = "";
     WeatherForecast[] forecasts;
     string schema;
 
     protected override async Task OnInitializedAsync()
     {
         forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
-        schema = Schemas.WeatherTemplated;
+    }
+
+    private void OnSubmit(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        var details = new { eventArgs.Data, eventArgs.Model };
+        actionDetails = "OnSubmit: " + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(details, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true });
+    }
+
+    private void OnNavigation(string url)
+    {
+        actionDetails = "OnNavigation: " + Environment.NewLine + url;
     }
 }

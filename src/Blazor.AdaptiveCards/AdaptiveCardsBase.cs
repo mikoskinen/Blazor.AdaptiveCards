@@ -21,7 +21,7 @@ namespace AdaptiveCards.Blazor
         public string @class { get; set; } = "row";
 
         [Parameter]
-        public string CardClass { get; set; } = "col-3";
+        public string CardClass { get; set; } = "col-3 mb-3";
 
         [Parameter]
         public Dictionary<string, object> CardAttributes { get; set; } = new Dictionary<string, object>();
@@ -39,7 +39,7 @@ namespace AdaptiveCards.Blazor
         /// Gets or sets the handler which is executed when opening link.
         /// </summary>
         /// <value>The handler.</value>
-        [Parameter] public EventCallback<string> OnOpenLinkAction { get; set; }
+        [Parameter] public EventCallback<string> OnOpenUrlAction { get; set; }
 
         /// <summary>
         /// Gets or sets the submit action handler.

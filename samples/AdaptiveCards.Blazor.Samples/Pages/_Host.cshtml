@@ -21,6 +21,8 @@
     <script src="popper.min.js"></script>
     <script src="prism.js" data-manual></script>
     <script src="codeBlockJsInterop.js" data-manual></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script src="_content/AdaptiveCardsBlazor/adaptiveCardsJsInterop.js"></script>
 </head>
@@ -50,9 +52,15 @@
         </ul>
     </header>
     <app>
-        @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
+        @(await Html.RenderComponentAsync<App>(RenderMode.Server))
     </app>
 
     <script src="_framework/blazor.server.js"></script>
+
+    <script>
+        AOS.init({
+            once: true
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,44 @@
+@page "/collections/layouts"
+
+@using AdaptiveCards.Blazor.Samples.Data
+@inject WeatherForecastService ForecastService
+
+<h1>Customizing Layouts with Card Collection</h1>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <Info>This is the default layout</Info>
+    <CardCollection Models="@forecasts" Schema="@Schemas.WeatherTemplated"></CardCollection>
+
+    <Info class="mt-4">Cards without bottom marginals</Info>
+    <CardCollection CardClass="col-3 m-0" Models="@forecasts" Schema="@Schemas.WeatherTemplated"></CardCollection>
+
+    <Info class="mt-4">Larger cards</Info>
+    <CardCollection CardClass="col-12" Models="@forecasts" Schema="@Schemas.WeatherTemplated"></CardCollection>
+
+    <Info class="mt-4">Smaller cards</Info>
+    <CardCollection CardClass="col-2" Models="@forecasts" Schema="@Schemas.WeatherTemplated"></CardCollection>
+
+    <Info class="mt-4">Smaller Card Collection</Info>
+    <CardCollection class="row col-6" Models="@forecasts" Schema="@Schemas.WeatherTemplated"></CardCollection>
+
+    <Info class="mt-4">List based Card Collection</Info>
+    <ListCardCollection class="col-6" Models="@forecasts.Take(3)" Schema="@Schemas.WeatherTemplated"></ListCardCollection>
+
+    <Info class="mt-4">Masonry-like</Info>
+    <CardCollection class="card-columns" CardClass="card" Models="@forecasts" Schema="@Schemas.WeatherTemplated"></CardCollection>
+}
+
+@code {
+    WeatherForecast[] forecasts;
+    string schema;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+    }
+}

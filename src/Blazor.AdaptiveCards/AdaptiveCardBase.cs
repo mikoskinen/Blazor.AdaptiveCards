@@ -152,11 +152,11 @@ namespace AdaptiveCards.Blazor
                     return;
                 }
 
+                CurrentSchema = schema;
+
                 var adaptiveCard = await CreateCardFromSchema(schema);
                 var renderedAdaptiveCard = Renderer.RenderCard(adaptiveCard.Card);
                 CardHtml = renderedAdaptiveCard.Html.ToString();
-
-                CurrentSchema = schema;
 
                 if (RenderMode == RenderMode.Asynchronous)
                 {

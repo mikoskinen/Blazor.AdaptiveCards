@@ -292,9 +292,6 @@ namespace AdaptiveCards.Blazor.Samples
     }
   ]
 }";
-        #endregion
-
-        #region Templated Weather
         public static string WeatherTemplated = @"{
   ""$schema"": ""http://adaptivecards.io/schemas/adaptive-card.json"",
   ""type"": ""AdaptiveCard"",
@@ -378,11 +375,6 @@ namespace AdaptiveCards.Blazor.Samples
   ],
   ""actions"": [
     {
-      ""type"": ""Action.OpenUrl"",
-      ""title"": ""Open Weather Service"",
-      ""url"": ""https://weather.com""
-    },
-    {
       ""type"": ""Action.ShowCard"",
       ""title"": ""Share..."",
       ""card"": {
@@ -401,7 +393,8 @@ namespace AdaptiveCards.Blazor.Samples
         ""actions"": [
           {
             ""type"": ""Action.Submit"",
-            ""title"": ""Send Email""
+            ""title"": ""Send Email"",
+            ""name"" : ""Send""
           }
         ]
       }
@@ -432,7 +425,7 @@ namespace AdaptiveCards.Blazor.Samples
           ""items"": [
             {
               ""type"": ""Image"",
-              ""url"": ""https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg"",
+              ""url"": ""https://via.placeholder.com/400"",
               ""size"": ""small"",
               ""style"": ""person""
             }
@@ -477,7 +470,7 @@ namespace AdaptiveCards.Blazor.Samples
         },
         {
           ""title"": ""Assigned to:"",
-          ""value"": ""Matt Hidinger""
+          ""value"": ""This Person""
         },
         {
           ""title"": ""Due date:"",

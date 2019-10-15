@@ -1,0 +1,45 @@
+@page "/misc/animation"
+
+@using AdaptiveCards.Blazor.Samples.Data
+@inject WeatherForecastService ForecastService
+
+<h1>Card Collection with Animation</h1>
+
+
+
+@if (Customers?.Any() == true)
+{
+    <Info>
+        This sample shows how cards can be animated using aos.js
+    </Info>
+    <CardCollection Models="@Customers" CardAttributes="@AnimationAttributes"></CardCollection>
+
+    <Info class="mt-4">
+        This sample shows how cards can be animated one by one
+    </Info>
+
+    <CardCollection Models="@Customers" CardAttributes="@AnimationAttributes" CardAttributeFunctions="@AttributeFunctions"></CardCollection>
+}
+
+
+
+@code {
+    private List<Customer> Customers = new List<Customer>();
+    private Dictionary<string, object> AnimationAttributes = new Dictionary<string, object>() {
+        { "data-aos", "fade-up" },
+    };
+
+    private List<(string, Func<int, object, object>)> AttributeFunctions = new List<(string, Func<int, object, object>)>() {
+        ("data-aos-delay", (i, customer) => (i * 200).ToString())
+    };
+
+    protected override void OnInitialized()
+    {
+        Customers.Clear();
+
+        for (int i = 0; i < 10; i++)
+        {
+            Customers.Add(new Customer() { FirstName = $"Person {i}", LastName = "Lastname" });
+        }
+    }
+}

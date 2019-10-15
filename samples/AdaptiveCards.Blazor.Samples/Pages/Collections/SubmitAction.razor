@@ -3,40 +3,72 @@
 @using AdaptiveCards.Blazor.Samples.Data
 @inject WeatherForecastService ForecastService
 
-<h1>Weather forecast</h1>
+<h1>Handling Submit Action in Card Collection</h1>
 
-<p>This component demonstrates fetching data from a service.</p>
+<div class="row">
+    <div class="col-8">
+        @if (forecasts == null)
+        {
+            <p><em>Loading...</em></p>
+        }
 
-@if (forecasts == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    @if (selectedForecast != null && !string.IsNullOrWhiteSpace(submittedTo))
-    {
-        <b>@selectedForecast.Date.ToShortDateString(): </b> @submittedTo
-    }
+        else
+        {
+            <Info>This sample demonstrates how Submit action can be handled using OnSubmitAction.</Info>
 
-    <CardCollection OnSubmitAction="@SendEmail" CardClass="col-6" Models="@forecasts" Schema="@schema"></CardCollection>
-}
+            <CardCollection OnSubmitAction="@SendEmail" Models="@forecasts" Schema="@Schemas.WeatherTemplated"></CardCollection>
+
+            <Info class="mt-4">This sample demonstrates how Submit action can be handled using SubmitHandler.</Info>
+
+            <CardCollection SubmitHandler="this" Models="@forecasts" Schema="@Schemas.WeatherTemplated"></CardCollection>
+
+            <Info class="mt-4">This sample demonstrates how to rerender the card which submitted the action</Info>
+            <CardCollection OnSubmitAction="@SendEmailReRender" Models="@forecasts" Schema="@Schemas.WeatherTemplated"></CardCollection>
+        }
+    </div>
+    <div class="col-4">
+        @if (!string.IsNullOrWhiteSpace(actionDetails))
+        {
+            <Sticky>
+                <p class="alert alert-success" style="white-space: pre-wrap">@actionDetails</p>
+            </Sticky>
+        }
+    </div>
+</div>
 
 @code {
     WeatherForecast[] forecasts;
-    string schema;
     WeatherForecast selectedForecast = null;
-    string submittedTo = null;
+    string actionDetails = "";
 
     protected override async Task OnInitializedAsync()
     {
         forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
-        schema = Schemas.WeatherTemplated;
     }
 
     public void SendEmail(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
     {
-        submittedTo = eventArgs.Data["emailAddress"].ToString();
+        var details = new { eventArgs.Action, eventArgs.Data, eventArgs.Model };
+        actionDetails = "SendEmail: " + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(details, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true });
+    }
+
+    public Task Submit(WeatherForecast model, string emailAddress, TemplatedAdaptiveCard card)
+    {
+        var details = new { emailAddress, model };
+        actionDetails = "Submit: " + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(details, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true });
+
+        StateHasChanged();
+
+        return Task.CompletedTask;
+    }
+
+    public void SendEmailReRender(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        var details = new { eventArgs.Action, eventArgs.Data, eventArgs.Model };
+        actionDetails = "SendEmailReRender: " + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(details, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true });
+
         selectedForecast = (WeatherForecast)eventArgs.Model;
+        selectedForecast.Summary = "Shared";
 
         eventArgs.AdaptiveCard.ShouldReRender = true;
     }

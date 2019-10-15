@@ -42,3 +42,7 @@ pre[class*="language-"] > code {
 .ac-textinput.ac-input {
     width: 100%;
 }
+
+.ac-adaptivecard.ac-showCard{
+    border: 0px;
+}

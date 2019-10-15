@@ -3,9 +3,11 @@
 @using AdaptiveCards.Blazor.Samples.Data
 @inject WeatherForecastService ForecastService
 
-<h1>Weather forecast</h1>
+<h1>Card Collection with Named Template</h1>
 
-<p>This component demonstrates fetching data from a service.</p>
+<Info>
+    This sample shows how the name of the template can be used to render cards in Card Collection.
+</Info>
 
 @if (Customers?.Any() == true)
 {

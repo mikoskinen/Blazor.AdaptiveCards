@@ -7,46 +7,38 @@
 
 <div class="row">
     <div class="col-4">
-        <p>This demonstarates how Submit action can be handled using OnSubmitAction.</p>
+        <Info>This demonstrates how Submit action can be handled using OnSubmitAction.</Info>
 
-        <AdaptiveCard Schema="@schema" OnSubmitAction="OnSubmit"></AdaptiveCard>
+        <AdaptiveCard Schema="@Schemas.SimpleSubmit" OnSubmitAction="OnSubmit"></AdaptiveCard>
 
-        <p class="mt-3">This demonstarates how Submit action can be handled using SubmitHandler.</p>
+        <Info class="mt-4">This demonstrates how Submit action can be handled using SubmitHandler.</Info>
 
-        <AdaptiveCard Schema="@schema" SubmitHandler="this"></AdaptiveCard>
+        <AdaptiveCard Schema="@Schemas.SimpleSubmit" SubmitHandler="this"></AdaptiveCard>
 
-        <p class="mt-3">This demonstarates how Submit action can be handled using SubmitHandler and model binding.</p>
+        <Info class="mt-4">This demonstrates how Submit action can be handled using SubmitHandler and model binding.</Info>
 
-        <AdaptiveCard Schema="@schema2" SubmitHandler="this"></AdaptiveCard>
+        <AdaptiveCard Schema="@Schemas.SimpleSubmitNamedAction" SubmitHandler="this"></AdaptiveCard>
 
-        <p class="mt-3">This demonstarates how how handle card with multiple submit actions using OnSubmitAction.</p>
+        <Info class="mt-4">This demonstrates how to handle a card with multiple submit actions using OnSubmitAction.</Info>
 
-        <AdaptiveCard Schema="@schema3" OnSubmitAction="OnSubmitAndDecline"></AdaptiveCard>
+        <AdaptiveCard Schema="@Schemas.SimpleSubmitAndDecline" OnSubmitAction="OnSubmitAndDecline"></AdaptiveCard>
 
-        <p class="mt-3">This demonstarates how how handle card with multiple submit actions using SubmitHandler.</p>
+        <Info class="mt-4">This demonstrates how to handle a card with multiple submit actions using SubmitHandler.</Info>
 
-        <AdaptiveCard Schema="@schema3" SubmitHandler="this"></AdaptiveCard>
+        <AdaptiveCard Schema="@Schemas.SimpleSubmitAndDecline" SubmitHandler="this"></AdaptiveCard>
     </div>
     <div class="col-8">
         @if (!string.IsNullOrWhiteSpace(actionDetails))
         {
-            <p class="alert alert-success mt-3" style="white-space: pre-wrap">@actionDetails</p>
+            <Sticky>
+                <p class="alert alert-success mt-3" style="white-space: pre-wrap">@actionDetails</p>
+            </Sticky>
         }
     </div>
 </div>
 
 @code {
-    string schema;
-    string schema2;
-    string schema3;
     string actionDetails = "";
-
-    protected override void OnInitialized()
-    {
-        schema = Schemas.SimpleSubmit;
-        schema2 = Schemas.SimpleSubmitNamedAction;
-        schema3 = Schemas.SimpleSubmitAndDecline;
-    }
 
     private void OnSubmit(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
     {

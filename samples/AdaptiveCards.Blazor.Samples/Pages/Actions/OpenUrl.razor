@@ -5,14 +5,13 @@
 
 <h1>OpenUrl action</h1>
 
-<p>This demonstarates how OpenUrl action is automatically handled by Adaptive Cards for Blazor (Note: Navigation happens outside this page).</p>
+<Info>This demonstrates how OpenUrl action is automatically handled by Adaptive Cards for Blazor (Note: Navigation happens outside this page).</Info>
 
-<AdaptiveCard Schema="@schema"></AdaptiveCard>
+<AdaptiveCard Schema="@Schemas.WeatherOpenUrl"></AdaptiveCard>
 
-<div class="mb-3"></div>
-<p>This demonstarates how OpenUrl can be manually handled</p>
+<Info class="mt-5">This demonstrates how OpenUrl can be handled manually</Info>
 
-<AdaptiveCard OnOpenUrlAction="HandleOpenUrl" Schema="@schema"></AdaptiveCard>
+<AdaptiveCard OnOpenUrlAction="HandleOpenUrl" Schema="@Schemas.WeatherOpenUrl"></AdaptiveCard>
 
 @if (!string.IsNullOrWhiteSpace(openUrl))
 {
@@ -20,13 +19,7 @@
 }
 
 @code {
-    string schema;
     string openUrl;
-
-    protected override void OnInitialized()
-    {
-        schema = Schemas.WeatherOpenUrl;
-    }
 
     private void HandleOpenUrl(string url)
     {

@@ -1,0 +1,76 @@
+@page "/misc/Events"
+
+@using AdaptiveCards.Blazor.Samples.Data
+@inject WeatherForecastService ForecastService
+
+<h1>Handling Events</h1>
+
+<div class="row">
+    <div class="col-8">
+        @if (forecasts == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+
+        else
+        {
+            <Info>This sample demonstrates how to use OnCardRendered.</Info>
+            <AdaptiveCard Schema="@Schemas.Weather" OnCardRendered="HandleCardRendered"></AdaptiveCard>
+
+            <Info class="mt-4">This sample demonstrates how to use OnCardRenderFailed.</Info>
+            <AdaptiveCard Schema="broken schema" OnCardRenderFailed="HandleCardRenderFailed" ></AdaptiveCard>
+
+            <Info class="mt-4">This sample demonstrates how to use OnSubmit.</Info>
+            <AdaptiveCard Schema="@Schemas.SimpleSubmit" OnSubmitAction="HandleSubmit"></AdaptiveCard>
+
+            <Info class="mt-4">This sample demonstrates how to use OnOpenUrlAction.</Info>
+            <AdaptiveCard Schema="@Schemas.WeatherOpenUrl" OnOpenUrlAction="HandleOpenUrl"></AdaptiveCard>
+        }
+    </div>
+    <div class="col-4">
+        @if (!string.IsNullOrWhiteSpace(eventDetails))
+        {
+            <Sticky>
+                <p class="alert alert-success" style="white-space: pre-wrap">@eventDetails</p>
+            </Sticky>
+        }
+    </div>
+</div>
+
+@code {
+    WeatherForecast[] forecasts;
+    WeatherForecast selectedForecast = null;
+    string eventDetails = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+    }
+
+    public void HandleCardRendered(AdaptiveCards.Blazor.Actions.CardRenderedEventArgs eventArgs)
+    {
+        UpdateDetails("OnCardRendered:" + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(eventArgs, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true }));
+    }
+
+    public void HandleCardRenderFailed(AdaptiveCards.Blazor.Actions.CardRenderFailedEventArgs eventArgs)
+    {
+        var details = new { Exception = eventArgs.Exception.Message, Schema = eventArgs.Schema };
+        UpdateDetails("OnCardRenderFailed:" + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(details, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true }));
+    }
+
+    public void HandleSubmit(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        var details = new { eventArgs.Action, eventArgs.Data, eventArgs.Model };
+        UpdateDetails("OnSubmitAction:" + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(details, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true }));
+    }
+
+    public void HandleOpenUrl(string url)
+    {
+        UpdateDetails("OnOpenUrlAction:" + Environment.NewLine + url);
+    }
+
+    private void UpdateDetails(string text)
+    {
+        eventDetails = $"{Environment.NewLine}{DateTime.Now.ToString()}: {text}{Environment.NewLine}{eventDetails}";
+    }
+}

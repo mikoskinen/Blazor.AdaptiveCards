@@ -1,0 +1,47 @@
+@page "/collections/attributes"
+@using global::AdaptiveCards.Blazor.Templating
+
+@using AdaptiveCards.Blazor.Samples.Data
+@inject WeatherForecastService ForecastService
+
+<h1>Adding attributes to cards in Card Collection</h1>
+
+@if (Customers?.Any() == true)
+{
+    <Info>
+        This sample shows how to add custom attributes to each card. View the source code of the page to validate attributes.
+    </Info>
+
+    <CardCollection Models="@Customers" CardAttributes="@CustomAttributes"></CardCollection>
+
+    <Info class="mt-4">
+        This sample shows how to add index based attributes to each card. View the source code of the page to validate attributes.
+    </Info>
+
+    <CardCollection Models="@Customers" CardAttributes="@CustomAttributes" CardAttributeFunctions="@AttributeFunctions"></CardCollection>
+}
+
+@code {
+    private List<Customer>
+    Customers = new List<Customer>
+        ();
+
+    [Inject]
+    private IModelTemplateCatalog ModelTemplateCatalog { get; set; }
+
+    private Dictionary<string, object> CustomAttributes = new Dictionary<string, object>() { { "test", "attribute" }, { "Another", "Test Attribute" } };
+
+    private List<(string, Func<int, object, object>)> AttributeFunctions = new List<(string, Func<int, object, object>)>() {
+        ("card-index", (i, model) => i.ToString())
+    };
+
+    protected override void OnInitialized()
+    {
+        Customers.Clear();
+
+        for (int i = 0; i < 10; i++)
+        {
+            Customers.Add(new Customer() { FirstName = $"Person {i}", LastName = "Lastname" });
+        }
+    }
+}

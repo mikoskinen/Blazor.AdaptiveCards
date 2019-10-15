@@ -3,9 +3,11 @@
 @using AdaptiveCards.Blazor.Samples.Data
 @inject WeatherForecastService ForecastService
 
-<h1>Weather forecast</h1>
+<h1>Card Collection with Default Template</h1>
 
-<p>This component demonstrates fetching data from a service.</p>
+<Info>
+    This sample shows how the Card Collection automatically selects the default template. Default template is set in the application's ConfigureServices.
+</Info>
 
 @if (Customers?.Any() == true)
 {

@@ -1,10 +1,12 @@
 @page "/"
 
-<h1>Hello Adaptive Cards for Blazor!</h1>
+<h1>Adaptive Cards for Blazor sample</h1>
 
-Here's a card for displaying the weather:
+<Info>
+    This sample shows how to display Adaptive Card and to handle its actions
+</Info>
 
-<AdaptiveCard Schema="@schema" OnSubmitAction="HandleSubmit" OnOpenUrlAction="HandleNavigation"></AdaptiveCard>
+<AdaptiveCard Schema="@Schemas.Weather" OnSubmitAction="HandleSubmit" OnOpenUrlAction="HandleNavigation"></AdaptiveCard>
 
 @if (!string.IsNullOrWhiteSpace(navigatingTo))
 {
@@ -17,14 +19,8 @@ Here's a card for displaying the weather:
 }
 
 @code{
-    string schema = "";
     string submittedTo = "";
     string navigatingTo = "";
-
-    protected override void OnInitialized()
-    {
-        schema = Schemas.Weather;
-    }
 
     public void HandleNavigation(string url)
     {
