@@ -29,7 +29,6 @@ Install-Package AdaptiveCardsBlazor
 
 #### Configure _Imports.razor
 
-
 ```csharp
 ...
 @using AdaptiveCards.Blazor
@@ -41,77 +40,52 @@ Install-Package AdaptiveCardsBlazor
     <script src="_content/AdaptiveCardsBlazor/adaptiveCardsJsInterop.js"></script>
 ```
 
-#### Add JSON schema-file
-
-Please make sure that it is copied to output directory.
-
-Schema.json:
-
-```json
-{
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.0",
-  "body": [
-    {
-      "type": "TextBlock",
-      "text": "Warm",
-      "size": "large",
-      "isSubtle": true
-    },
-    {
-      "type": "TextBlock",
-      "text": "September 18, 7:30 AM",
-      "spacing": "none"
-    }
-  ]
-}
-```
-
-#### Load schema in component
+#### Create the schema in Index-component
 
 ```csharp
-@code{
-    string schema = "";
-
-    protected override void OnInitialized()
-    {
-        schema = System.IO.File.ReadAllText("Schema.json");
-    }
+@code {
+    string schema = @"{
+      ""$schema"": ""http://adaptivecards.io/schemas/adaptive-card.json"",
+      ""type"": ""AdaptiveCard"",
+      ""version"": ""1.2"",
+      ""body"": [
+        {
+          ""type"": ""TextBlock"",
+          ""text"": ""Adaptive Cards for Blazor simple example""
+        }
+      ]
+    }";
 }
 ```
 
 #### Render the card by adding component into page
 
 ```html
-        <AdaptiveCard Schema="@schema" SubmitHandler="this"></AdaptiveCard>
+        <AdaptiveCard Schema="@schema"></AdaptiveCard>
 ```
 
 ## Result
 
-![](2019-10-09-21-44-46.png)
+![](2019-10-15-19-09-18.png)
 
 ## Full source code of index.razor
 
 ```html
 @page "/"
 
-<h1>Hello Adaptive Cards for Blazor!</h1>
-
-Here's a card for displaying the weather:
-
-<div class="row">
-    <div class="col-3">
-        <AdaptiveCard Schema="@schema"></AdaptiveCard>
-    </div>
-</div>
+<AdaptiveCard Schema="@schema"></AdaptiveCard>
 
 @code{
-    string schema = "";
-
-    protected override void OnInitialized()
-    {
-        schema = System.IO.File.ReadAllText("WeatherSchema.json");
-    }
+    string schema = @"{
+      ""$schema"": ""http://adaptivecards.io/schemas/adaptive-card.json"",
+      ""type"": ""AdaptiveCard"",
+      ""version"": ""1.2"",
+      ""body"": [
+        {
+          ""type"": ""TextBlock"",
+          ""text"": ""Adaptive Cards for Blazor simple example""
+        }
+      ]
+    }";
 }
 ```

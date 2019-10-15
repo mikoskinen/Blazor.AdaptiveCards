@@ -2,6 +2,8 @@
 
 Adaptive Cards for Blazor is a community project that provides Adaptive Cards support for your Blazor applications. [Adaptive Cards](https://adaptivecards.io/) are a way to exchange content in a common and consistent way. Adaptive Cards can be integrated into different applications like Microsoft Teams and Outlook. Adaptive Cards can also be integrated into custom applications built with .NET, iOS and JavaScript. And now Blazor, the new Web App platform from Microsoft is supported.
 
+[![NuGet](https://img.shields.io/nuget/v/AdaptiveCardsBlazor.svg)](https://www.nuget.org/packages/AdaptiveCardsBlazor/)
+
 ## Feature Highlights
 
 Adaptive Cards for Blazor provides components for displaying Adaptive Cards inside your Blazor Application. Here's few of the most notable features of this library:
@@ -62,78 +64,49 @@ Install-Package AdaptiveCardsBlazor
     <script src="_content/AdaptiveCardsBlazor/adaptiveCardsJsInterop.js"></script>
 ```
 
-#### Add JSON schema-file
-
-Please make sure that it is copied to output directory.
-
-Schema.json:
-
-```json
-{
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.0",
-  "body": [
-    {
-      "type": "TextBlock",
-      "text": "Warm",
-      "size": "large",
-      "isSubtle": true
-    },
-    {
-      "type": "TextBlock",
-      "text": "September 18, 7:30 AM",
-      "spacing": "none"
-    }
-  ]
-}
-```
-
-#### Load schema in component
+#### Create the schema in Index-component
 
 ```csharp
-@code{
-    string schema = "";
-
-    protected override void OnInitialized()
-    {
-        schema = System.IO.File.ReadAllText("Schema.json");
-    }
+@code {
+    string schema = @"{
+      ""$schema"": ""http://adaptivecards.io/schemas/adaptive-card.json"",
+      ""type"": ""AdaptiveCard"",
+      ""version"": ""1.2"",
+      ""body"": [
+        {
+          ""type"": ""TextBlock"",
+          ""text"": ""Adaptive Cards for Blazor simple example""
+        }
+      ]
+    }";
 }
 ```
 
 #### Render the card by adding component into page
 
 ```html
-        <AdaptiveCard Schema="@schema" SubmitHandler="this"></AdaptiveCard>
+        <AdaptiveCard Schema="@schema"></AdaptiveCard>
 ```
-
-## Result
-
-![](2019-10-09-21-44-46.png)
 
 ## Full source code of index.razor
 
 ```html
 @page "/"
 
-<h1>Hello Adaptive Cards for Blazor!</h1>
-
-Here's a card for displaying the weather:
-
-<div class="row">
-    <div class="col-3">
-        <AdaptiveCard Schema="@schema"></AdaptiveCard>
-    </div>
-</div>
+<AdaptiveCard Schema="@schema"></AdaptiveCard>
 
 @code{
-    string schema = "";
-
-    protected override void OnInitialized()
-    {
-        schema = System.IO.File.ReadAllText("WeatherSchema.json");
-    }
+    string schema = @"{
+      ""$schema"": ""http://adaptivecards.io/schemas/adaptive-card.json"",
+      ""type"": ""AdaptiveCard"",
+      ""version"": ""1.2"",
+      ""body"": [
+        {
+          ""type"": ""TextBlock"",
+          ""text"": ""Adaptive Cards for Blazor simple example""
+        }
+      ]
+    }";
 }
 ```
 
