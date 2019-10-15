@@ -7,7 +7,7 @@
 	<Footer>Copyright 2019 Mikael Koskinen</Footer>
 	<Navigations>
 		<Navigation Url="/" ExtraClass="active">Documentation</Navigation>
-		<Navigation Url="https://adaptivecardsblazorsamplessvc.azurewebsites.net/" ExtraClass="">Samples</Navigation>
+		<Navigation Url="http://samples.adaptivecardsblazor.com" ExtraClass="">Samples</Navigation>
 	</Navigations>
 	<SecondaryLinks>
 		<SecondaryLink Url="https://adaptivecardsblazor.com">Project Home</SecondaryLink>

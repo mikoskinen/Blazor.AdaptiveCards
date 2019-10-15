@@ -22,7 +22,7 @@ Adaptive Cards for Blazor provides components for displaying Adaptive Cards insi
 
 ## Samples
 
-Samples are available from https://adaptivecardsblazorsamplessvc.azurewebsites.net/. Please note: The samples are currently hosted on a free Azure App Service plan. If the sample site gets too much traffic, Azure will throttle/take down the site. You can run the samples on your own computer by cloning the repository.
+Samples are available from http://samples.adaptivecardsblazor.com. Please note: The samples are currently hosted on a free Azure App Service plan. If the sample site gets too much traffic, Azure will throttle/take down the site. You can run the samples on your own computer by cloning the repository.
 
 There's also a WeatherCards sample app. This sample is part of the getting started guide and can be found from https://github.com/mikoskinen/Blazor.AdaptiveCards/tree/master/samples/WeatherCards
 
