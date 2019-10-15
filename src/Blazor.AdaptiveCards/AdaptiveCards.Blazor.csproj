@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
@@ -8,7 +8,7 @@
     <Company />
     <Description>Adaptive Cards for Blazor provides powerful support for using Adaptive Cards inside Blazor Applications.</Description>
     <PackageDescription>Adaptive Cards for Blazor provides powerful and fully featured support for using Adaptive Cards inside Blazor Applications. Some of the feature highlights include built-in support for templates, ability to handle actions in C# and many more.</PackageDescription>
-    <PackageProjectUrl>https://github.com/mikoskinen/Blazor.AdaptiveCards</PackageProjectUrl>
+    <PackageProjectUrl>https://adaptivecardsblazor.com</PackageProjectUrl>
     <Copyright>©2019 Mikael Koskinen</Copyright>
     <PackageId>AdaptiveCardsBlazor</PackageId>
     <Product>AdaptiveCards.Blazor</Product>

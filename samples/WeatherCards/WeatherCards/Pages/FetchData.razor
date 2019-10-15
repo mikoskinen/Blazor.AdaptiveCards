@@ -18,7 +18,7 @@ else
         <b>@selectedForecast.Date.ToShortDateString(): </b> @submittedTo
     }
 
-    <AdaptiveCards OnSubmitAction="@SendEmail" CardClass="col-6" TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"></AdaptiveCards>
+    <CardCollection OnSubmitAction="@SendEmail" CardClass="col-6" Models="@forecasts" Schema="@schema"></CardCollection>
 }
 
 @code {
