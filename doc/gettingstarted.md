@@ -832,7 +832,7 @@ Start by removing the table:
 
 ![](2019-10-07-18-05-39.png)
 
-Card Collection can be rendered through AdaptiveCards-component. The component requires three properties: the templated schema, the model type and list of models (objects). List of objects we already have in the form of forecasts:
+Card Collection can be rendered through AdaptiveCards-component. The component requires two properties: a templated schema and a list of models (objects). The list of objects we already have in the form of forecasts:
 
 ```csharp
 @code {

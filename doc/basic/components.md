@@ -12,7 +12,7 @@ AdaptiveCard-component is the basic building block in Adaptive Cards for Blazor.
 **Usage:**
 
 ```json {.line-numbers}
-            <AdaptiveCard Schema="@schema" OnCardSubmit="Submit"></AdaptiveCard>
+<AdaptiveCard Schema="@schema"></AdaptiveCard>
 ```
 
 ## TemplatedAdaptiveCard
