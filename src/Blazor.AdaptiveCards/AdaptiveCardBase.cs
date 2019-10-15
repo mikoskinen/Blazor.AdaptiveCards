@@ -51,7 +51,7 @@ namespace AdaptiveCards.Blazor
         /// Gets or sets the handler which is executed when opening link.
         /// </summary>
         /// <value>The handler.</value>
-        [Parameter] public EventCallback<string> OnOpenLinkAction { get; set; }
+        [Parameter] public EventCallback<string> OnOpenUrlAction { get; set; }
 
         /// <summary>
         /// Gets or sets the submit action handler.
@@ -188,9 +188,9 @@ namespace AdaptiveCards.Blazor
         [JSInvokable]
         public async Task OpenUrl(string url)
         {
-            if (OnOpenLinkAction.HasDelegate)
+            if (OnOpenUrlAction.HasDelegate)
             {
-                await OnOpenLinkAction.InvokeAsync(url);
+                await OnOpenUrlAction.InvokeAsync(url);
 
                 return;
             }

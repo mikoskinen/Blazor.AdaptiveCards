@@ -4,24 +4,35 @@
 
 Here's a card for displaying the weather:
 
-<AdaptiveCard Schema="@schema" class="mytest"></AdaptiveCard>
+<AdaptiveCard Schema="@schema" OnSubmitAction="HandleSubmit" OnOpenUrlAction="HandleNavigation"></AdaptiveCard>
+
+@if (!string.IsNullOrWhiteSpace(navigatingTo))
+{
+    <p class="alert alert-success"><b>Navigating to:</b> @navigatingTo</p>
+}
 
 @if (!string.IsNullOrWhiteSpace(submittedTo))
 {
-    <b>Email submitted to:</b> @submittedTo
+    <p class="alert alert-success"><b>Email submitted to:</b> @submittedTo</p>
 }
 
 @code{
     string schema = "";
     string submittedTo = "";
+    string navigatingTo = "";
 
     protected override void OnInitialized()
     {
         schema = Schemas.Weather;
     }
 
-    public void Submit(string emailAddress)
+    public void HandleNavigation(string url)
     {
-        submittedTo = emailAddress;
+        navigatingTo = url;
+    }
+
+    public void HandleSubmit(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        submittedTo = eventArgs.Data["emailAddress"].ToString();
     }
 }

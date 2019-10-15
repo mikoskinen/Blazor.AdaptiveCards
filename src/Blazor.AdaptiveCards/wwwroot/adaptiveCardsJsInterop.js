@@ -40,13 +40,13 @@ window.blazorAdaptiveCards = {
 
         // Find all the form controls and add them into the object
         var inputs = card.querySelectorAll("input");
+        addElements(inputs, obj, card);
 
-        if (inputs) {
-            for (var i = 0; i < inputs.length; i++) {
-                var item = inputs[i];
-                obj[item.name] = item.value;
-            }
-        }
+        var textareas = card.querySelectorAll("textarea");
+        addElements(textareas, obj, card);
+
+        var selectors = card.querySelectorAll("select");
+        addElements(selectors, obj, card);
 
         // Submit actions can provide a name. This is useful if one card has multiple submit actions
         var actionName = el.getAttribute('data-name');
@@ -64,3 +64,72 @@ window.blazorAdaptiveCards = {
         cardComponent.invokeMethodAsync("SubmitData", obj, actionName);
     }
 };
+
+function addElements(inputs, obj, card) {
+
+    var radioButtonGroups = [];
+    if (inputs) {
+        for (var i = 0; i < inputs.length; i++) {
+            var item = inputs[i];
+
+            if (item.type && item.type === 'checkbox') {
+
+                handleCheckboxes(item, card, obj);
+            }
+            else if (item.type && item.type === 'radio') {
+                var groupName = item.name;
+                if (radioButtonGroups.indexOf(groupName) === -1) {
+                    radioButtonGroups.push(groupName);
+                }
+            }
+            else {
+                obj[item.name] = item.value;
+            }
+        }
+    }
+
+    handleRadioButtons(radioButtonGroups, card, obj);
+}
+
+function handleCheckboxes(item, card, obj) {
+    var checkboxSelector = 'input[name="' + item.name + '"]';
+    var checkboxes = card.querySelectorAll(checkboxSelector);
+    var isMultiValue = checkboxes.length > 1;
+
+    if (isMultiValue) {
+        if (obj[item.name] === undefined) {
+            obj[item.name] = [];
+        }
+        if (item.hasAttribute("value") && item.checked) {
+            obj[item.name].push(item.value);
+        }
+    }
+
+    else {
+        if (item.hasAttribute("value")) {
+            obj[item.name] = item.value;
+        }
+        else {
+            obj[item.name] = item.checked;
+        }
+    }
+}
+
+function handleRadioButtons(radioButtonGroups, card, obj) {
+
+    if (!radioButtonGroups) {
+        return;
+    }
+
+    for (var n = 0; n < radioButtonGroups.length; n++) {
+
+        var radioButtonGroup = radioButtonGroups[n];
+        var selector = 'input[name="' + radioButtonGroup + '"]:checked';
+        var selectedRadioButton = card.querySelector(selector);
+
+        if (selectedRadioButton) {
+            var radioButtonGroupValue = selectedRadioButton.value;
+            obj[radioButtonGroup] = radioButtonGroupValue;
+        }
+    }
+}

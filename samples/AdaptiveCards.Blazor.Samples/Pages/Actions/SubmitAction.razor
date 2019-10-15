@@ -1,0 +1,94 @@
+@page "/actions/submit"
+
+@using AdaptiveCards.Blazor.Samples.Data
+@inject WeatherForecastService ForecastService
+
+<h1>Submit action</h1>
+
+<div class="row">
+    <div class="col-4">
+        <p>This demonstarates how Submit action can be handled using OnSubmitAction.</p>
+
+        <AdaptiveCard Schema="@schema" OnSubmitAction="OnSubmit"></AdaptiveCard>
+
+        <p class="mt-3">This demonstarates how Submit action can be handled using SubmitHandler.</p>
+
+        <AdaptiveCard Schema="@schema" SubmitHandler="this"></AdaptiveCard>
+
+        <p class="mt-3">This demonstarates how Submit action can be handled using SubmitHandler and model binding.</p>
+
+        <AdaptiveCard Schema="@schema2" SubmitHandler="this"></AdaptiveCard>
+
+        <p class="mt-3">This demonstarates how how handle card with multiple submit actions using OnSubmitAction.</p>
+
+        <AdaptiveCard Schema="@schema3" OnSubmitAction="OnSubmitAndDecline"></AdaptiveCard>
+
+        <p class="mt-3">This demonstarates how how handle card with multiple submit actions using SubmitHandler.</p>
+
+        <AdaptiveCard Schema="@schema3" SubmitHandler="this"></AdaptiveCard>
+    </div>
+    <div class="col-8">
+        @if (!string.IsNullOrWhiteSpace(actionDetails))
+        {
+            <p class="alert alert-success mt-3" style="white-space: pre-wrap">@actionDetails</p>
+        }
+    </div>
+</div>
+
+@code {
+    string schema;
+    string schema2;
+    string schema3;
+    string actionDetails = "";
+
+    protected override void OnInitialized()
+    {
+        schema = Schemas.SimpleSubmit;
+        schema2 = Schemas.SimpleSubmitNamedAction;
+        schema3 = Schemas.SimpleSubmitAndDecline;
+    }
+
+    private void OnSubmit(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        actionDetails = "OnSubmit: " + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(eventArgs.Data, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true });
+    }
+
+    public Task Submit(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        actionDetails = "SubmitHandler: " + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(eventArgs.Data, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true });
+
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    public Task MySubmit(string myName, string myEmail)
+    {
+        var details = new { myName, myEmail };
+        actionDetails = "MySubmit: " + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(details, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true });
+
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private void OnSubmitAndDecline(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        var details = new { actionName = eventArgs.Action, eventArgs.Data };
+        actionDetails = "OnSubmit: " + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(details, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true });
+    }
+
+    public Task Send(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        actionDetails = "Send: " + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(eventArgs.Data, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true });
+
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    public Task Decline(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        actionDetails = "Decline: " + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(eventArgs.Data, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true });
+
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+}

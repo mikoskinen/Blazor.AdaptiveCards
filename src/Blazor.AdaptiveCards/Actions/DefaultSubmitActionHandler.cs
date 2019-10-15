@@ -35,9 +35,9 @@ namespace AdaptiveCards.Blazor.Actions
 
                 string handlerMethod = null;
 
-                if (handlersMethods.Contains(actionName))
+                if (handlersMethods.Contains(actionName, StringComparer.InvariantCultureIgnoreCase))
                 {
-                    handlerMethod = actionName;
+                    handlerMethod = handlersMethods.First(x => string.Equals(x, actionName, StringComparison.InvariantCultureIgnoreCase));
                 }
                 else if (handlersMethods.Contains("Submit"))
                 {
@@ -70,7 +70,7 @@ namespace AdaptiveCards.Blazor.Actions
 
                 if (methodParameters.Any() != true)
                 {
-                    var t = (Task) method.Invoke(handler, null);
+                    var t = (Task)method.Invoke(handler, null);
                     await t;
 
                     return;
@@ -78,7 +78,7 @@ namespace AdaptiveCards.Blazor.Actions
 
                 if (methodParameters.Count == 1 && typeof(SubmitEventArgs).IsAssignableFrom(methodParameters.First().ParameterType))
                 {
-                    var t = (Task) method.Invoke(handler, new[] { eventArgs });
+                    var t = (Task)method.Invoke(handler, new[] { eventArgs });
                     await t;
 
                     return;
@@ -86,7 +86,7 @@ namespace AdaptiveCards.Blazor.Actions
 
                 if (model != null && methodParameters.Count == 1 && model.GetType().IsAssignableFrom(methodParameters.First().ParameterType))
                 {
-                    var t = (Task) method.Invoke(handler, new[] { model });
+                    var t = (Task)method.Invoke(handler, new[] { model });
                     await t;
 
                     return;
@@ -143,7 +143,7 @@ namespace AdaptiveCards.Blazor.Actions
                     arguments.Add(null);
                 }
 
-                var tOut = (Task) method.Invoke(handler, arguments.ToArray());
+                var tOut = (Task)method.Invoke(handler, arguments.ToArray());
                 await tOut;
             }
             catch (Exception e)

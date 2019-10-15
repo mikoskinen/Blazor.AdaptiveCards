@@ -1,0 +1,19 @@
+@page "/actions/showcard"
+
+@using AdaptiveCards.Blazor.Samples.Data
+@inject WeatherForecastService ForecastService
+
+<h1>ShowCard action</h1>
+
+<p>This demonstarates how Action.ShowCard action is automatically handled.</p>
+
+<AdaptiveCard Schema="@schema"></AdaptiveCard>
+
+@code {
+    string schema;
+
+    protected override void OnInitialized()
+    {
+        schema = Schemas.WeatherShowCard;
+    }
+}

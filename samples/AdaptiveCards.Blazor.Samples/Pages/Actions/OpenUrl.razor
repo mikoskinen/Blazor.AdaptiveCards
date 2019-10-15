@@ -1,0 +1,35 @@
+@page "/actions/openurl"
+
+@using AdaptiveCards.Blazor.Samples.Data
+@inject WeatherForecastService ForecastService
+
+<h1>OpenUrl action</h1>
+
+<p>This demonstarates how OpenUrl action is automatically handled by Adaptive Cards for Blazor (Note: Navigation happens outside this page).</p>
+
+<AdaptiveCard Schema="@schema"></AdaptiveCard>
+
+<div class="mb-3"></div>
+<p>This demonstarates how OpenUrl can be manually handled</p>
+
+<AdaptiveCard OnOpenUrlAction="HandleOpenUrl" Schema="@schema"></AdaptiveCard>
+
+@if (!string.IsNullOrWhiteSpace(openUrl))
+{
+    <p class="alert alert-success">Navigating to: @openUrl</p>
+}
+
+@code {
+    string schema;
+    string openUrl;
+
+    protected override void OnInitialized()
+    {
+        schema = Schemas.WeatherOpenUrl;
+    }
+
+    private void HandleOpenUrl(string url)
+    {
+        openUrl = url;
+    }
+}

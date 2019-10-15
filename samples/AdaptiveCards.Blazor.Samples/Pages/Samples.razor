@@ -2,7 +2,7 @@
 
 <h1>Official Samples</h1>
 
-<p>Here's a collection of different samples from <a href="https://adaptivecards.io/samples/" target="_blank">https://adaptivecards.io/samples/</a>:</p>
+<p>Here's a collection of different samples from <a href="https://adaptivecards.io/samples/" target="_blank">https://adaptivecards.io/samples/</a></p>
 
 <div class="row">
     <div class="col-2">
@@ -21,35 +21,51 @@
                 </tr>
             }
         </table>
+
     </div>
     <div class="col-7">
-        @CustomRender
-        @*<CodeBlock Language="language-json" Code="@schema"></CodeBlock>*@
+        <textarea readonly style="width:100%; background: #fafafa; border: 0" rows="30">@schema</textarea>
     </div>
     <div class="col-3">
-        <AdaptiveCard Schema="@schema"></AdaptiveCard>
+        <AdaptiveCard Schema="@schema" OnSubmitAction="OnSubmit" OnOpenUrlAction="OnOpenLink"></AdaptiveCard>
+
+        <div>
+            @if (!string.IsNullOrWhiteSpace(actionDetails))
+            {
+                <p class="alert alert-success mt-3" style="white-space: pre-wrap">@actionDetails</p>
+            }
+        </div>
     </div>
 </div>
 
 @code{
     string schema = "";
     string schemaName = "";
+    string actionDetails = "";
     Dictionary<string, string> schemas = new Dictionary<string, string>();
-    private RenderFragment CustomRender { get; set; }
-
-    private RenderFragment CreateComponent() => builder =>
-    {
-        builder.OpenComponent(0, typeof(CodeBlock));
-        builder.AddAttribute(1, "Language", "language-json");
-        builder.AddAttribute(1, "Code", schema);
-        builder.CloseComponent();
-    };
 
     protected override void OnInitialized()
     {
         schemas.Add("Activity update", Schemas.ActivityUpdate);
-        schemas.Add("Calendar reminder", Schemas.CalendarUpdate);
+        schemas.Add("Calendar reminder", Schemas.CalendarReminder);
         schemas.Add("Flight itinerary", Schemas.FlightItinerary);
+        schemas.Add("Flight update", Schemas.FlightUpdate);
+        schemas.Add("Food order", Schemas.FoodOrder);
+        schemas.Add("Image gallery", Schemas.ImageGallery);
+        schemas.Add("Input form", Schemas.InputForm);
+        schemas.Add("Inputs", Schemas.Inputs);
+        schemas.Add("Restaurant", Schemas.Restaurant);
+        schemas.Add("Solitaire", Schemas.Solitaire);
+        schemas.Add("Sporting event", Schemas.SportingEvent);
+        schemas.Add("Stock update", Schemas.StockUpdate);
+        schemas.Add("Weather compact", Schemas.WeatherCompact);
+        schemas.Add("Weather large", Schemas.WeatherLarge);
+        // Product video not yet supported: https://github.com/mikoskinen/Blazor.AdaptiveCards/issues/7
+        //schemas.Add("Product video", Schemas.ProductVideo);
+        schemas.Add("Agenda", Schemas.Agenda);
+        // ToggleVisibility not yet supported: https://github.com/mikoskinen/Blazor.AdaptiveCards/issues/3
+        //schemas.Add("Expense report", Schemas.ExpenseReport);
+        schemas.Add("Flight Details", Schemas.FlightDetails);
 
         var selectedSchema = schemas.First();
 
@@ -61,6 +77,17 @@
         schemaName = selectedSchema.Key;
         schema = selectedSchema.Value;
 
-        CustomRender = CreateComponent();
+        actionDetails = "";
+    }
+
+    private void OnSubmit(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        var details = new { eventArgs.Action, eventArgs.Data };
+        actionDetails = "Submit: " + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(details, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true });
+    }
+
+    private void OnOpenLink(string url)
+    {
+        actionDetails = "Open link: " + Environment.NewLine + url;
     }
 }
