@@ -15,16 +15,16 @@ AdaptiveCard-component is the basic building block in Adaptive Cards for Blazor.
             <AdaptiveCard Schema="@schema" OnCardSubmit="Submit"></AdaptiveCard>
 ```
 
-## TemplatedAdaptiveCard<T>
+## TemplatedAdaptiveCard
 
-TemplatedAdaptiveCard<T> is a generic component which supports templating. Template is a JSON schema. TemplatedAdaptiveCard takes a model (C# object) and a template. The model is bound against the template schema. The end result is then rendered on the screen. 
+TemplatedAdaptiveCard is a component which supports templating. Template is a JSON schema. TemplatedAdaptiveCard takes a model (C# object) and a template. The model is bound against the template schema. The end result is then rendered on the screen. 
 
-*Note*: The templating support in Adaptive Cards for Blazor is a custom-built solution, based on the [Scriban](https://github.com/lunet-io/scriban) templating language. Adaptive Cards should at some point receive a native templating support
+*Note*: The templating support in Adaptive Cards for Blazor is a custom-built solution, based on the [Scriban](https://github.com/lunet-io/scriban) templating language. Adaptive Cards should at some point receive a native templating support and it's possible that at that point, Adaptive Cards for Blazor changes from Scriban to the official solution.
 
 **Usage:**
 
 ```html {.line-numbers}
-<TemplatedAdaptiveCard Model="customer" TModel="Customer" Schema="@schema"></TemplatedAdaptiveCard>
+<TemplatedAdaptiveCard Model="customer" Schema="@schema"></TemplatedAdaptiveCard>
 
 @code{
     string schema = "";
@@ -37,9 +37,9 @@ TemplatedAdaptiveCard<T> is a generic component which supports templating. Templ
 }
 ```
 
-## AdaptiveCards<T>
+## CardCollection
 
-Adaptive Cards for Blazor has a feature called Card Collections. Card Collections allow the developer to easily display a list of cards based on two things: **A model** and **a template**. Model can be any .NET object, like a Customer. Template is a JSON schema. Card Collection takes a list of models, for example List<WeatherInfo> and the template and then binds each model against the schema. The end result is then rendered on the screen. 
+Adaptive Cards for Blazor has a feature called Card Collections. Card Collections allow the developer to easily display a list of cards based on two things: **A list of models** and **a template**. Model can be any .NET object, like a Customer. Template is a JSON schema. Card Collection takes a list of models, for example List<WeatherInfo> and the template and then binds each model against the schema. The end result is then rendered on the screen. 
 
 **Usage:**
 
@@ -55,7 +55,7 @@ else
         <b>@selectedForecast.Date.ToShortDateString(): </b> @submittedTo
     }
 
-    <AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"></AdaptiveCards>
+    <CardCollection Models="@forecasts" Schema="@schema"></AdaptiveCards>
 }
 
 @code {

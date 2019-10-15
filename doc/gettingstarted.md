@@ -524,7 +524,7 @@ The next part of this tutorial is a shorter one. It continues from the first par
 
 ## Card Collections
 
-Adaptive Cards for Blazor has a feature called Card Collections. Card Collections allow the developer to easily display a list of cards based on two things: **A model** and **a template**. Model can be any .NET object, like a Customer, Invoice or WeatherInf. Template is a JSON schema. Card Collection takes a list of models, for example List<WeatherInfo> and the template and then binds each model against the schema. The end result is then rendered on the screen. Sounds harder than it is.
+Adaptive Cards for Blazor has a feature called Card Collections. Card Collections allow the developer to easily display a list of cards based on two things: **A list of models** and **a template**. Model can be any .NET object, like a Customer, Invoice or WeatherInfo. Template is a JSON schema. Card Collection takes a list of models, for example List<WeatherInfo> and the template and then binds each model against the schema. The end result is then rendered on the screen. Sounds harder than it is.
 
 *Note*: The templating support in Adaptive Cards for Blazor is a custom-built solution, based on the [Scriban](https://github.com/lunet-io/scriban) templating language. Adaptive Cards should at some point receive a native templating support.
 
@@ -858,10 +858,10 @@ As in the first part of this tutorial, we will load the schema-file from the dis
     }
 }
 ```
-And here's how we add the AdaptiveCards-component:
+And here's how we add the CardCollection-component:
 
 ```html
-    <AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"></AdaptiveCards>
+    <CardCollection Models="@forecasts" Schema="@schema"></AdaptiveCards>
 ```
 
 FetchData.razor at this point should look like the following:
@@ -882,7 +882,7 @@ FetchData.razor at this point should look like the following:
 }
 else
 {
-    <AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"></AdaptiveCards>
+    <CardCollection Models="@forecasts" Schema="@schema"></AdaptiveCards>
 }
 
 @code {
@@ -906,7 +906,7 @@ It's quite pretty! Card Collection tries not to care what CSS files you are usin
 You can use **CardClass** and **Class** properties to configure what classes are applied to the collection and to its content. To make the cards larger, we can change the card class to col-6:
 
 ```html {.line-numbers}
-    <AdaptiveCards CardClass="col-6" TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"></AdaptiveCards>
+    <CardCollection CardClass="col-6" Models="@forecasts" Schema="@schema"></AdaptiveCards>
 ```
 
 This will give us two columns instead of four:
@@ -917,11 +917,11 @@ In the next and last section of this tutorial we will add support for handling t
 
 ### Handling Actions 
 
-Similar to the first part of this tutorial, our cards contain two actions: OpenLink and Submit action:
+Similar to the first part of this tutorial, our cards contain two actions: OpenUrl and Submit action:
 
 ![](2019-10-07-19-00-13.png)
 
-The "Open weather service" action is of type OpenLink and it works automatically. But we need to handle manually the "Share..." functionality using C#. As before, we add a little textbox above the component to display information about the action. But this time we "catch" the actual model from the card in order to display information:
+The "Open weather service" action is of type OpenUrl and it works automatically. But we need to handle manually the "Share..." functionality using C#. As before, we add a little textbox above the component to display information about the action. But this time we "catch" the actual model from the card in order to display information:
 
 ```html {.line-numbers}
 @if (forecasts == null)
@@ -935,7 +935,7 @@ else
         <b>@selectedForecast.Date.ToShortDateString(): </b> @submittedTo
     }
 
-    <AdaptiveCards OnSubmitAction="@SendEmail" CardClass="col-6" TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"></AdaptiveCards>
+    <CardCollection OnSubmitAction="@SendEmail" CardClass="col-6" Models="@forecasts" Schema="@schema"></CardCollection>
 }
 @code {
     WeatherForecast[] forecasts;
