@@ -1,0 +1,28 @@
+@page "/templating/templateselector"
+@using AdaptiveCards.Blazor.Templating
+
+<h1>Templated Card with Default Template</h1>
+
+<Info>
+    This sample shows how a TemplatedAdaptiveCard can used with TemplateSelector. TemplateSelector allows you to define a function which selects the template based on some criteria.
+</Info>
+
+<TemplatedAdaptiveCard TemplateSelector="SelectTemplate" Model="@(new Customer() { FirstName = "Templated", LastName = "Customer" })"></TemplatedAdaptiveCard>
+
+<TemplatedAdaptiveCard TemplateSelector="SelectTemplate" Model="@(new Customer() { FirstName = "Second", LastName = "Customer" })"></TemplatedAdaptiveCard>
+
+@code{
+    [Inject]
+    private IModelTemplateCatalog ModelTemplateCatalog { get; set; }
+
+    private string SelectTemplate(object customer)
+    {
+        var cust = (Customer)customer;
+        if (cust.FirstName.Contains("Second"))
+        {
+            return ModelTemplateCatalog.Get("Alternative");
+        }
+
+        return ModelTemplateCatalog.Get(customer.GetType().Name);
+    }
+}

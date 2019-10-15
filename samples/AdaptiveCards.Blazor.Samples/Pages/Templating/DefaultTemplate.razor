@@ -1,0 +1,8 @@
+@page "/templating/defaulttemplate"
+<h1>Templated Card with Default Template</h1>
+
+<Info>
+    This sample shows how a TemplatedAdaptiveCard automatically selects the default template. Default template is set in the application's ConfigureServices.
+</Info>
+
+<TemplatedAdaptiveCard Model="@(new Customer() { FirstName = "Templated", LastName = "Customer" })"></TemplatedAdaptiveCard>

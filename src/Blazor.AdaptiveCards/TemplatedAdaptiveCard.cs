@@ -48,6 +48,12 @@ namespace AdaptiveCards.Blazor
         /// <value>The name of the template.</value>
         [Parameter] public string TemplateName { get => _templateName; set => _templateName = value; }
 
+        /// <summary>
+        /// Gets or sets the template selector.
+        /// </summary>
+        /// <value>The template selector.</value>
+        [Parameter] public Func<object, string> TemplateSelector { get; set; }
+
         [Inject] private IAdaptiveCardTemplatingProvider TemplatingProvider { get; set; }
         [Inject] private IModelTemplateCatalog ModelTemplateCatalog { get; set; }
 
@@ -58,7 +64,7 @@ namespace AdaptiveCards.Blazor
         private string ParentTemplateName { get; set; }
 
         [CascadingParameter(Name = "TemplateSelector")]
-        private Func<object, string> TemplateSelector { get; set; }
+        private Func<object, string> ParentTemplateSelector { get; set; }
 
         public async Task RenderCard(string schema, object model)
         {
@@ -70,6 +76,13 @@ namespace AdaptiveCards.Blazor
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
+
+            if (ParentTemplateSelector != null)
+            {
+                Schema = ParentTemplateSelector(_model);
+
+                return;
+            }
 
             if (TemplateSelector != null)
             {

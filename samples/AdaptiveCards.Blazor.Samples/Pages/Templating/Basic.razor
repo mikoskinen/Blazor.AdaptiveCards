@@ -1,0 +1,31 @@
+@page "/templating/basic"
+@using AdaptiveCards.Blazor.Samples.Data
+
+<h1>Templating Overview</h1>
+
+<Info>
+    Templating allows you to combine an adaptive card and a model (C# object). This sample shows the basic usage of the TemplatedAdaptiveCard.
+</Info>
+
+<TemplatedAdaptiveCard Schema="@Schemas.CustomerTemplated" Model="customer" OnSubmitAction="HandleSubmit" OnOpenUrlAction="HandleNavigation"></TemplatedAdaptiveCard>
+
+@if (!string.IsNullOrWhiteSpace(actionDetails))
+{
+    <p class="alert alert-success" style="white-space: pre-wrap">@actionDetails</p>
+}
+
+@code{
+    Customer customer = new Customer() { FirstName = "Templated", LastName = "Customer" };
+    string actionDetails = "";
+
+    public void HandleNavigation(string url)
+    {
+        actionDetails = "OnNavigation: " + Environment.NewLine + url;
+    }
+
+    public void HandleSubmit(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        var details = new { eventArgs.Data, eventArgs.Model, eventArgs.Action };
+        actionDetails = "Submit: " + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(details, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true });
+    }
+}

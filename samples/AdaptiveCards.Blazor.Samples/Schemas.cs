@@ -412,7 +412,7 @@ namespace AdaptiveCards.Blazor.Samples
   ""body"": [
     {
       ""type"": ""TextBlock"",
-      ""text"": ""Publish Adaptive Card schema"",
+      ""text"": ""Templated Card schema"",
       ""weight"": ""bolder"",
       ""size"": ""medium""
     },
