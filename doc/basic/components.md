@@ -3,7 +3,7 @@ order: 2
 title: Components
 ---
 
-Adaptive Cards for Blazor contains three components:
+Adaptive Cards for Blazor contains three components: AdaptiveCard, TemplatedAdaptiveCard and CardCollection.
 
 ## AdaptiveCard
 

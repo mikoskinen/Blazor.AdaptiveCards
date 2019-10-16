@@ -1,14 +1,14 @@
 ---
 order: 0
 title: Welcome to Adaptive Cards for Blazor
-description: This community project provides a powerful way of integrating Adaptive Cards into your Blazor applications.
+description: Adaptive Cards for Blazor provides a powerful way of integrating Adaptive Cards into your Blazor applications.
 ---
 
 ![](logo_small.jpg)
 
 ## Introduction
 
-Adaptive Cards for Blazor is a community project that provides Adaptive Cards support for your Blazor applications. [Adaptive Cards](https://adaptivecards.io/) are a way to exchange content in a common and consistent way. Adaptive Cards can be integrated into different applications like Microsoft Teams and Outlook. Adaptive Cards can also be integrated into custom applications built with .NET, iOS and JavaScript. And now Blazor, the new Web App platform from Microsoft is supported.
+Adaptive Cards for Blazor is a community project that provides **Adaptive Cards support for your Blazor applications**. [Adaptive Cards](https://adaptivecards.io/) are a way to exchange content in a common and consistent way. Adaptive Cards can be integrated into different applications like Microsoft Teams and Outlook. Adaptive Cards can also be integrated into custom applications built with .NET, iOS and JavaScript. And now Blazor, the new Web App platform from Microsoft is supported.
 
 ## Feature Highlights
 
@@ -19,6 +19,12 @@ Adaptive Cards for Blazor provides components for displaying Adaptive Cards insi
 * **Card Collections**: Display a list of cards based on model and use template selector to customize the output.
 * **Action support**: Handle Submit and OpenUrl actions using C#.
 * **Native .NET-based solution**: Blazor Adaptive Cards is based on the official .NET SDK for Adaptive Cards. 
+
+## Getting Started
+
+Our [Getting Started](https://www.adaptivecardsblazor.com/gettingstarted.html) guide teaches you how to build Blazor applications using Adaptive Cards for Blazor. It's the recommended source of information for those who are new to Adaptive Cards.
+
+For a quick introduction, please see the [Quick Start](https://www.adaptivecardsblazor.com/basic/quickstart.html).
 
 ## Samples
 

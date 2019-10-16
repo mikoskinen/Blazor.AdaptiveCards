@@ -3,9 +3,9 @@ order: 5
 title: Template Selector
 ---
 
-TemplateSelector allows you to define a function which selects the template based on some criteria. This is useful in scenarios where you have multiple schemas for a single type and fixed criteria of when to use which schema.
+Template Selector allows you to define a function which selects the template based on some criteria. This is useful in scenarios where you have multiple schemas for a single type and fixed criteria of when to use which schema.
 
-To use Template Select, first configure available schemas in application's ConfigureServices:
+To use Template Selector, first configure available schemas in application's ConfigureServices:
 
 ```csharp {.line-numbers}
 services.AddBlazorAdaptiveCards()
