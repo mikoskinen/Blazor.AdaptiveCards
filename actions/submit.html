@@ -28,6 +28,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="/">Documentation</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="http://samples.adaptivecardsblazor.com">Samples</a>
+                    </li>
             </ul>
         </div>
 
@@ -94,7 +97,7 @@
                                 <ul class="nav bd-sidenav">
                                         <li class="">
                                             <a href="/actions/introduction.html">
-                                                Introduction to actions
+                                                Introduction to Actions
                                             </a>
                                         </li>
                                         <li class="">
@@ -108,12 +111,7 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/actions/multiplesubmitactions.html">
-                                                Multiple submit actions
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/actions/opencard.html">
+                                            <a href="/actions/showcard.html">
                                                 ShowCard
                                             </a>
                                         </li>
@@ -131,8 +129,18 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/templating/binding.html">
-                                                Binding models and schemas
+                                            <a href="/templating/defaulttemplate.html">
+                                                Default Template
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/templating/alternativetemplate.html">
+                                                Alternative Template
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/templating/templateselector.html">
+                                                Template Selector
                                             </a>
                                         </li>
                                 </ul>
@@ -208,13 +216,182 @@
 
                 <div class="d-none d-xl-block col-xl-2 bd-toc">
                     <ul class="section-nav">
+                            <li class="toc-entry toc-h3"><a href="#onsubmitaction">OnSubmitAction</a></li>
+                            <li class="toc-entry toc-h3"><a href="#submithandler">SubmitHandler</a></li>
+                            <li class="toc-entry toc-h2"><a href="#card-with-multiple-submit-actions">Card with multiple submit actions</a></li>
                     </ul>
                 </div>
 
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
                 <h1 class="bd-title" id="content">Submit</h1>
                 <p class="bd-lead"></p>
-                <p>TODO</p>
+                <p>Submit actions are quite likely the most popular actions in Adaptive Cards. They allow you to gather some input from the user, like their name and address, and then to submit that data into your desired endpoint.</p>
+<p>The <a href="https://adaptivecards.io/samples/Inputs.html">Inputs sample</a> at the Adaptive Cards' sample site gives a good representation of different input controls which are available through the schema.</p>
+<p>Here's an example schema with a submit action:</p>
+<pre><code class="line-numbers language-json">"body": [
+  ...
+],
+"actions": [
+  {
+    "type": "Action.OpenUrl",
+    "title": "Open Weather Service",
+    "url": "https://weather.com"
+  },
+  {
+    "type": "Action.ShowCard",
+    "title": "Share...",
+    "card": {
+      "type": "AdaptiveCard",
+      "body": [
+        {
+          "type": "TextBlock",
+          "text": "Share with Email:"
+        },
+        {
+          "type": "Input.Text",
+          "id": "emailAddress",
+          "placeholder": "user@email.com"
+        }
+      ],
+      "actions": [
+        {
+          "type": "Action.Submit",
+          "title": "Send Email"
+        }
+      ]
+    }
+  }
+]
+</code></pre>
+<p>Adaptive Cards for Blazor offers two ways of handling the submitted data: Using the <strong>OnSubmitAction</strong> or the <strong>SubmitHandler</strong>.</p>
+<h3 id="onsubmitaction">OnSubmitAction</h3>
+<p>OnSubmitAction is an EventCallBack provided by AdaptiveCard-component. To handle the callback, define a method which takes SubmitEventArgs as a parameter:</p>
+<pre><code class="line-numbers language-csharp">    private void OnSubmit(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        ...
+    }
+</code></pre>
+<h3 id="submithandler">SubmitHandler</h3>
+<p>With SubmitHandler you aren't limited to getting the submitted data through the SubmitEventArgs as you can take advantage of model binding. In it's simplest form, SubmitHandler requires that the handler contains a method called <strong>Submit</strong>:</p>
+<pre><code class="line-numbers language-html">&lt;AdaptiveCard Schema="@Schemas.SimpleSubmit" SubmitHandler="this"&gt;&lt;/AdaptiveCard&gt;
+@code {
+    public Task Submit(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        ...
+
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+}
+</code></pre>
+<p>The model binding feature of SubmitHandler binds the input fields against the method parameters. Given the following schema:</p>
+<pre><code class="line-numbers language-json">{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Your name",
+              "wrap": true
+            },
+            {
+              "type": "Input.Text",
+              "id": "myName",
+              "placeholder": "Last, First"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Your email",
+              "wrap": true
+            },
+            {
+              "type": "Input.Text",
+              "id": "myEmail",
+              "placeholder": "youremail@example.com",
+              "style": "email"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Submit",
+      "name": "MySubmit"
+    }
+  ]
+}
+</code></pre>
+<p>The Submit-method can match parameters to the input fields using their id:</p>
+<pre><code class="line-numbers language-html">&lt;AdaptiveCard Schema="@Schemas.SimpleSubmit" SubmitHandler="this"&gt;&lt;/AdaptiveCard&gt;
+@code {
+    public Task Submit(string myName, string myEmail)
+    {
+        ...
+
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+}
+</code></pre>
+<h2 id="card-with-multiple-submit-actions">Card with multiple submit actions</h2>
+<p>An Adaptive Card can contain multiple submit actions by giving them unique <strong>name</strong>:</p>
+<pre><code class="line-numbers language-json">  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Send",
+      "name": "send"
+    },
+    {
+      "type": "Action.Submit",
+      "title": "Decline",
+      "name": "decline"
+    }
+  ]
+</code></pre>
+<p>To handle multiple actions using OnSubmitAction, you can use SubmitEventArgs.Action. Here's an example where the code can differentiate between the two actions:</p>
+<pre><code class="line-numbers language-html">&lt;AdaptiveCard Schema="@Schemas.SimpleSubmitAndDecline" OnSubmitAction="OnSubmitAndDecline"&gt;&lt;/AdaptiveCard&gt;
+
+@code {
+    private void OnSubmitAndDecline(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        if (eventArgs.Action == "send")
+        {
+            ...
+        }
+        else
+        {
+            ...
+        }
+    }
+}
+</code></pre>
+<p>To handle multiple actions using SubmitHandler, define multiple methods and match the method names with the action names:</p>
+<pre><code class="line-numbers language-html">&lt;AdaptiveCard Schema="@Schemas.SimpleSubmitAndDecline" SubmitHandler="this"&gt;&lt;/AdaptiveCard&gt;
+
+@code {
+    public Task Send(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        ...
+        return Task.CompletedTask;
+    }
+
+    public Task Decline(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        ...
+        return Task.CompletedTask;
+    }
+}
+</code></pre>
 
 
                 <div class="row">
@@ -222,7 +399,7 @@
                             <a class="text-muted" href="/actions/openurl.html">Previous: OpenUrl</a>
                     </div>
                     <div class="col text-right">
-                            <a class="text-muted" href="/actions/multiplesubmitactions.html">Next: Multiple submit actions</a>
+                            <a class="text-muted" href="/actions/showcard.html">Next: ShowCard</a>
                     </div>
                 </div>
 

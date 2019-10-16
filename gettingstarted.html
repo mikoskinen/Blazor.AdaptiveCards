@@ -28,6 +28,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="/">Documentation</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="http://samples.adaptivecardsblazor.com">Samples</a>
+                    </li>
             </ul>
         </div>
 
@@ -94,7 +97,7 @@
                                 <ul class="nav bd-sidenav">
                                         <li class="">
                                             <a href="/actions/introduction.html">
-                                                Introduction to actions
+                                                Introduction to Actions
                                             </a>
                                         </li>
                                         <li class="">
@@ -108,12 +111,7 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/actions/multiplesubmitactions.html">
-                                                Multiple submit actions
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/actions/opencard.html">
+                                            <a href="/actions/showcard.html">
                                                 ShowCard
                                             </a>
                                         </li>
@@ -131,8 +129,18 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/templating/binding.html">
-                                                Binding models and schemas
+                                            <a href="/templating/defaulttemplate.html">
+                                                Default Template
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/templating/alternativetemplate.html">
+                                                Alternative Template
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/templating/templateselector.html">
+                                                Template Selector
                                             </a>
                                         </li>
                                 </ul>
@@ -615,7 +623,7 @@ Here's a card for displaying the weather:
 <p>This concludes the first part of our tutorial. In this tutorial we set-up our Blazor app to support Adaptive Cards for Blazor. Then we created a card schema using JSON. Lastly, we added three different actions into our card.</p>
 <p>The next part of this tutorial is a shorter one. It continues from the first part and shows how you can use Card Collections: Adaptive Cards for Blazor's way of rendering multiple cards.</p>
 <h2 id="card-collections">Card Collections</h2>
-<p>Adaptive Cards for Blazor has a feature called Card Collections. Card Collections allow the developer to easily display a list of cards based on two things: <strong>A model</strong> and <strong>a template</strong>. Model can be any .NET object, like a Customer, Invoice or WeatherInf. Template is a JSON schema. Card Collection takes a list of models, for example List<weatherinfo> and the template and then binds each model against the schema. The end result is then rendered on the screen. Sounds harder than it is.</weatherinfo></p>
+<p>Adaptive Cards for Blazor has a feature called Card Collections. Card Collections allow the developer to easily display a list of cards based on two things: <strong>A list of models</strong> and <strong>a template</strong>. Model can be any .NET object, like a Customer, Invoice or WeatherInfo. Template is a JSON schema. Card Collection takes a list of models, for example List<weatherinfo> and the template and then binds each model against the schema. The end result is then rendered on the screen. Sounds harder than it is.</weatherinfo></p>
 <p><em>Note</em>: The templating support in Adaptive Cards for Blazor is a custom-built solution, based on the <a href="https://github.com/lunet-io/scriban">Scriban</a> templating language. Adaptive Cards should at some point receive a native templating support.</p>
 <p>Here's a quick reminder of how our weather schema displays the temperatures:</p>
 <pre><code class="line-numbers language-json">        {
@@ -874,7 +882,7 @@ Here's a card for displaying the weather:
 <p><a href="2019-10-07-18-04-52.png" class="lightbox"><img src="2019-10-07-18-04-52.png" class="img-fluid" alt=""></a></p>
 <p>Start by removing the table:</p>
 <p><a href="2019-10-07-18-05-39.png" class="lightbox"><img src="2019-10-07-18-05-39.png" class="img-fluid" alt=""></a></p>
-<p>Card Collection can be rendered through AdaptiveCards-component. The component requires three properties: the templated schema, the model type and list of models (objects). List of objects we already have in the form of forecasts:</p>
+<p>Card Collection can be rendered through AdaptiveCards-component. The component requires two properties: a templated schema and a list of models (objects). The list of objects we already have in the form of forecasts:</p>
 <pre><code class="language-csharp">@code {
     WeatherForecast[] forecasts;
 
@@ -896,8 +904,8 @@ Here's a card for displaying the weather:
     }
 }
 </code></pre>
-<p>And here's how we add the AdaptiveCards-component:</p>
-<pre><code class="language-html">    &lt;AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+<p>And here's how we add the CardCollection-component:</p>
+<pre><code class="language-html">    &lt;CardCollection Models="@forecasts" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
 </code></pre>
 <p>FetchData.razor at this point should look like the following:</p>
 <pre><code class="line-numbers language-html">@page "/fetchdata"
@@ -915,7 +923,7 @@ Here's a card for displaying the weather:
 }
 else
 {
-    &lt;AdaptiveCards TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+    &lt;CardCollection Models="@forecasts" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
 }
 
 @code {
@@ -933,15 +941,15 @@ else
 <p><a href="2019-10-07-18-48-32.png" class="lightbox"><img src="2019-10-07-18-48-32.png" class="img-fluid" alt=""></a></p>
 <p>It's quite pretty! Card Collection tries not to care what CSS files you are using (Bootstrap vs Material vs custom). Couple classes are still added by default which allows the cards to render nicely when used with Bootstrap: The collection gets the class <strong>"row"</strong> and each of the cards is wrapped inside class <strong>col-3</strong>.</p>
 <p>You can use <strong>CardClass</strong> and <strong>Class</strong> properties to configure what classes are applied to the collection and to its content. To make the cards larger, we can change the card class to col-6:</p>
-<pre><code class="line-numbers language-html">    &lt;AdaptiveCards CardClass="col-6" TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+<pre><code class="line-numbers language-html">    &lt;CardCollection CardClass="col-6" Models="@forecasts" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
 </code></pre>
 <p>This will give us two columns instead of four:</p>
 <p><a href="2019-10-07-18-52-25.png" class="lightbox"><img src="2019-10-07-18-52-25.png" class="img-fluid" alt=""></a></p>
 <p>In the next and last section of this tutorial we will add support for handling the actions.</p>
 <h3 id="handling-actions">Handling Actions</h3>
-<p>Similar to the first part of this tutorial, our cards contain two actions: OpenLink and Submit action:</p>
+<p>Similar to the first part of this tutorial, our cards contain two actions: OpenUrl and Submit action:</p>
 <p><a href="2019-10-07-19-00-13.png" class="lightbox"><img src="2019-10-07-19-00-13.png" class="img-fluid" alt=""></a></p>
-<p>The "Open weather service" action is of type OpenLink and it works automatically. But we need to handle manually the "Share..." functionality using C#. As before, we add a little textbox above the component to display information about the action. But this time we "catch" the actual model from the card in order to display information:</p>
+<p>The "Open weather service" action is of type OpenUrl and it works automatically. But we need to handle manually the "Share..." functionality using C#. As before, we add a little textbox above the component to display information about the action. But this time we "catch" the actual model from the card in order to display information:</p>
 <pre><code class="line-numbers language-html">@if (forecasts == null)
 {
     &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
@@ -953,7 +961,7 @@ else
         &lt;b&gt;@selectedForecast.Date.ToShortDateString(): &lt;/b&gt; @submittedTo
     }
 
-    &lt;AdaptiveCards OnSubmitAction="@SendEmail" CardClass="col-6" TModel="WeatherForecast" Models="@forecasts.ToList()" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+    &lt;CardCollection OnSubmitAction="@SendEmail" CardClass="col-6" Models="@forecasts" Schema="@schema"&gt;&lt;/CardCollection&gt;
 }
 @code {
     WeatherForecast[] forecasts;

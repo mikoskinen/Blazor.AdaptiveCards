@@ -28,6 +28,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="/">Documentation</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="http://samples.adaptivecardsblazor.com">Samples</a>
+                    </li>
             </ul>
         </div>
 
@@ -94,7 +97,7 @@
                                 <ul class="nav bd-sidenav">
                                         <li class="active">
                                             <a href="/actions/introduction.html">
-                                                Introduction to actions
+                                                Introduction to Actions
                                             </a>
                                         </li>
                                         <li class="">
@@ -108,12 +111,7 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/actions/multiplesubmitactions.html">
-                                                Multiple submit actions
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/actions/opencard.html">
+                                            <a href="/actions/showcard.html">
                                                 ShowCard
                                             </a>
                                         </li>
@@ -131,8 +129,18 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/templating/binding.html">
-                                                Binding models and schemas
+                                            <a href="/templating/defaulttemplate.html">
+                                                Default Template
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/templating/alternativetemplate.html">
+                                                Alternative Template
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/templating/templateselector.html">
+                                                Template Selector
                                             </a>
                                         </li>
                                 </ul>
@@ -212,9 +220,23 @@
                 </div>
 
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
-                <h1 class="bd-title" id="content">Introduction to actions</h1>
+                <h1 class="bd-title" id="content">Introduction to Actions</h1>
                 <p class="bd-lead">Blazor Adaptive Cards support OpenUrl, Submit and ShowCard actions</p>
-                <p>TODO</p>
+                <p>Adaptive Cards can contain actions. Actions are usually displayed as button and their functionality can range from opening links to confirming booking details. Adaptive Cards support four types of actions:</p>
+<ul>
+<li><strong><a href="https://adaptivecards.io/explorer/Action.OpenUrl.html">OpenUrl</a></strong>: An action which opens a link (href)</li>
+<li><strong><a href="https://adaptivecards.io/explorer/Action.Submit.html">Submit</a></strong>: Submits input fields (form)</li>
+<li><strong><a href="https://adaptivecards.io/explorer/Action.ShowCard.html">ShowCard</a></strong>: Cards can contain cards. ShowCard can be used to show and hide an card. Usually used for displaying more detailed data for a particular card.</li>
+<li><strong><a href="https://adaptivecards.io/explorer/Action.ToggleVisibility.html">ToggleVisibility</a></strong>: Action which can show or hide card elements.</li>
+</ul>
+<p>Adaptive Cards for Blazor supports three types of actions: OpenUrl, Submit and ShowCard. Support for ToggleVisibility is coming on the next version.</p>
+<p>The actions are defined in the <strong>"actions"</strong> element of the schema. Actions inside the actions-element are rendered at the bottom of the card. Here's how to define an empty actions element:</p>
+<pre><code class="line-numbers language-json">"body": [
+  ...
+],
+"actions": [
+]
+</code></pre>
 
 
                 <div class="row">
