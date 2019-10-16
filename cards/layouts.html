@@ -1,0 +1,281 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Adaptive Cards for Blazor</title>
+    <meta name="description" content="Adaptive Cards for Blazor: Documentation">
+
+    <link href="/assets/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/docs.min.css" rel="stylesheet">
+    <link href="/assets/prism.css" rel="stylesheet">
+    <link href="/assets/simpleLightbox.min.css" rel="stylesheet">
+    <link href="/assets/theme.css" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+</head>
+<body>
+
+    <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar bd-fix">
+
+        <a class="navbar-brand mr-0 mr-md-2" href="/"><img src="/assets/logo.png" width="36" height="36" class="d-block" viewBox="0 0 612 612" role="img" focusable="false" /></a>
+
+        <div class="navbar-nav-scroll">
+            <ul class="navbar-nav bd-navbar-nav flex-row">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Documentation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="http://samples.adaptivecardsblazor.com">Samples</a>
+                    </li>
+            </ul>
+        </div>
+
+        <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+                <li class="nav-item">
+                    <a class="nav-link p-2" href="https://adaptivecardsblazor.com" target="_blank" rel="noopener">Project Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link p-2" href="https://github.com/mikoskinen/Blazor.AdaptiveCards" target="_blank" rel="noopener">GitHub</a>
+                </li>
+        </ul>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
+                <button class="btn btn-link bd-search-docs-toggle d-md-none p-0 collapsed" type="button" data-toggle="collapse" data-target="#bd-docs-nav" aria-controls="bd-docs-nav" aria-expanded="false" aria-label="Toggle docs navigation"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" role="img" focusable="false"><title>Menu</title><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button>
+                <nav class="collapse bd-links" id="bd-docs-nav">
+                        <div class="bd-toc-item active">
+                            <a class="bd-toc-link" href="/index.html">
+                                Home
+                            </a>
+
+                                <ul class="nav bd-sidenav">
+                                        <li class="">
+                                            <a href="/index.html">
+                                                Welcome to Adaptive Cards for Blazor
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/gettingstarted.html">
+                                                Getting Started
+                                            </a>
+                                        </li>
+                                </ul>
+                        </div>
+                        <div class="bd-toc-item active">
+                            <a class="bd-toc-link" href="/basic/quickstart.html">
+                                Introduction
+                            </a>
+
+                                <ul class="nav bd-sidenav">
+                                        <li class="">
+                                            <a href="/basic/quickstart.html">
+                                                Quick start
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/basic/introductiontoadaptivecards.html">
+                                                Introduction to Adaptive Cards
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/basic/components.html">
+                                                Components
+                                            </a>
+                                        </li>
+                                </ul>
+                        </div>
+                        <div class="bd-toc-item active">
+                            <a class="bd-toc-link" href="/actions/introduction.html">
+                                Actions
+                            </a>
+
+                                <ul class="nav bd-sidenav">
+                                        <li class="">
+                                            <a href="/actions/introduction.html">
+                                                Introduction to Actions
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/actions/openurl.html">
+                                                OpenUrl
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/actions/submit.html">
+                                                Submit
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/actions/showcard.html">
+                                                ShowCard
+                                            </a>
+                                        </li>
+                                </ul>
+                        </div>
+                        <div class="bd-toc-item active">
+                            <a class="bd-toc-link" href="/templating/introduction.html">
+                                Templating
+                            </a>
+
+                                <ul class="nav bd-sidenav">
+                                        <li class="">
+                                            <a href="/templating/introduction.html">
+                                                Introduction to templating
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/templating/defaulttemplate.html">
+                                                Default Template
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/templating/alternativetemplate.html">
+                                                Alternative Template
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/templating/templateselector.html">
+                                                Template Selector
+                                            </a>
+                                        </li>
+                                </ul>
+                        </div>
+                        <div class="bd-toc-item active">
+                            <a class="bd-toc-link" href="/cards/introduction.html">
+                                Card Collections
+                            </a>
+
+                                <ul class="nav bd-sidenav">
+                                        <li class="">
+                                            <a href="/cards/introduction.html">
+                                                Introduction to Card Collections
+                                            </a>
+                                        </li>
+                                        <li class="active">
+                                            <a href="/cards/layouts.html">
+                                                Layouts
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/cards/actions.html">
+                                                Handling actions
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/cards/templateselector.html">
+                                                Template selector
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/cards/attributes.html">
+                                                Attributes
+                                            </a>
+                                        </li>
+                                </ul>
+                        </div>
+                        <div class="bd-toc-item active">
+                            <a class="bd-toc-link" href="/advanced/events.html">
+                                Advanced Topics
+                            </a>
+
+                                <ul class="nav bd-sidenav">
+                                        <li class="">
+                                            <a href="/advanced/events.html">
+                                                Events
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/advanced/configuration.html">
+                                                Configuration
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/advanced/animations.html">
+                                                Animations
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="/advanced/performance.html">
+                                                Performance tips
+                                            </a>
+                                        </li>
+                                </ul>
+                        </div>
+                </nav>
+            </div>
+
+                <div class="d-none d-xl-block col-xl-2 bd-toc">
+                    <ul class="section-nav">
+                            <li class="toc-entry toc-h3"><a href="#customizing-layout">Customizing Layout</a></li>
+                    </ul>
+                </div>
+
+            <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
+                <h1 class="bd-title" id="content">Layouts</h1>
+                <p class="bd-lead"></p>
+                <p>Card Collection tries not to care what CSS files you are using (Bootstrap vs Material vs custom). Couple classes are still added by default which allows the cards to render nicely when used with Bootstrap: The collection gets the class <strong>"row"</strong> and each of the cards is wrapped inside class <strong>col-3</strong>.</p>
+<p>Card Collections contain two built-in layouts: <strong>Div-based</strong> layout and <strong>List-based</strong> layout. Div-based layout is the default one, provided by CardCollection component. It works well in situations where the applicatin uses grid systems like Bootstrap: the collection div can be given "row" as the class and each card gets "col-x" class.</p>
+<p>List-based layout is provided by ListCardCollection. It wraps the cards into a ul and each card is inside li.</p>
+<p>Here's the default HTML when CardCollection-component is used:</p>
+<p><a href="2019-10-16-08-38-15.png" class="lightbox"><img src="2019-10-16-08-38-15.png" class="img-fluid" alt=""></a></p>
+<p>And here's the HTML with ListCardCollection:</p>
+<p><a href="2019-10-16-08-39-12.png" class="lightbox"><img src="2019-10-16-08-39-12.png" class="img-fluid" alt=""></a></p>
+<h3 id="customizing-layout">Customizing Layout</h3>
+<p>Card Collection components provide two main parameters which can be used to customize how cards are rendered: <strong>Class</strong> and <strong>CardClass</strong>. Class can be used to set the container's class and CardClass changed the class of each card. Here's an example code where card-columns and card classes are applied to the container and to the cards:</p>
+<pre><code class="line-numbers language-html">    &lt;CardCollection class="card-columns" CardClass="card" Models="@forecasts" Schema="@Schemas.WeatherTemplated"&gt;&lt;/CardCollection&gt;
+</code></pre>
+<p>And here's the HTML:</p>
+<p><a href="2019-10-16-08-42-14.png" class="lightbox"><img src="2019-10-16-08-42-14.png" class="img-fluid" alt=""></a></p>
+<p>If you are using Bootstrap, the easiest way to make cards larger and smaller are through the CardClass-parameter. To make cards smaller:</p>
+<pre><code class="line-numbers language-html">    &lt;CardCollection CardClass="col-2" Models="@forecasts" Schema="@Schemas.WeatherTemplated"&gt;&lt;/CardCollection&gt;
+</code></pre>
+<p><a href="2019-10-16-08-59-48.png" class="lightbox"><img src="2019-10-16-08-59-48.png" class="img-fluid" alt=""></a></p>
+<p>And to make cards larger:</p>
+<pre><code class="line-numbers language-html">    &lt;CardCollection CardClass="col-12" Models="@forecasts" Schema="@Schemas.WeatherTemplated"&gt;&lt;/CardCollection&gt;
+</code></pre>
+<p><a href="2019-10-16-08-59-38.png" class="lightbox"><img src="2019-10-16-08-59-38.png" class="img-fluid" alt=""></a></p>
+
+
+                <div class="row">
+                    <div class="col">
+                            <a class="text-muted" href="/cards/introduction.html">Previous: Introduction to Card Collections</a>
+                    </div>
+                    <div class="col text-right">
+                            <a class="text-muted" href="/cards/actions.html">Next: Handling actions</a>
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <footer class="bd-footer text-muted">
+                    <div class="p-4">
+                            <p>Copyright 2019 Mikael Koskinen</p>
+                        <p>Documentation built with <a target="_blank" href="https://grazedocs.io">GrazeDocs</a>. <a target="_blank" href="https://getbootstrap.com/docs/4.3/assets/css/docs.min.css">"Bootstrap Docs"</a> theme by Twitter is licensed under <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="license noopener">CC BY 3.0</a></p>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/jquery-3.2.1.slim.min.js"></script>
+    <script src="/assets/popper.min.js"></script>
+    <script src="/assets/bootstrap.min.js"></script>
+    <script src="/assets/prism.js"></script>
+    <script src="/assets/simpleLightbox.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.lightbox').simpleLightbox();
+        });
+    </script>
+</body>
+</html>

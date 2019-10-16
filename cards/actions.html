@@ -156,6 +156,11 @@
                                                 Introduction to Card Collections
                                             </a>
                                         </li>
+                                        <li class="">
+                                            <a href="/cards/layouts.html">
+                                                Layouts
+                                            </a>
+                                        </li>
                                         <li class="active">
                                             <a href="/cards/actions.html">
                                                 Handling actions
@@ -167,21 +172,21 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/cards/builtinlayouts.html">
-                                                Layouts
+                                            <a href="/cards/attributes.html">
+                                                Attributes
                                             </a>
                                         </li>
                                 </ul>
                         </div>
                         <div class="bd-toc-item active">
-                            <a class="bd-toc-link" href="/advanced/animations.html">
+                            <a class="bd-toc-link" href="/advanced/events.html">
                                 Advanced Topics
                             </a>
 
                                 <ul class="nav bd-sidenav">
                                         <li class="">
-                                            <a href="/advanced/animations.html">
-                                                Configuration
+                                            <a href="/advanced/events.html">
+                                                Events
                                             </a>
                                         </li>
                                         <li class="">
@@ -190,23 +195,13 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/advanced/events.html">
-                                                Events
+                                            <a href="/advanced/animations.html">
+                                                Animations
                                             </a>
                                         </li>
                                         <li class="">
                                             <a href="/advanced/performance.html">
                                                 Performance tips
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/updatingschema.html">
-                                                Updating schema
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/renderingerror.html">
-                                                Handling rendering errors
                                             </a>
                                         </li>
                                 </ul>
@@ -216,17 +211,66 @@
 
                 <div class="d-none d-xl-block col-xl-2 bd-toc">
                     <ul class="section-nav">
+                            <li class="toc-entry toc-h3"><a href="#rerendering-card">Rerendering card</a></li>
                     </ul>
                 </div>
 
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
                 <h1 class="bd-title" id="content">Handling actions</h1>
                 <p class="bd-lead"></p>
-                
+                <p>Similar to a single card, Card Collections can handle OpenUrl-action automatically but Submit-action must be handled using code. And similar to a single card, <strong>OnSubmitAction</strong> and <strong>SubmitHandler</strong> can be used to handle submit.</p>
+<p>When using OnSubmitAction or SubmitHandler with a Card Collection, you get access to the model which is bound against the card.</p>
+<p>Here's an example of OnSubmitAction:</p>
+<pre><code class="line-numbers language-html">&lt;CardCollection OnSubmitAction="@SendEmail" Models="@forecasts" Schema="@Schemas.WeatherTemplated"&gt;&lt;/CardCollection&gt;
+...
+@code {
+    ...
+    public void SendEmail(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        var details = new { eventArgs.Action, eventArgs.Data, eventArgs.Model };
+    }
+}
+</code></pre>
+<p>SubmitEventArgs can be used to access the following data: The name of the submit action, the submitted data, the model and the AdaptiveCard.</p>
+<p>SubmitHandler makes some things easier as it supports model binding. Here's an example of using SubmitHandler with CardCollection:</p>
+<pre><code class="line-numbers language-html">&lt;CardCollection SubmitHandler="this" Models="@forecasts" Schema="@Schemas.WeatherTemplated"&gt;&lt;/CardCollection&gt;
+...
+@code {
+    ...
+    public Task Submit(WeatherForecast model, string emailAddress, TemplatedAdaptiveCard card)
+    {
+        var details = new { emailAddress, model };
+ 
+        StateHasChanged();
+
+        return Task.CompletedTask;
+    }
+}
+</code></pre>
+<h3 id="rerendering-card">Rerendering card</h3>
+<p>As mentioned above, you can access to underlying model when Submit action is executed. This means that you can modify the model. For performance reasons CardCollection doesn't rerender cards when a submit action is handled, meaning if you modify the model, your card won't show the changes. But you can direct the CardCollection to rerender a single card.</p>
+<p>Here's an example where a Submit action is executed which then modifies the model. A rerender updated the visible card:</p>
+<pre><code class="line-numbers language-html">&lt;CardCollection OnSubmitAction="@SendEmailReRender" Models="@forecasts" Schema="@Schemas.WeatherTemplated"&gt;&lt;/CardCollection&gt;
+...
+@code {
+    ...
+    public void SendEmailReRender(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        var details = new { eventArgs.Action, eventArgs.Data, eventArgs.Model };
+ 
+        selectedForecast = (WeatherForecast)eventArgs.Model;
+        selectedForecast.Summary = "Shared";
+
+        eventArgs.AdaptiveCard.ShouldReRender = true;
+    }
+}
+</code></pre>
+<p><a href="2019-10-16-08-57-10.png" class="lightbox"><img src="2019-10-16-08-57-10.png" class="img-fluid" alt=""></a></p>
+
 
                 <div class="row">
                     <div class="col">
-                            <a class="text-muted" href="/cards/introduction.html">Previous: Introduction to Card Collections</a>
+                            <a class="text-muted" href="/cards/layouts.html">Previous: Layouts</a>
                     </div>
                     <div class="col text-right">
                             <a class="text-muted" href="/cards/templateselector.html">Next: Template selector</a>

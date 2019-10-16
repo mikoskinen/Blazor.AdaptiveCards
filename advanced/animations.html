@@ -157,6 +157,11 @@
                                             </a>
                                         </li>
                                         <li class="">
+                                            <a href="/cards/layouts.html">
+                                                Layouts
+                                            </a>
+                                        </li>
+                                        <li class="">
                                             <a href="/cards/actions.html">
                                                 Handling actions
                                             </a>
@@ -167,21 +172,21 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/cards/builtinlayouts.html">
-                                                Layouts
+                                            <a href="/cards/attributes.html">
+                                                Attributes
                                             </a>
                                         </li>
                                 </ul>
                         </div>
                         <div class="bd-toc-item active">
-                            <a class="bd-toc-link" href="/advanced/animations.html">
+                            <a class="bd-toc-link" href="/advanced/events.html">
                                 Advanced Topics
                             </a>
 
                                 <ul class="nav bd-sidenav">
-                                        <li class="active">
-                                            <a href="/advanced/animations.html">
-                                                Configuration
+                                        <li class="">
+                                            <a href="/advanced/events.html">
+                                                Events
                                             </a>
                                         </li>
                                         <li class="">
@@ -189,24 +194,14 @@
                                                 Configuration
                                             </a>
                                         </li>
-                                        <li class="">
-                                            <a href="/advanced/events.html">
-                                                Events
+                                        <li class="active">
+                                            <a href="/advanced/animations.html">
+                                                Animations
                                             </a>
                                         </li>
                                         <li class="">
                                             <a href="/advanced/performance.html">
                                                 Performance tips
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/updatingschema.html">
-                                                Updating schema
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/renderingerror.html">
-                                                Handling rendering errors
                                             </a>
                                         </li>
                                 </ul>
@@ -216,20 +211,98 @@
 
                 <div class="d-none d-xl-block col-xl-2 bd-toc">
                     <ul class="section-nav">
+                            <li class="toc-entry toc-h3"><a href="#modify_host.cshtml">Modify _Host.cshtml</a></li>
+                            <li class="toc-entry toc-h3"><a href="#add-animation-attributes">Add animation attributes</a></li>
                     </ul>
                 </div>
 
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
-                <h1 class="bd-title" id="content">Configuration</h1>
+                <h1 class="bd-title" id="content">Animations</h1>
                 <p class="bd-lead"></p>
-                <p>TODO</p>
+                <p>Adaptive Cards can be animated using CSS and JS libraries. Here's an example where <a href="https://michalsnik.github.io/aos/">aos.js</a> is used to animate a Card Collection.</p>
+<p><a href="animatedcard.gif" class="lightbox"><img src="animatedcard.gif" class="img-fluid" alt=""></a></p>
+<p>Here's a step by step guide of integrating AOS with Adaptive Cards for Blazor.</p>
+<h3 id="modify_host.cshtml">Modify _Host.cshtml</h3>
+<p>Add the following lines into your _Host.cshtml header:</p>
+<pre><code class="line-numbers language-html">    &lt;link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"&gt;
+    &lt;script src="https://unpkg.com/aos@2.3.1/dist/aos.js"&gt;&lt;/script&gt;
+</code></pre>
+<p>And then the following lines just before the body-tag:</p>
+<pre><code class="line-numbers language-html">    &lt;script&gt;
+        AOS.init({
+            once: true
+        });
+    &lt;/script&gt;
+</code></pre>
+<h3 id="add-animation-attributes">Add animation attributes</h3>
+<p>AOS uses attributes for defining how cards are animated. The <strong>CardAttributes</strong> and <strong>CardAttributeFunctions</strong> parameters of CardCollection are handy as they can be used to add the required attributes.</p>
+<p>Here's an example which makes each card to fade up:</p>
+<pre><code class="line-numbers language-html">@if (Customers?.Any() == true)
+{
+    &lt;CardCollection Models="@Customers" CardAttributes="@AnimationAttributes"&gt;&lt;/CardCollection&gt;
+}
+
+@code {
+    private List&lt;Customer&gt; Customers = new List&lt;Customer&gt;();
+    private Dictionary&lt;string, object&gt; AnimationAttributes = new Dictionary&lt;string, object&gt;() {
+        { "data-aos", "fade-up" },
+    };
+
+    protected override void OnInitialized()
+    {
+        Customers.Clear();
+
+        for (int i = 0; i &lt; 10; i++)
+        {
+            Customers.Add(new Customer() { FirstName = $"Person {i}", LastName = "Lastname" });
+        }
+    }
+}
+</code></pre>
+<p>This looks OK but every card is animated at the same time. To make the cards animate one after another, CardAttributeFunctions can be used to set a individual delay for each card:</p>
+<pre><code class="line-numbers language-html">@if (Customers?.Any() == true)
+{
+    &lt;Info&gt;
+        This sample shows how cards can be animated using aos.js
+    &lt;/Info&gt;
+    &lt;CardCollection Models="@Customers" CardAttributes="@AnimationAttributes"&gt;&lt;/CardCollection&gt;
+
+    &lt;Info class="mt-4"&gt;
+        This sample shows how cards can be animated one by one
+    &lt;/Info&gt;
+
+    &lt;CardCollection Models="@Customers" CardAttributes="@AnimationAttributes" CardAttributeFunctions="@AttributeFunctions"&gt;&lt;/CardCollection&gt;
+}
+
+@code {
+    private List&lt;Customer&gt; Customers = new List&lt;Customer&gt;();
+    private Dictionary&lt;string, object&gt; AnimationAttributes = new Dictionary&lt;string, object&gt;() {
+        { "data-aos", "fade-up" },
+    };
+
+    private List&lt;(string, Func&lt;int, object, object&gt;)&gt; AttributeFunctions = new List&lt;(string, Func&lt;int, object, object&gt;)&gt;() {
+        ("data-aos-delay", (i, customer) =&gt; (i * 200).ToString())
+    };
+
+    protected override void OnInitialized()
+    {
+        Customers.Clear();
+
+        for (int i = 0; i &lt; 10; i++)
+        {
+            Customers.Add(new Customer() { FirstName = $"Person {i}", LastName = "Lastname" });
+        }
+    }
+}
+</code></pre>
 
 
                 <div class="row">
                     <div class="col">
+                            <a class="text-muted" href="/advanced/configuration.html">Previous: Configuration</a>
                     </div>
                     <div class="col text-right">
-                            <a class="text-muted" href="/advanced/configuration.html">Next: Configuration</a>
+                            <a class="text-muted" href="/advanced/performance.html">Next: Performance tips</a>
                     </div>
                 </div>
 

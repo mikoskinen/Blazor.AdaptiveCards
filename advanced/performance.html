@@ -157,6 +157,11 @@
                                             </a>
                                         </li>
                                         <li class="">
+                                            <a href="/cards/layouts.html">
+                                                Layouts
+                                            </a>
+                                        </li>
+                                        <li class="">
                                             <a href="/cards/actions.html">
                                                 Handling actions
                                             </a>
@@ -167,21 +172,21 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/cards/builtinlayouts.html">
-                                                Layouts
+                                            <a href="/cards/attributes.html">
+                                                Attributes
                                             </a>
                                         </li>
                                 </ul>
                         </div>
                         <div class="bd-toc-item active">
-                            <a class="bd-toc-link" href="/advanced/animations.html">
+                            <a class="bd-toc-link" href="/advanced/events.html">
                                 Advanced Topics
                             </a>
 
                                 <ul class="nav bd-sidenav">
                                         <li class="">
-                                            <a href="/advanced/animations.html">
-                                                Configuration
+                                            <a href="/advanced/events.html">
+                                                Events
                                             </a>
                                         </li>
                                         <li class="">
@@ -190,23 +195,13 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/advanced/events.html">
-                                                Events
+                                            <a href="/advanced/animations.html">
+                                                Animations
                                             </a>
                                         </li>
                                         <li class="active">
                                             <a href="/advanced/performance.html">
                                                 Performance tips
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/updatingschema.html">
-                                                Updating schema
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/renderingerror.html">
-                                                Handling rendering errors
                                             </a>
                                         </li>
                                 </ul>
@@ -222,15 +217,31 @@
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
                 <h1 class="bd-title" id="content">Performance tips</h1>
                 <p class="bd-lead"></p>
-                <p>TODO</p>
+                <p>Adaptive Cards work by transforming a JSON schema into HTML. This takes time. Adaptive Cards for Blazor uses the Adaptive Cards for .NET SDK to create the cards so it can work as quickly as the underlying SDK. Unfortunately the SDK doesn't always provide a lightning fast rendering.</p>
+<p>If you render just a single card, it's unlikely you notice a long delay, even if the JSON schema is complex. But, if you use Card Collections and display hundredths of cards in a single page, it's quite likely you start to see performance problems.</p>
+<p>By default, an Adaptive Card is rendered before the page hosting the card is shown. In other words, the rendering happens in the <strong>OnParametersSetAsync</strong> of the component. In many ways this is the desired way as it means the card is fully visible when the user first sees the page.</p>
+<p>There's an alternative mode for rendering the card. In this mode, card isn't rendered during OnParametersSetAsync but on <strong>OnAfterRenderAsync</strong>. This way the page can be shown to the user even though the card isn't yet ready. With a single card this causes flashing issues as the card first takes 0 pixels and after the render it expand to take the required space, making other HTML elements to jump into their new locations. But the alternative render mode can be a life saver when using Card Collections.</p>
+<p>These two render modes are called Synchronous and Asynchronous. By default Synchronous is used. To switch to the Asynchronous rendering, use <strong>RenderMode</strong> parameter:</p>
+<pre><code class="line-numbers language-html">    &lt;CardCollection Models="@Customers" RenderMode="RenderMode.Asynchronous"&gt;&lt;/CardCollection&gt;
+```html
+
+Is Asynchronous rendering better than Synchronous? It depends on multiple factors:
+
+* How many cards you are going to display
+* How complicated is the schema
+* Is it better for your user to first see an empty page
+
+The recommended way is to start from Synchronous and to switch into Asynchronous if you need a better performance. And you quite likely need all the performance benefits if you're rendering more than 30 cards.
+
+*Note:* Currently the RenderMode parameter is accessible only through CardCollection. You can't set RenderMode for a single AdaptiveCard. This may change in future.
+</code></pre>
 
 
                 <div class="row">
                     <div class="col">
-                            <a class="text-muted" href="/advanced/events.html">Previous: Events</a>
+                            <a class="text-muted" href="/advanced/animations.html">Previous: Animations</a>
                     </div>
                     <div class="col text-right">
-                            <a class="text-muted" href="/advanced/updatingschema.html">Next: Updating schema</a>
                     </div>
                 </div>
 

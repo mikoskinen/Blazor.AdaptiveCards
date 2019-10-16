@@ -157,6 +157,11 @@
                                             </a>
                                         </li>
                                         <li class="">
+                                            <a href="/cards/layouts.html">
+                                                Layouts
+                                            </a>
+                                        </li>
+                                        <li class="">
                                             <a href="/cards/actions.html">
                                                 Handling actions
                                             </a>
@@ -167,21 +172,21 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/cards/builtinlayouts.html">
-                                                Layouts
+                                            <a href="/cards/attributes.html">
+                                                Attributes
                                             </a>
                                         </li>
                                 </ul>
                         </div>
                         <div class="bd-toc-item active">
-                            <a class="bd-toc-link" href="/advanced/animations.html">
+                            <a class="bd-toc-link" href="/advanced/events.html">
                                 Advanced Topics
                             </a>
 
                                 <ul class="nav bd-sidenav">
                                         <li class="">
-                                            <a href="/advanced/animations.html">
-                                                Configuration
+                                            <a href="/advanced/events.html">
+                                                Events
                                             </a>
                                         </li>
                                         <li class="active">
@@ -190,23 +195,13 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/advanced/events.html">
-                                                Events
+                                            <a href="/advanced/animations.html">
+                                                Animations
                                             </a>
                                         </li>
                                         <li class="">
                                             <a href="/advanced/performance.html">
                                                 Performance tips
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/updatingschema.html">
-                                                Updating schema
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/renderingerror.html">
-                                                Handling rendering errors
                                             </a>
                                         </li>
                                 </ul>
@@ -222,15 +217,68 @@
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
                 <h1 class="bd-title" id="content">Configuration</h1>
                 <p class="bd-lead"></p>
-                <p>TODO</p>
+                <p>Adaptive Cards for Blazor can be configured through the application's ConfigureServices-method. AddBlazorAdaptiveCards exposes BlazorAdaptiveCardsOptions, which allows configuring different aspects of the library:</p>
+<pre><code class="line-numbers language-csharp">        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
+            services.AddSingleton&lt;WeatherForecastService&gt;();
+
+            services.AddBlazorAdaptiveCards(options =&gt;
+            {
+                options.RenderFailedText = "Custom rendering error text";
+            })
+                .AddTemplate&lt;WeatherForecast&gt;(Schemas.WeatherTemplated)
+                .AddTemplate&lt;Customer&gt;(Schemas.CustomerTemplated)
+                .AddFileTemplate("Alternative", "AlternativeTemplatedAdaptiveCard.json");
+        }
+</code></pre>
+<p>Here are all the options:</p>
+<ul>
+<li>AdaptiveOpenUrlActionProvider: Gets or sets the adaptive open URL action provider.</li>
+<li>AdaptiveShowCardActionProvider: Gets or sets the adaptive show card action provider.</li>
+<li>AdaptiveSubmitActionProvider: Gets or sets the adaptive submit action provider.</li>
+<li>AdaptiveCardTemplatingProvider: Gets or sets the adaptive card templating provider.</li>
+<li>AllowTemplatingError: Gets or sets a value indicating whether templating exception throws.</li>
+<li>RenderFailedText: Gets or sets the render failed text.</li>
+</ul>
+<p>Another way to customize Adaptive Cards for Blazor is by implementing interfaces. For example, when a Submit action is executed, the execution happens through <strong>ISubmitActionHandler</strong>. By default this is implemented by <strong>DefaultSubmitActionHandler</strong>. If you want a complete control of how submit actions are handled, you can create a custom class:</p>
+<pre><code class="line-numbers language-csharp">        public class MySubmitHandler : ISubmitActionHandler
+        {
+            public Task Handle(SubmitEventArgs eventArgs, object handler, object model)
+            {
+                ...
+            }
+        }
+</code></pre>
+<p>Then, add your custom solution in ConfigureServices before calling AddBlazorAdaptiveCards:</p>
+<pre><code class="line-numbers language-csharp">        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
+            services.AddSingleton&lt;WeatherForecastService&gt;();
+
+            services.AddSingleton&lt;ISubmitActionHandler, MySubmitHandler&gt;();
+
+            services.AddBlazorAdaptiveCards(options =&gt;
+            {
+            });
+        }
+</code></pre>
+<p>Here's the public interfaces you can replace with your own solutions:</p>
+<ul>
+<li>ISubmitActionHandler</li>
+<li>IModelTemplateCatalog</li>
+<li>IModelTemplateProvider</li>
+</ul>
 
 
                 <div class="row">
                     <div class="col">
-                            <a class="text-muted" href="/advanced/animations.html">Previous: Configuration</a>
+                            <a class="text-muted" href="/advanced/events.html">Previous: Events</a>
                     </div>
                     <div class="col text-right">
-                            <a class="text-muted" href="/advanced/events.html">Next: Events</a>
+                            <a class="text-muted" href="/advanced/animations.html">Next: Animations</a>
                     </div>
                 </div>
 

@@ -157,6 +157,11 @@
                                             </a>
                                         </li>
                                         <li class="">
+                                            <a href="/cards/layouts.html">
+                                                Layouts
+                                            </a>
+                                        </li>
+                                        <li class="">
                                             <a href="/cards/actions.html">
                                                 Handling actions
                                             </a>
@@ -167,21 +172,21 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/cards/builtinlayouts.html">
-                                                Layouts
+                                            <a href="/cards/attributes.html">
+                                                Attributes
                                             </a>
                                         </li>
                                 </ul>
                         </div>
                         <div class="bd-toc-item active">
-                            <a class="bd-toc-link" href="/advanced/animations.html">
+                            <a class="bd-toc-link" href="/advanced/events.html">
                                 Advanced Topics
                             </a>
 
                                 <ul class="nav bd-sidenav">
                                         <li class="">
-                                            <a href="/advanced/animations.html">
-                                                Configuration
+                                            <a href="/advanced/events.html">
+                                                Events
                                             </a>
                                         </li>
                                         <li class="">
@@ -190,23 +195,13 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/advanced/events.html">
-                                                Events
+                                            <a href="/advanced/animations.html">
+                                                Animations
                                             </a>
                                         </li>
                                         <li class="">
                                             <a href="/advanced/performance.html">
                                                 Performance tips
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/updatingschema.html">
-                                                Updating schema
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/renderingerror.html">
-                                                Handling rendering errors
                                             </a>
                                         </li>
                                 </ul>
@@ -222,8 +217,8 @@
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
                 <h1 class="bd-title" id="content">Template Selector</h1>
                 <p class="bd-lead"></p>
-                <p>TemplateSelector allows you to define a function which selects the template based on some criteria. This is useful in scenarios where you have multiple schemas for a single type and fixed criteria of when to use which schema.</p>
-<p>To use Template Select, first configure available schemas in application's ConfigureServices:</p>
+                <p>Template Selector allows you to define a function which selects the template based on some criteria. This is useful in scenarios where you have multiple schemas for a single type and fixed criteria of when to use which schema.</p>
+<p>To use Template Selector, first configure available schemas in application's ConfigureServices:</p>
 <pre><code class="line-numbers language-csharp">services.AddBlazorAdaptiveCards()
     .AddTemplate&lt;Customer&gt;(Schemas.CustomerTemplated)
     .AddFileTemplate("Alternative", "AlternativeTemplatedAdaptiveCard.json");

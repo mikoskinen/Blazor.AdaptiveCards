@@ -157,6 +157,11 @@
                                             </a>
                                         </li>
                                         <li class="">
+                                            <a href="/cards/layouts.html">
+                                                Layouts
+                                            </a>
+                                        </li>
+                                        <li class="">
                                             <a href="/cards/actions.html">
                                                 Handling actions
                                             </a>
@@ -167,21 +172,21 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/cards/builtinlayouts.html">
-                                                Layouts
+                                            <a href="/cards/attributes.html">
+                                                Attributes
                                             </a>
                                         </li>
                                 </ul>
                         </div>
                         <div class="bd-toc-item active">
-                            <a class="bd-toc-link" href="/advanced/animations.html">
+                            <a class="bd-toc-link" href="/advanced/events.html">
                                 Advanced Topics
                             </a>
 
                                 <ul class="nav bd-sidenav">
-                                        <li class="">
-                                            <a href="/advanced/animations.html">
-                                                Configuration
+                                        <li class="active">
+                                            <a href="/advanced/events.html">
+                                                Events
                                             </a>
                                         </li>
                                         <li class="">
@@ -189,24 +194,14 @@
                                                 Configuration
                                             </a>
                                         </li>
-                                        <li class="active">
-                                            <a href="/advanced/events.html">
-                                                Events
+                                        <li class="">
+                                            <a href="/advanced/animations.html">
+                                                Animations
                                             </a>
                                         </li>
                                         <li class="">
                                             <a href="/advanced/performance.html">
                                                 Performance tips
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/updatingschema.html">
-                                                Updating schema
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/renderingerror.html">
-                                                Handling rendering errors
                                             </a>
                                         </li>
                                 </ul>
@@ -222,15 +217,60 @@
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
                 <h1 class="bd-title" id="content">Events</h1>
                 <p class="bd-lead"></p>
-                <p>TODO</p>
+                <p>Adaptive Cards provide the following event callbacks:</p>
+<ul>
+<li>OnCardRendered</li>
+<li>OnCardRenderFailed</li>
+<li>OnSubmitAction</li>
+<li>OnOpenUrlAction</li>
+</ul>
+<p>Example of OnCardRendered:</p>
+<pre><code class="line-numbers language-html">    &lt;AdaptiveCard Schema="@Schemas.Weather" OnCardRendered="HandleCardRendered"&gt;&lt;/AdaptiveCard&gt;
+    ...
+
+@code {
+    public void HandleCardRendered(AdaptiveCards.Blazor.Actions.CardRenderedEventArgs eventArgs)
+    {
+        ...
+    }}    
+</code></pre>
+<p>Example of OnCardRenderFailed:</p>
+<pre><code class="line-numbers language-html">    &lt;AdaptiveCard Schema="broken schema" OnCardRenderFailed="HandleCardRenderFailed" &gt;&lt;/AdaptiveCard&gt;
+    ...
+
+@code {
+    public void HandleCardRenderFailed(AdaptiveCards.Blazor.Actions.CardRenderFailedEventArgs eventArgs)
+    {
+        ...
+    }
+</code></pre>
+<p>Example of OnSubmitAction:</p>
+<pre><code class="line-numbers language-html">    &lt;AdaptiveCard Schema="@Schemas.SimpleSubmit" OnSubmitAction="HandleSubmit"&gt;&lt;/AdaptiveCard&gt;
+    ...
+
+@code {
+    public void HandleSubmit(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    {
+        ...
+    }
+</code></pre>
+<p>Example of OnOpenUrlAction:</p>
+<pre><code class="line-numbers language-html">    &lt;AdaptiveCard Schema="@Schemas.WeatherOpenUrl" OnOpenUrlAction="HandleOpenUrl"&gt;&lt;/AdaptiveCard&gt;
+    ...
+
+@code {
+    public void HandleOpenUrl(string url)
+    {
+        ...
+    }
+</code></pre>
 
 
                 <div class="row">
                     <div class="col">
-                            <a class="text-muted" href="/advanced/configuration.html">Previous: Configuration</a>
                     </div>
                     <div class="col text-right">
-                            <a class="text-muted" href="/advanced/performance.html">Next: Performance tips</a>
+                            <a class="text-muted" href="/advanced/configuration.html">Next: Configuration</a>
                     </div>
                 </div>
 

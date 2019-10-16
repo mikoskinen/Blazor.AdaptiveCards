@@ -157,6 +157,11 @@
                                             </a>
                                         </li>
                                         <li class="">
+                                            <a href="/cards/layouts.html">
+                                                Layouts
+                                            </a>
+                                        </li>
+                                        <li class="">
                                             <a href="/cards/actions.html">
                                                 Handling actions
                                             </a>
@@ -167,21 +172,21 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/cards/builtinlayouts.html">
-                                                Layouts
+                                            <a href="/cards/attributes.html">
+                                                Attributes
                                             </a>
                                         </li>
                                 </ul>
                         </div>
                         <div class="bd-toc-item active">
-                            <a class="bd-toc-link" href="/advanced/animations.html">
+                            <a class="bd-toc-link" href="/advanced/events.html">
                                 Advanced Topics
                             </a>
 
                                 <ul class="nav bd-sidenav">
                                         <li class="">
-                                            <a href="/advanced/animations.html">
-                                                Configuration
+                                            <a href="/advanced/events.html">
+                                                Events
                                             </a>
                                         </li>
                                         <li class="">
@@ -190,23 +195,13 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a href="/advanced/events.html">
-                                                Events
+                                            <a href="/advanced/animations.html">
+                                                Animations
                                             </a>
                                         </li>
                                         <li class="">
                                             <a href="/advanced/performance.html">
                                                 Performance tips
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/updatingschema.html">
-                                                Updating schema
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="/advanced/renderingerror.html">
-                                                Handling rendering errors
                                             </a>
                                         </li>
                                 </ul>
@@ -222,13 +217,43 @@
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
                 <h1 class="bd-title" id="content">Introduction to Card Collections</h1>
                 <p class="bd-lead"></p>
-                
+                <p>Adaptive Cards for Blazor has a feature called Card Collections. Card Collections allow the developer to easily display a list of cards based on two things: <strong>A list of models</strong> and <strong>a template</strong>. Model can be any .NET object, like a Customer, Invoice or WeatherInfo. Template is a JSON schema. Card Collection takes a list of models, for example List<weatherinfo> and the template and then binds each model against the schema. The end result is then rendered on the screen.</weatherinfo></p>
+<p><a href="2019-10-16-08-28-39.png" class="lightbox"><img src="2019-10-16-08-28-39.png" class="img-fluid" alt=""></a></p>
+<p><em>Note</em>: The templating support in Adaptive Cards for Blazor is a custom-built solution, based on the <a href="https://github.com/lunet-io/scriban">Scriban</a> templating language. Adaptive Cards should at some point receive a native templating support.</p>
+<p>Card Collection supported is provided by CardCollection component. Here's an example where CardCollection is used to display weather forecasts:</p>
+<pre><code class="line-numbers language-html">@if (forecasts == null)
+{
+    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+}
+else
+{
+    &lt;CardCollection Models="@forecasts" Schema="@Schemas.WeatherTemplated"&gt;&lt;/CardCollection&gt;
+}
+
+@if (!string.IsNullOrWhiteSpace(actionDetails))
+{
+    &lt;p class="alert alert-success mt-3" style="white-space: pre-wrap"&gt;@actionDetails&lt;/p&gt;
+}
+
+@code {
+    string actionDetails = "";
+    WeatherForecast[] forecasts;
+    string schema;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+    }
+}
+</code></pre>
+<p>Behind the scenes CardCollection uses TemplatedAdaptiveCard to create the cards.</p>
+
 
                 <div class="row">
                     <div class="col">
                     </div>
                     <div class="col text-right">
-                            <a class="text-muted" href="/cards/actions.html">Next: Handling actions</a>
+                            <a class="text-muted" href="/cards/layouts.html">Next: Layouts</a>
                     </div>
                 </div>
 
