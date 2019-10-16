@@ -1,6 +1,10 @@
 ## Introduction
 
-Adaptive Cards for Blazor is a community project that provides Adaptive Cards support for your Blazor applications. [Adaptive Cards](https://adaptivecards.io/) are a way to exchange content in a common and consistent way. Adaptive Cards can be integrated into different applications like Microsoft Teams and Outlook. Adaptive Cards can also be integrated into custom applications built with .NET, iOS and JavaScript. And now Blazor, the new Web App platform from Microsoft is supported.
+Adaptive Cards for Blazor is a community project that provides Adaptive Cards support for your Blazor applications. 
+
+![Adaptive Cards for Blazor Logo](https://raw.githubusercontent.com/mikoskinen/Blazor.AdaptiveCards/master/doc/logo_small.jpg)
+
+[Adaptive Cards](https://adaptivecards.io/) are a way to exchange content in a common and consistent way. Adaptive Cards can be integrated into different applications like Microsoft Teams and Outlook. Adaptive Cards can also be integrated into custom applications built with .NET, iOS and JavaScript. And now Blazor, the new Web App platform from Microsoft is supported.
 
 [![NuGet](https://img.shields.io/nuget/v/AdaptiveCardsBlazor.svg)](https://www.nuget.org/packages/AdaptiveCardsBlazor/)
 
