@@ -33,6 +33,8 @@ else
     <CardCollection class="card-columns" CardClass="card" Models="@forecasts" Schema="@Schemas.WeatherTemplated"></CardCollection>
 }
 
+<CodeBlock Source="Collections/Layouts.razor" />
+
 @code {
     WeatherForecast[] forecasts;
     string schema;

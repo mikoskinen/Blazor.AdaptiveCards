@@ -7,11 +7,13 @@
 
 @if (Customers?.Any() == true)
 {
-<Info>
-    This sample takes time to load as it renders 50 cards. The collection uses the default rendering mode called "Synchronous rendering". The next sample can be used to validate the performance difference between synchronous and asynchronous rendering.
-</Info>
+    <Info>
+        This sample takes time to load as it renders 50 cards. The collection uses the default rendering mode called "Synchronous rendering". The next sample can be used to validate the performance difference between synchronous and asynchronous rendering.
+    </Info>
     <CardCollection Models="@Customers" RenderMode="RenderMode.Synchronous"></CardCollection>
 }
+
+<CodeBlock Source="Misc/SyncRender.razor" />
 
 @code {
     private List<Customer> Customers = new List<Customer>();

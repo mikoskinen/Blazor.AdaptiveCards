@@ -19,6 +19,8 @@
     <CardCollection Models="@Customers" CardAttributes="@AnimationAttributes" CardAttributeFunctions="@AttributeFunctions"></CardCollection>
 }
 
+<CodeBlock Source="Misc/Animation.razor" />
+
 @code {
     private List<Customer> Customers = new List<Customer>();
     private Dictionary<string, object> AnimationAttributes = new Dictionary<string, object>() {

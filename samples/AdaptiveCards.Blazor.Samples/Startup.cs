@@ -30,6 +30,9 @@ namespace AdaptiveCards.Blazor.Samples
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddHttpClient("samples", x => {
+                x.BaseAddress = new System.Uri("https://raw.githubusercontent.com/mikoskinen/Blazor.AdaptiveCards/master/samples/AdaptiveCards.Blazor.Samples/Pages/");
+            });
 
             services.AddBlazorAdaptiveCards()
                 .AddTemplate<WeatherForecast>(Schemas.WeatherTemplated)

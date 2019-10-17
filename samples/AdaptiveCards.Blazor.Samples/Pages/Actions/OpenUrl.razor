@@ -13,6 +13,8 @@
 
 <AdaptiveCard OnOpenUrlAction="HandleOpenUrl" Schema="@Schemas.WeatherOpenUrl"></AdaptiveCard>
 
+<CodeBlock Source="Actions/OpenUrl.razor" />
+
 @if (!string.IsNullOrWhiteSpace(openUrl))
 {
     <p class="alert alert-success">Navigating to: @openUrl</p>

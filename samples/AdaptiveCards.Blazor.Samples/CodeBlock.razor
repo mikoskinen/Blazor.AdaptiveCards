@@ -1,36 +1,68 @@
-<pre><code id="@_id" class="@Language">@Code
-</code>
-</pre>
+<div class="mt-5">
+    <BSButton Color="Color.Primary" OnClick="onclick">Source Code</BSButton>
+    <div class="mb-3"></div>
+    <BSCollapse IsOpen="@IsOpen">
+        <BSCard CardType="CardType.Card">
+            <pre><code id="@_id" class="@Language">@Code
+        </code>
+        </pre>
+        </BSCard>
+    </BSCollapse>
+</div>
+
 @code {
     private string _code;
 
     [Parameter]
-    public string Language { get; set; } = "language-csharp";
+    public string Language { get; set; } = "language-html";
 
     [Parameter]
-    public string Code
-    {
-        get
-        {
-            return _code;
-        }
-        set
-        {
-            if (string.Equals(_code, value))
-            {
-                return;
-            }
+    public string Source { get; set; }
 
-            _code = value;
-        }
-    }
+    [Parameter]
+    public string Code { get; set; }
 
     [Inject] private IJSRuntime JsRuntime { get; set; }
+    [Inject] private IHttpClientFactory clientFactory { get; set; }
+
+    public bool IsVisible { get; set; }
 
     private readonly Guid _id = Guid.NewGuid();
 
+    bool IsOpen { get; set; }
+    void onclick(MouseEventArgs e)
+    {
+        IsOpen = !IsOpen;
+        StateHasChanged();
+
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        if (string.IsNullOrWhiteSpace(Source))
+        {
+            return;
+        }
+
+        try
+        {
+            var client = clientFactory.CreateClient("samples");
+            var downloadedCode =
+
+            Code = await client.GetStringAsync(Source);
+        }
+        catch (Exception)
+        {
+            Code = $"Failed to download code from {Source}";
+        }
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (string.IsNullOrWhiteSpace(Code))
+        {
+            return;
+        }
+
         await JsRuntime.InvokeVoidAsync("codeBlock.highlight", _id.ToString());
     }
 }

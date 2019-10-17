@@ -11,6 +11,8 @@
 
 <TemplatedAdaptiveCard TemplateSelector="SelectTemplate" Model="@(new Customer() { FirstName = "Second", LastName = "Customer" })"></TemplatedAdaptiveCard>
 
+<CodeBlock Source="Templating/TemplateSelector.razor" />
+
 @code{
     [Inject]
     private IModelTemplateCatalog ModelTemplateCatalog { get; set; }

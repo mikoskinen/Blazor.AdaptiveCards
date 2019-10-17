@@ -18,7 +18,7 @@
             <AdaptiveCard Schema="@Schemas.Weather" OnCardRendered="HandleCardRendered"></AdaptiveCard>
 
             <Info class="mt-4">This sample demonstrates how to use OnCardRenderFailed.</Info>
-            <AdaptiveCard Schema="broken schema" OnCardRenderFailed="HandleCardRenderFailed" ></AdaptiveCard>
+            <AdaptiveCard Schema="broken schema" OnCardRenderFailed="HandleCardRenderFailed"></AdaptiveCard>
 
             <Info class="mt-4">This sample demonstrates how to use OnSubmit.</Info>
             <AdaptiveCard Schema="@Schemas.SimpleSubmit" OnSubmitAction="HandleSubmit"></AdaptiveCard>
@@ -36,6 +36,8 @@
         }
     </div>
 </div>
+
+<CodeBlock Source="Misc/Events.razor" />
 
 @code {
     WeatherForecast[] forecasts;
