@@ -64,7 +64,7 @@
                                                 Getting Started
                                             </a>
                                         </li>
-                                        <li class="">
+                                        <li class="active">
                                             <a href="/roadmap.html">
                                                 Roadmap
                                             </a>
@@ -161,7 +161,7 @@
                             </a>
 
                                 <ul class="nav bd-sidenav">
-                                        <li class="active">
+                                        <li class="">
                                             <a href="/cards/introduction.html">
                                                 Introduction to Card Collections
                                             </a>
@@ -225,45 +225,24 @@
                 </div>
 
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
-                <h1 class="bd-title" id="content">Introduction to Card Collections</h1>
+                <h1 class="bd-title" id="content">Roadmap</h1>
                 <p class="bd-lead"></p>
-                <p>Adaptive Cards for Blazor has a feature called Card Collections. Card Collections allow the developer to easily display a list of cards based on two things: <strong>A list of models</strong> and <strong>a template</strong>. Model can be any .NET object, like a Customer, Invoice or WeatherInfo. Template is a JSON schema. Card Collection takes a list of models, for example List<weatherinfo> and the template and then binds each model against the schema. The end result is then rendered on the screen.</weatherinfo></p>
-<p><a href="2019-10-16-08-28-39.png" class="lightbox"><img src="2019-10-16-08-28-39.png" class="img-fluid" alt=""></a></p>
-<p><em>Note</em>: The templating support in Adaptive Cards for Blazor is a custom-built solution, based on the <a href="https://github.com/lunet-io/scriban">Scriban</a> templating language. Adaptive Cards should at some point receive a native templating support.</p>
-<p>Card Collection supported is provided by CardCollection component. Here's an example where CardCollection is used to display weather forecasts:</p>
-<pre><code class="line-numbers language-html">@if (forecasts == null)
-{
-    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
-}
-else
-{
-    &lt;CardCollection Models="@forecasts" Schema="@Schemas.WeatherTemplated"&gt;&lt;/CardCollection&gt;
-}
-
-@if (!string.IsNullOrWhiteSpace(actionDetails))
-{
-    &lt;p class="alert alert-success mt-3" style="white-space: pre-wrap"&gt;@actionDetails&lt;/p&gt;
-}
-
-@code {
-    string actionDetails = "";
-    WeatherForecast[] forecasts;
-    string schema;
-
-    protected override async Task OnInitializedAsync()
-    {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
-    }
-}
-</code></pre>
-<p>Behind the scenes CardCollection uses TemplatedAdaptiveCard to create the cards.</p>
+                <p>Here's the current roadmap for Adaptive Cards for Blazor:</p>
+<ul>
+<li><del>October 2019: 1.0.0</del></li>
+<li>October 2019: 1.1.0: Adds support for ToggleVisibility.</li>
+<li>November 2019: 2.0.0: Adds support for .NET Core 3.1.</li>
+<li>May 2020: 3.0.0-beta: Adds support for preview version of .NET 5 and adds a fully tested support for Blazor WebAssembly.</li>
+<li>November 2020: 3.0.0: Adds support for RTM version of .NET 5 and fully supports both the WebAssembly and Server versions of Blazor.</li>
+</ul>
 
 
                 <div class="row">
                     <div class="col">
+                            <a class="text-muted" href="/gettingstarted.html">Previous: Getting Started</a>
                     </div>
                     <div class="col text-right">
-                            <a class="text-muted" href="/cards/layouts.html">Next: Layouts</a>
+                            <a class="text-muted" href="/releashistory.html">Next: Release History</a>
                     </div>
                 </div>
 
