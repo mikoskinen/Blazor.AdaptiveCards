@@ -76,11 +76,10 @@
         return Task.CompletedTask;
     }
 
-    public Task Decline(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
+    public void Decline(AdaptiveCards.Blazor.Actions.SubmitEventArgs eventArgs)
     {
         actionDetails = "Decline: " + Environment.NewLine + System.Text.Json.JsonSerializer.Serialize(eventArgs.Data, options: new System.Text.Json.JsonSerializerOptions() { WriteIndented = true });
 
         StateHasChanged();
-        return Task.CompletedTask;
     }
 }

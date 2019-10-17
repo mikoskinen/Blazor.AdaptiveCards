@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
@@ -67,27 +68,24 @@ namespace AdaptiveCards.Blazor.Actions
 
                 var method = handler.GetType().GetMethod(submitMethodName);
                 var methodParameters = method.GetParameters().ToList();
-
+                
                 if (methodParameters.Any() != true)
                 {
-                    var t = (Task)method.Invoke(handler, null);
-                    await t;
+                    await Invoke(method, handler, null);
 
                     return;
                 }
 
                 if (methodParameters.Count == 1 && typeof(SubmitEventArgs).IsAssignableFrom(methodParameters.First().ParameterType))
                 {
-                    var t = (Task)method.Invoke(handler, new[] { eventArgs });
-                    await t;
+                    await Invoke(method, handler, new[] { eventArgs });
 
                     return;
                 }
 
                 if (model != null && methodParameters.Count == 1 && model.GetType().IsAssignableFrom(methodParameters.First().ParameterType))
                 {
-                    var t = (Task)method.Invoke(handler, new[] { model });
-                    await t;
+                    await Invoke(method, handler, new[] { model });
 
                     return;
                 }
@@ -143,14 +141,26 @@ namespace AdaptiveCards.Blazor.Actions
                     arguments.Add(null);
                 }
 
-                var tOut = (Task)method.Invoke(handler, arguments.ToArray());
-                await tOut;
+                await Invoke(method, handler, arguments.ToArray());
             }
             catch (Exception e)
             {
                 _logger.LogError(e, "Failed to run submit method {submitMethodName} in {handler} with {eventArgs}.", submitMethodName, eventArgs, handler);
 
                 throw new SubmitActionException("Failed to run submit method", eventArgs, handler, e);
+            }
+        }
+
+        private async Task Invoke(MethodInfo method, object handler, object[] arguments)
+        {
+            if (method.ReturnType == typeof(void))
+            {
+                method.Invoke(handler, arguments.ToArray());
+            }
+            else
+            {
+                var tOut = (Task)method.Invoke(handler, arguments.ToArray());
+                await tOut;
             }
         }
 
