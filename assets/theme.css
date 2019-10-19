@@ -36,3 +36,7 @@
 pre[class*="language-"]>code {
 	border-left-color: #5D2F91 !important;
 }
+
+.utterances {
+	max-width: 100% !important;
+}
