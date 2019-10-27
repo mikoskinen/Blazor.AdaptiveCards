@@ -125,7 +125,7 @@
                                                 ShowCard
                                             </a>
                                         </li>
-                                        <li class="">
+                                        <li class="active">
                                             <a href="/actions/togglevisibility.html">
                                                 ToggleVisibility
                                             </a>
@@ -214,7 +214,7 @@
                                                 Animations
                                             </a>
                                         </li>
-                                        <li class="active">
+                                        <li class="">
                                             <a href="/advanced/performance.html">
                                                 Performance tips
                                             </a>
@@ -230,31 +230,103 @@
                 </div>
 
             <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
-                <h1 class="bd-title" id="content">Performance tips</h1>
+                <h1 class="bd-title" id="content">ToggleVisibility</h1>
                 <p class="bd-lead"></p>
-                <p>Adaptive Cards work by transforming a JSON schema into HTML. This takes time. Adaptive Cards for Blazor uses the Adaptive Cards for .NET SDK to create the cards so it can work as quickly as the underlying SDK. Unfortunately the SDK doesn't always provide a lightning fast rendering.</p>
-<p>If you render just a single card, it's unlikely you notice a long delay, even if the JSON schema is complex. But, if you use Card Collections and display hundredths of cards in a single page, it's quite likely you start to see performance problems.</p>
-<p>By default, an Adaptive Card is rendered before the page hosting the card is shown. In other words, the rendering happens in the <strong>OnParametersSetAsync</strong> of the component. In many ways this is the desired way as it means the card is fully visible when the user first sees the page.</p>
-<p>There's an alternative mode for rendering the card. In this mode, card isn't rendered during OnParametersSetAsync but on <strong>OnAfterRenderAsync</strong>. This way the page can be shown to the user even though the card isn't yet ready. With a single card this causes flashing issues as the card first takes 0 pixels and after the render it expand to take the required space, making other HTML elements to jump into their new locations. But the alternative render mode can be a life saver when using Card Collections.</p>
-<p>These two render modes are called Synchronous and Asynchronous. By default Synchronous is used. To switch to the Asynchronous rendering, use <strong>RenderMode</strong> parameter:</p>
-<pre><code class="line-numbers language-html">    &lt;CardCollection Models="@Customers" RenderMode="RenderMode.Asynchronous"&gt;&lt;/CardCollection&gt;
-```html
-
-Is Asynchronous rendering better than Synchronous? It depends on multiple factors:
-
-* How many cards you are going to display
-* How complicated is the schema
-* Is it better for your user to first see an empty page
-
-The recommended way is to start from Synchronous and to switch into Asynchronous if you need a better performance. And you quite likely need all the performance benefits if you're rendering more than 30 cards.
-
-*Note:* Currently the RenderMode parameter is accessible only through CardCollection. You can't set RenderMode for a single AdaptiveCard. This may change in future.
+                <p>ToggleVisibility action can be used to show and hide card's elements. Unlike ShowCard, which can be used to display and hide a Card, ToggleVisibility can be used to control the visibility of individual Adaptive Card elements.</p>
+<p>Adaptive Cards for Blazor automatically handles the ToggleVisibility action. Here's an example schema with ToggleVisibility:</p>
+<pre><code class="line-numbers language-json">{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Warm",
+      "size": "large",
+      "isSubtle": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "September 18, 7:30 AM",
+      "spacing": "none"
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "Image",
+              "url": "http://messagecardplayground.azurewebsites.net/assets/Mostly%20Cloudy-Square.png",
+              "size": "small",
+              "visibility": false,
+              "id": "weatherImage"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "42",
+              "size": "extraLarge",
+              "spacing": "none"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "F",
+              "weight": "bolder",
+              "spacing": "small"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "Hi 51",
+              "horizontalAlignment": "left"
+            },
+            {
+              "type": "TextBlock",
+              "text": "Lo 40",
+              "horizontalAlignment": "left",
+              "spacing": "none"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.ToggleVisibility",
+      "title": "Toggle Image",
+      "targetElements": [ "weatherImage"]
+    }
+  ]
+}  
+</code></pre>
+<p>Using the action doesn't require any code:</p>
+<pre><code class="language-csharp">&lt;AdaptiveCard Schema="@Schemas.WeatherToggleVisibility"&gt;&lt;/AdaptiveCard&gt;
 </code></pre>
 
 
                 <div class="row">
                     <div class="col">
-                            <a class="text-muted" href="/advanced/animations.html">Previous: Animations</a>
+                            <a class="text-muted" href="/actions/showcard.html">Previous: ShowCard</a>
                     </div>
                     <div class="col text-right">
                     </div>

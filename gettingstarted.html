@@ -125,6 +125,11 @@
                                                 ShowCard
                                             </a>
                                         </li>
+                                        <li class="">
+                                            <a href="/actions/togglevisibility.html">
+                                                ToggleVisibility
+                                            </a>
+                                        </li>
                                 </ul>
                         </div>
                         <div class="bd-toc-item active">
@@ -451,7 +456,7 @@ Here's a card for displaying the weather:
 <li><strong><a href="https://adaptivecards.io/explorer/Action.ShowCard.html">ShowCard</a></strong>: Cards can contain cards. ShowCard can be used to show and hide an card. Usually used for displaying more detailed data for a particular card.</li>
 <li><strong><a href="https://adaptivecards.io/explorer/Action.ToggleVisibility.html">ToggleVisibility</a></strong>: Action which can show or hide card elements.</li>
 </ul>
-<p>Adaptive Cards for Blazor supports three types of actions: OpenUrl, Submit and ShowCard. Support for ToggleVisibility is coming on the next version.</p>
+<p>Adaptive Cards for Blazor from version 1.1.0 onwards supports all action types.</p>
 <p>Adding an OpenUrl action is just a matter of adding couple new lines into our schema. Currently our card's schema only contains the <strong>"body"</strong> element. Now we add a new <strong>"actions"</strong> element in it. Actions inside the actions-element are rendered at the bottom of the card. Here's how to define an empty actions element:</p>
 <pre><code class="line-numbers language-json">"body": [
   ...
