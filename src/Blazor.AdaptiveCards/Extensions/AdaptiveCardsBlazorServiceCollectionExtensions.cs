@@ -41,6 +41,12 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 AdaptiveCardActionCreators.CreateAdaptiveSubmitAction = options.AdaptiveSubmitActionProvider;
             }
+            
+            if (options.AdaptiveToggleVisibilityActionProvider != null)
+            {
+                AdaptiveCardActionCreators.CreateAdaptiveToggleVisibilityAction = options.AdaptiveToggleVisibilityActionProvider;
+            }
+
 
             if (options.AdaptiveCardTemplatingProvider == null)
             {
@@ -60,6 +66,11 @@ namespace Microsoft.Extensions.DependencyInjection
             AdaptiveCardRenderer.ActionTransformers.Register<AdaptiveSubmitAction>((action, tag, context) =>
             {
                 AdaptiveCardActionCreators.CreateAdaptiveSubmitAction(action, tag, context);
+            });
+            
+            AdaptiveCardRenderer.ActionTransformers.Register<AdaptiveToggleVisibilityAction>((action, tag, context) =>
+            {
+                AdaptiveCardActionCreators.CreateAdaptiveToggleVisibilityAction(action, tag, context);
             });
 
             services.AddSingleton<AdaptiveCardRenderer>();

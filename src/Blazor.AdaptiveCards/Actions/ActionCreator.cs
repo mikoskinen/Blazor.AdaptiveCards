@@ -6,7 +6,7 @@ namespace AdaptiveCards.Blazor.Actions
 {
     public class ActionCreator
     {
-        public global::AdaptiveCards.AdaptiveCard Create(global::AdaptiveCards.AdaptiveCard adaptiveCard, Func<dynamic, List<AdaptiveAction>> actions,
+        public AdaptiveCards.AdaptiveCard Create(AdaptiveCards.AdaptiveCard adaptiveCard, Func<dynamic, List<AdaptiveAction>> actions,
             object obj)
         {
             if (actions == null)

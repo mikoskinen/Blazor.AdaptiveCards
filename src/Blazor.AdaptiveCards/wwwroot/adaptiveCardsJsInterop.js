@@ -62,6 +62,117 @@ window.blazorAdaptiveCards = {
 
         // Invoke the C#-method which handles the actual submit operation
         cardComponent.invokeMethodAsync("SubmitData", obj, actionName);
+    },
+
+    // Based on the code https://github.com/microsoft/AdaptiveCards/blob/master/source/dotnet/Samples/AdaptiveCards.Sample.Html/Program.cs
+    toggleVisibility: function (id) {
+
+        var el = document.getElementById(id);
+        if (!el) {
+            return;
+        }
+
+        var targetElementsString = el.getAttribute('data-ac-targetelements');
+        var targetElements = targetElementsString.split(',');
+
+        // For each target in list of targets
+        for (var i = 0; i < targetElements.length; i++) {
+
+            /// Do a split for commas and for each element, find the : to divide both strings
+            var targetElementIdWithAction = targetElements[i].split(':');
+            var targetElementId = targetElementIdWithAction[0];
+            var targetElementAction = targetElementIdWithAction[1];
+
+            var targetElementsInDocument = document.getElementsByName(targetElementId);
+            var targetElement = targetElementsInDocument[0];
+            var isCheckBoxElement = ((targetElementsInDocument.length > 1) && !(targetElement.className.includes('ac-textinput')));
+
+            var targetSeparatorId = targetElement.dataset.acSeparatorid;
+            var separator = document.getElementById(targetSeparatorId);
+
+            if (targetElementAction === 'True' || (targetElementAction === 'Toggle' && targetElement.style.display === 'none')) {
+                {
+                    if (isCheckBoxElement) {
+                        {
+                            targetElement.style.display = 'inline-block';
+                        }
+                    } else {
+                        {
+                            targetElement.style.display = 'flex';
+                        }
+                    }
+
+                    if (targetElement.className.includes('ac-container')) {
+                        {
+                            targetElement.style.display = 'block';
+                        }
+                    }
+
+                    if (separator != null) {
+                        {
+                            separator.style.display = 'block';
+                        }
+                    }
+                }
+            } else if (targetElementAction === 'False' || (targetElementAction === 'Toggle' && targetElement.style.display !== 'none')) {
+                {
+                    targetElement.style.display = 'none';
+
+                    if (separator != null) {
+                        {
+                            separator.style.display = 'none';
+                        }
+                    }
+                }
+            }
+
+            var parent = targetElement.parentNode;
+            var isFirstElement = true;
+            for (var k = 0; k < parent.childNodes.length; k++) {
+                {
+
+                    var child = parent.childNodes[k];
+
+                    <!-- if element is separator -> skip (As we don't care of this one) -->
+                    if (child.className.includes('ac-separator') || child.className.includes('ac-columnseparator')) {
+                        {
+                            continue;
+                        }
+                    }
+
+                    <!-- if element is not visible -> skip (The separator was hidden in the previous step) -->
+                    if (child.style.display === 'none') {
+                        {
+                            continue;
+                        }
+                    }
+
+                    var childSeparatorId = child.dataset.acSeparatorid;
+                    var childSeparator = document.getElementById(childSeparatorId);
+
+                    if (isFirstElement) {
+                        {
+                            <!-- if element is visible -> hide separator -->
+                            if (childSeparator != null) {
+                                {
+                                    childSeparator.style.display = 'none';
+                                }
+                            }
+                            isFirstElement = false;
+                        }
+                    } else {
+                        {
+                            <!-- if element is visible -> show separator -->
+                            if (childSeparator != null) {
+                                {
+                                    childSeparator.style.display = 'block';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 };
 
@@ -75,14 +186,12 @@ function addElements(inputs, obj, card) {
             if (item.type && item.type === 'checkbox') {
 
                 handleCheckboxes(item, card, obj);
-            }
-            else if (item.type && item.type === 'radio') {
+            } else if (item.type && item.type === 'radio') {
                 var groupName = item.name;
                 if (radioButtonGroups.indexOf(groupName) === -1) {
                     radioButtonGroups.push(groupName);
                 }
-            }
-            else {
+            } else {
                 obj[item.name] = item.value;
             }
         }
@@ -103,13 +212,10 @@ function handleCheckboxes(item, card, obj) {
         if (item.hasAttribute("value") && item.checked) {
             obj[item.name].push(item.value);
         }
-    }
-
-    else {
+    } else {
         if (item.hasAttribute("value")) {
             obj[item.name] = item.value;
-        }
-        else {
+        } else {
             obj[item.name] = item.checked;
         }
     }

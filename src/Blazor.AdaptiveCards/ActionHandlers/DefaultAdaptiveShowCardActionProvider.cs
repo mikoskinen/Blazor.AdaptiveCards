@@ -12,8 +12,7 @@ namespace AdaptiveCards.Blazor.ActionHandlers
             tag.Attr("data-ac-showCardId", targetId);
 
             tag.Attributes.Add("onclick",
-                "document.getElementById('" + targetId + "').style.display === 'none' ? document.getElementById('" + targetId +
-                "').style.display = '' : document.getElementById('" + targetId + "').style.display = 'none';");
+                $"document.getElementById('{targetId}').style.display === 'none' ? document.getElementById('{targetId}').style.display = '' : document.getElementById('{targetId}').style.display = 'none';");
         }
     }
 }

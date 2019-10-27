@@ -5,6 +5,14 @@ title: Release History
 
 Here's the release history of Adaptive Cards for Blazor:
 
+### 17.10.2019 1.1.0
+
+https://www.nuget.org/packages/AdaptiveCardsBlazor/1.1.0
+
+Adds the following features:
+
+* [Add support for Action.ToggleVisibility #3](https://github.com/mikoskinen/Blazor.AdaptiveCards/issues/3)
+
 ### 17.10.2019 1.0.1
 
 https://www.nuget.org/packages/AdaptiveCardsBlazor/1.0.1

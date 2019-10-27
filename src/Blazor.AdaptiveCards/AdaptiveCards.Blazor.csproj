@@ -15,16 +15,18 @@
     <AssemblyName>AdaptiveCards.Blazor</AssemblyName>
     <RootNamespace>AdaptiveCards.Blazor</RootNamespace>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.1</Version>
     <RepositoryUrl>https://github.com/mikoskinen/Blazor.AdaptiveCards</RepositoryUrl>
     <PackageTags>Adaptive Cards;Blazor</PackageTags>
     <PackageIcon>logo_128.png</PackageIcon>
     <Title>Adaptive Cards for Blazor</Title>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+    <MinVerMinimumMajorMinor>1.1</MinVerMinimumMajorMinor>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AdaptiveCards.Rendering.Html" Version="1.2.3" />
     <PackageReference Include="Scriban" Version="2.0.1" />
+    <PackageReference Include="MinVer" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>

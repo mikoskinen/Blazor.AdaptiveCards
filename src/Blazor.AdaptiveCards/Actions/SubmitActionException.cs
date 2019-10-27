@@ -16,7 +16,7 @@ namespace AdaptiveCards.Blazor.Actions
             Handler = handler;
         }
 
-        public SubmitEventArgs EventArgs { get; private set; }
-        public object Handler { get; private set; }
+        public SubmitEventArgs EventArgs { get; }
+        public object Handler { get; }
     }
 }

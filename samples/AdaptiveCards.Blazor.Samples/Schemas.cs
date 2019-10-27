@@ -402,6 +402,90 @@ namespace AdaptiveCards.Blazor.Samples
   ]
 }
 ";
+        public static string WeatherToggleVisibility = @"{
+  ""$schema"": ""http://adaptivecards.io/schemas/adaptive-card.json"",
+  ""type"": ""AdaptiveCard"",
+  ""version"": ""1.0"",
+  ""body"": [
+    {
+      ""type"": ""TextBlock"",
+      ""text"": ""Warm"",
+      ""size"": ""large"",
+      ""isSubtle"": true
+    },
+    {
+      ""type"": ""TextBlock"",
+      ""text"": ""September 18, 7:30 AM"",
+      ""spacing"": ""none""
+    },
+    {
+      ""type"": ""ColumnSet"",
+      ""columns"": [
+        {
+          ""type"": ""Column"",
+          ""width"": ""auto"",
+          ""items"": [
+            {
+              ""type"": ""Image"",
+              ""url"": ""http://messagecardplayground.azurewebsites.net/assets/Mostly%20Cloudy-Square.png"",
+              ""size"": ""small"",
+              ""visibility"": false,
+              ""id"": ""weatherImage""
+            }
+          ]
+        },
+        {
+          ""type"": ""Column"",
+          ""width"": ""auto"",
+          ""items"": [
+            {
+              ""type"": ""TextBlock"",
+              ""text"": ""42"",
+              ""size"": ""extraLarge"",
+              ""spacing"": ""none""
+            }
+          ]
+        },
+        {
+          ""type"": ""Column"",
+          ""width"": ""stretch"",
+          ""items"": [
+            {
+              ""type"": ""TextBlock"",
+              ""text"": ""F"",
+              ""weight"": ""bolder"",
+              ""spacing"": ""small""
+            }
+          ]
+        },
+        {
+          ""type"": ""Column"",
+          ""width"": ""stretch"",
+          ""items"": [
+            {
+              ""type"": ""TextBlock"",
+              ""text"": ""Hi 51"",
+              ""horizontalAlignment"": ""left""
+            },
+            {
+              ""type"": ""TextBlock"",
+              ""text"": ""Lo 40"",
+              ""horizontalAlignment"": ""left"",
+              ""spacing"": ""none""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  ""actions"": [
+    {
+      ""type"": ""Action.ToggleVisibility"",
+      ""title"": ""Toggle Image"",
+      ""targetElements"": [ ""weatherImage""]
+    }
+  ]
+}";        
         #endregion
 
         #region Customer
@@ -3418,7 +3502,6 @@ namespace AdaptiveCards.Blazor.Samples
             {
               ""type"": ""Action.Submit"",
               ""title"": ""Approve"",
-              ""style"": ""positive"",
               ""data"": {
                 ""id"": ""_qkQW8dJlUeLVi7ZMEzYVw"",
                 ""action"": ""approve""
@@ -3427,7 +3510,6 @@ namespace AdaptiveCards.Blazor.Samples
             {
               ""type"": ""Action.ShowCard"",
               ""title"": ""Reject"",
-              ""style"": ""destructive"",
               ""card"": {
                 ""type"": ""AdaptiveCard"",
                 ""body"": [

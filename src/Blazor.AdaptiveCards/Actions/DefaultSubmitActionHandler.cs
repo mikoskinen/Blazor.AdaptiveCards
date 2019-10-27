@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
@@ -68,7 +69,7 @@ namespace AdaptiveCards.Blazor.Actions
 
                 var method = handler.GetType().GetMethod(submitMethodName);
                 var methodParameters = method.GetParameters().ToList();
-                
+
                 if (methodParameters.Any() != true)
                 {
                     await Invoke(method, handler, null);
@@ -117,8 +118,8 @@ namespace AdaptiveCards.Blazor.Actions
 
                     if (eventArgs.Data != null && !IsSimpleType(methodParameter.ParameterType))
                     {
-                        var json = System.Text.Json.JsonSerializer.Serialize(eventArgs.Data);
-                        var obj = System.Text.Json.JsonSerializer.Deserialize(json, methodParameter.ParameterType);
+                        var json = JsonSerializer.Serialize(eventArgs.Data);
+                        var obj = JsonSerializer.Deserialize(json, methodParameter.ParameterType);
 
                         arguments.Add(obj);
 
@@ -129,8 +130,8 @@ namespace AdaptiveCards.Blazor.Actions
                     {
                         if (eventArgs.Data.ContainsKey(methodParameter.Name))
                         {
-                            var valueJson = System.Text.Json.JsonSerializer.Serialize(eventArgs.Data[methodParameter.Name]);
-                            var value = System.Text.Json.JsonSerializer.Deserialize(valueJson, methodParameter.ParameterType);
+                            var valueJson = JsonSerializer.Serialize(eventArgs.Data[methodParameter.Name]);
+                            var value = JsonSerializer.Deserialize(valueJson, methodParameter.ParameterType);
 
                             arguments.Add(value);
 
@@ -159,7 +160,7 @@ namespace AdaptiveCards.Blazor.Actions
             }
             else
             {
-                var tOut = (Task)method.Invoke(handler, arguments.ToArray());
+                var tOut = (Task) method.Invoke(handler, arguments.ToArray());
                 await tOut;
             }
         }
@@ -169,7 +170,7 @@ namespace AdaptiveCards.Blazor.Actions
         {
             return
                 type.IsPrimitive ||
-                new Type[] { typeof(Enum), typeof(string), typeof(decimal), typeof(DateTime), typeof(DateTimeOffset), typeof(TimeSpan), typeof(Guid) }
+                new[] { typeof(Enum), typeof(string), typeof(decimal), typeof(DateTime), typeof(DateTimeOffset), typeof(TimeSpan), typeof(Guid) }
                     .Contains(type) ||
                 Convert.GetTypeCode(type) != TypeCode.Object ||
                 type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsSimpleType(type.GetGenericArguments()[0])
