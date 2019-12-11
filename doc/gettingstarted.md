@@ -861,7 +861,7 @@ As in the first part of this tutorial, we will load the schema-file from the dis
 And here's how we add the CardCollection-component:
 
 ```html
-    <CardCollection Models="@forecasts" Schema="@schema"></AdaptiveCards>
+    <CardCollection Models="@forecasts" Schema="@schema"></CardCollection>
 ```
 
 FetchData.razor at this point should look like the following:
@@ -882,7 +882,7 @@ FetchData.razor at this point should look like the following:
 }
 else
 {
-    <CardCollection Models="@forecasts" Schema="@schema"></AdaptiveCards>
+    <CardCollection Models="@forecasts" Schema="@schema"></CardCollection>
 }
 
 @code {
@@ -906,7 +906,7 @@ It's quite pretty! Card Collection tries not to care what CSS files you are usin
 You can use **CardClass** and **Class** properties to configure what classes are applied to the collection and to its content. To make the cards larger, we can change the card class to col-6:
 
 ```html {.line-numbers}
-    <CardCollection CardClass="col-6" Models="@forecasts" Schema="@schema"></AdaptiveCards>
+    <CardCollection CardClass="col-6" Models="@forecasts" Schema="@schema"></CardCollection>
 ```
 
 This will give us two columns instead of four:
