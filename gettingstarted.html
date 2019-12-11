@@ -915,7 +915,7 @@ Here's a card for displaying the weather:
 }
 </code></pre>
 <p>And here's how we add the CardCollection-component:</p>
-<pre><code class="language-html">    &lt;CardCollection Models="@forecasts" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+<pre><code class="language-html">    &lt;CardCollection Models="@forecasts" Schema="@schema"&gt;&lt;/CardCollection&gt;
 </code></pre>
 <p>FetchData.razor at this point should look like the following:</p>
 <pre><code class="line-numbers language-html">@page "/fetchdata"
@@ -933,7 +933,7 @@ Here's a card for displaying the weather:
 }
 else
 {
-    &lt;CardCollection Models="@forecasts" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+    &lt;CardCollection Models="@forecasts" Schema="@schema"&gt;&lt;/CardCollection&gt;
 }
 
 @code {
@@ -951,7 +951,7 @@ else
 <p><a href="2019-10-07-18-48-32.png" class="lightbox"><img src="2019-10-07-18-48-32.png" class="img-fluid" alt=""></a></p>
 <p>It's quite pretty! Card Collection tries not to care what CSS files you are using (Bootstrap vs Material vs custom). Couple classes are still added by default which allows the cards to render nicely when used with Bootstrap: The collection gets the class <strong>"row"</strong> and each of the cards is wrapped inside class <strong>col-3</strong>.</p>
 <p>You can use <strong>CardClass</strong> and <strong>Class</strong> properties to configure what classes are applied to the collection and to its content. To make the cards larger, we can change the card class to col-6:</p>
-<pre><code class="line-numbers language-html">    &lt;CardCollection CardClass="col-6" Models="@forecasts" Schema="@schema"&gt;&lt;/AdaptiveCards&gt;
+<pre><code class="line-numbers language-html">    &lt;CardCollection CardClass="col-6" Models="@forecasts" Schema="@schema"&gt;&lt;/CardCollection&gt;
 </code></pre>
 <p>This will give us two columns instead of four:</p>
 <p><a href="2019-10-07-18-52-25.png" class="lightbox"><img src="2019-10-07-18-52-25.png" class="img-fluid" alt=""></a></p>
