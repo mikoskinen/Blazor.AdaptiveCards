@@ -20,22 +20,43 @@
     <PackageIcon>logo_128.png</PackageIcon>
     <Title>Adaptive Cards for Blazor</Title>
     <MinVerTagPrefix>v</MinVerTagPrefix>
-    <MinVerMinimumMajorMinor>1.1</MinVerMinimumMajorMinor>
+    <MinVerMinimumMajorMinor>2.0</MinVerMinimumMajorMinor>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdaptiveCards.Rendering.Html" Version="1.2.3" />
+    <PackageReference Include="AdaptiveCards.Rendering.Html" Version="1.2.4" />
     <PackageReference Include="Scriban" Version="2.0.1" />
     <PackageReference Include="MinVer" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="logo_128.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
-  
+
+  <Target Name="CopyMissingBlazorContent" BeforeTargets="BlazorCompleteStandalonePublish">
+    <!-- https://github.com/aspnet/AspNetCore/issues/13103#issuecomment-555172130 -->
+    <PropertyGroup>
+      <FullPublishDir>$(PublishDir)</FullPublishDir>
+      <FullPublishDir Condition=" $(FullPublishDir.Contains(':')) != 'true' ">$(MSBuildThisFileDirectory)$(PublishDir)</FullPublishDir>
+    </PropertyGroup>
+
+    <Message Text="PublishIntermediateOutputPath: $(PublishIntermediateOutputPath)" Importance="high" />
+    <Message Text="OutDir: $(OutDir)" Importance="high" />
+    <Message Text="BlazorPublishDistDir: $(BlazorPublishDistDir)" Importance="High" />
+    <Message Text="PublishDir: $(PublishDir)" Importance="High" />
+    <Message Text="FullPublishDir: $(FullPublishDir)" Importance="High" />
+
+    <CreateItem Include="$(FullPublishDir)wwwroot\**\*.*">
+      <Output TaskParameter="Include" ItemName="FilesToCopy" />
+    </CreateItem>
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(FullPublishDir)$(BlazorPublishDistDir)%(RecursiveDir)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" />
+    <RemoveDir Directories="$(FullPublishDir)wwwroot" />
+    <Delete Files="$(FullPublishDir)$(BlazorPublishDistDir)**\*.map" />
+  </Target>
+
 </Project>
