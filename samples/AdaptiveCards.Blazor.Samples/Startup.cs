@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AdaptiveCards.Blazor.Samples.Data;
 using AdaptiveCards.Blazor.Extensions;
+using BlazorStrap;
 
 namespace AdaptiveCards.Blazor.Samples
 {
@@ -20,17 +21,22 @@ namespace AdaptiveCards.Blazor.Samples
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddSingleton<BlazorStrap.IBlazorStrap>();
+            services.AddBlazorStrap();
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddHttpClient("samples", x => {
                 x.BaseAddress = new System.Uri("https://raw.githubusercontent.com/mikoskinen/Blazor.AdaptiveCards/master/samples/AdaptiveCards.Blazor.Samples/Pages/");
+                
             });
 
             services.AddBlazorAdaptiveCards()
                 .AddTemplate<WeatherForecast>(Schemas.WeatherTemplated)
                 .AddTemplate<Customer>(Schemas.CustomerTemplated)
                 .AddFileTemplate("Alternative", "AlternativeTemplatedAdaptiveCard.json");
+            ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
