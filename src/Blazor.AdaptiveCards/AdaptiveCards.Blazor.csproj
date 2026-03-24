@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="AdaptiveCards.Rendering.Html" Version="1.2.4" />
-    <PackageReference Include="Scriban" Version="2.0.1" />
+    <PackageReference Include="Scriban" Version="7.0.0" />
     <PackageReference Include="MinVer" Version="2.0.0" />
   </ItemGroup>
 
